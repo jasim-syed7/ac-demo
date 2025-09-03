@@ -1,0 +1,143 @@
+Perfect! 👍 Here’s a step-by-step guide to install and fully set up SSMS 18.x on your Windows 10 (32-bit) machine.
+
+
+---
+
+🟢 Step 1: Download SSMS 18.x (32-bit)
+
+1. Go to Microsoft’s official download page:
+Download SSMS 18.12.1 (last 32-bit version)
+
+
+2. The download will start automatically – you will get a file like:
+SSMS-Setup-ENU.exe (~600 MB).
+
+
+
+
+---
+
+🟢 Step 2: Install SSMS 18.x
+
+1. Run the installer (right-click → Run as administrator recommended).
+
+
+2. In the SQL Server Installation Wizard, click Install.
+
+No need to change the default path unless you want a custom installation folder.
+
+
+
+3. Wait for installation to finish.
+
+It usually takes 5–10 minutes depending on system speed.
+
+
+
+4. Click Close when it says “Setup Completed Successfully”.
+
+
+
+
+---
+
+🟢 Step 3: Install / Configure SQL Server (if not installed)
+
+SSMS is just a management tool – you also need a SQL Server instance to connect to.
+
+1. If you already have SQL Server installed, skip this step.
+
+
+2. Otherwise:
+
+Download SQL Server 2019 Developer Edition (free) from Microsoft:
+Download SQL Server Developer Edition
+
+Run installer → Choose Basic or Custom installation.
+
+Follow on-screen instructions until setup completes.
+
+
+
+
+
+---
+
+🟢 Step 4: Open and Connect
+
+1. Launch SQL Server Management Studio (SSMS) from Start Menu.
+
+
+2. In Connect to Server dialog:
+
+Server type: Database Engine
+
+Server name: Choose your local instance (e.g., localhost or .\SQLEXPRESS).
+
+Authentication: Windows Authentication (default)
+
+
+
+3. Click Connect – you should see Object Explorer with your databases.
+
+
+
+
+---
+
+🟢 Step 5: First-Time Setup / Best Practices
+
+✅ Change Theme
+
+Tools → Options → Environment → General → Choose Blue/Light/Dark theme.
+
+
+✅ Enable Line Numbers in Query Editor
+
+Tools → Options → Text Editor → Transact-SQL → General → Check Line Numbers.
+
+
+✅ Create a Sample Database
+Run this in a new query window:
+
+CREATE DATABASE TestDB;
+GO
+USE TestDB;
+GO
+CREATE TABLE Employees (
+    ID INT PRIMARY KEY,
+    Name NVARCHAR(50),
+    Department NVARCHAR(50)
+);
+INSERT INTO Employees VALUES (1, 'Jasim', 'DevOps');
+SELECT * FROM Employees;
+
+You should see your first result table. 🎉
+
+
+---
+
+🟢 Step 6: Optional Extras
+
+Install SQL Server Sample Databases like AdventureWorks for practice.
+
+Configure IntelliSense (Tools → Options → Text Editor → Transact-SQL → IntelliSense).
+
+Enable Auto-Save / Query History (available under Tools → Options).
+
+
+
+---
+
+✅ Summary:
+
+Download SSMS 18.12.1 → Install → Install SQL Server (if needed) → Connect and start using.
+
+SSMS 18 is the last version supporting Windows 10 32-bit.
+
+
+
+---
+
+Want me to give you a visual installation guide (screenshots step by step) to make it super easy to follow?
+
