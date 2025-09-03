@@ -1,0 +1,448 @@
+### Detailed Explanation of Day 14: Weekly Review and Mini-Project
+
+**Objective**: Consolidate and apply the concepts learned from Days 8-13 (aggregate functions, string and date functions, numeric and conversion functions, conditional logic, and joins) through a comprehensive review and a hands-on mini-project. By the end of Day 14, you’ll reinforce your understanding of these topics, extend the `EmployeeDB` database with additional tables and data, and create aggregated reports using joins and functions. This day integrates your skills from Days 1-13, particularly `SELECT`, `WHERE`, `GROUP BY`, and joins, to build complex queries for real-world scenarios.
+
+**Duration**: 5-7 hours (split into review, mini-project setup, query development, and reflection). Adjust based on your comfort with SQL Server Management Studio (SSMS) and SQL syntax.
+
+---
+
+### Sub-Syllabus Breakdown
+1. **Review Days 8-13** (2-2.5 hours)
+   - Revisit aggregate functions, string and date functions, numeric and conversion functions, conditional logic, and joins (`INNER`, `LEFT`, `RIGHT`, `FULL`).
+   - Practice key concepts through targeted exercises to solidify understanding.
+2. **Extend Employee Database with Joins and Functions** (1.5-2 hours)
+   - Add new tables to `EmployeeDB` to support complex relationships.
+   - Incorporate functions (string, date, numeric, conversion) and joins in queries.
+3. **Query Aggregated Reports** (1.5-2 hours)
+   - Create 10-15 aggregated reports combining joins, functions, and conditional logic.
+   - Solve real-world business problems (e.g., employee performance reports, sales summaries).
+
+---
+
+### Step-by-Step Detailed Plan for Day 14
+
+#### 1. Review Days 8-13 (2-2.5 hours)
+**Goal**: Reinforce concepts from Days 8-13 to ensure mastery of aggregate functions, string/date functions, numeric/conversion functions, conditional logic, and joins.
+
+**Theory (45-60 minutes)**:
+- **Day 8: Aggregate Functions (COUNT, SUM, AVG, MIN, MAX, GROUP BY, HAVING)**:
+  - Recap: Aggregate functions summarize data (e.g., `COUNT(*)` for row counts, `SUM(Salary)` for totals).
+  - Key points:
+    - Use `GROUP BY` to group rows by columns (e.g., `GROUP BY DepartmentID`).
+    - Use `HAVING` to filter grouped results (e.g., `HAVING AVG(Salary) > 70000`).
+    - Handle NULLs (aggregates ignore NULLs except `COUNT(*)`).
+  - Example:
+    ```sql
+    SELECT DepartmentID, AVG(Salary) AS AvgSalary
+    FROM HR.Employees
+    GROUP BY DepartmentID
+    HAVING COUNT(*) > 1;
+    ```
+- **Day 9: String and Date Functions**:
+  - Recap: String functions (`LEN`, `UPPER`, `LOWER`, `SUBSTRING`, `CONCAT`) manipulate text; date functions (`GETDATE`, `DATEADD`, `DATEDIFF`) handle temporal data.
+  - Key points:
+    - Combine with `SELECT` or `WHERE` for formatting or filtering.
+    - Handle NULLs (e.g., `CONCAT` treats NULL as empty string).
+  - Example:
+    ```sql
+    SELECT CONCAT(FirstName, ' ', LastName) AS FullName, DATEDIFF(year, HireDate, GETDATE()) AS YearsEmployed
+    FROM HR.Employees;
+    ```
+- **Day 10: Numeric and Conversion Functions**:
+  - Recap: Numeric functions (`ROUND`, `CEILING`, `FLOOR`) adjust numbers; conversion functions (`CAST`, `CONVERT`) change data types.
+  - Key points:
+    - Use `ROUND` for precision, `CAST`/`CONVERT` for type changes.
+    - Avoid implicit conversions for performance.
+  - Example:
+    ```sql
+    SELECT ROUND(Salary, 0) AS WholeSalary, CONVERT(VARCHAR, GETDATE(), 101) AS Today
+    FROM HR.Employees;
+    ```
+- **Day 11: Conditional Logic (CASE, IIF)**:
+  - Recap: `CASE` (simple/searched) and `IIF` add conditional logic to queries.
+  - Key points:
+    - Use `CASE` for multiple conditions, `IIF` for simple true/false.
+    - Ensure consistent return types in `CASE`/`IIF`.
+  - Example:
+    ```sql
+    SELECT FirstName, IIF(Salary > 70000, 'High', 'Low') AS SalaryCategory
+    FROM HR.Employees;
+    ```
+- **Day 12: Joins – Inner Join**:
+  - Recap: `INNER JOIN` combines tables on matching keys, excluding non-matching rows.
+  - Key points:
+    - Use `ON` clause to specify join conditions.
+    - Qualify columns with aliases (e.g., `e.FirstName`).
+  - Example:
+    ```sql
+    SELECT e.FirstName, d.DepartmentName
+    FROM HR.Employees AS e
+    INNER JOIN HR.Departments AS d
+    ON e.DepartmentID = d.DepartmentID;
+    ```
+- **Day 13: Joins – Outer Joins**:
+  - Recap: `LEFT`, `RIGHT`, and `FULL OUTER JOIN` include unmatched rows with NULLs.
+  - Key points:
+    - Use `COALESCE` or `ISNULL` to handle NULLs.
+    - Compare with `INNER JOIN` to understand row inclusion.
+  - Example:
+    ```sql
+    SELECT e.FirstName, COALESCE(d.DepartmentName, 'Unassigned') AS DepartmentName
+    FROM HR.Employees AS e
+    LEFT JOIN HR.Departments AS d
+    ON e.DepartmentID = d.DepartmentID;
+    ```
+- **Key Integration Points**:
+  - Combine aggregates with joins for summarized reports (e.g., average salary per department).
+  - Use functions (`CONCAT`, `ROUND`, `DATEADD`) with joins for formatted output.
+  - Apply conditional logic (`CASE`, `IIF`) to categorize joined data.
+  - Handle NULLs in outer joins with `COALESCE` or `ISNULL`.
+- **Common Pitfalls**:
+  - Ambiguous column names in joins.
+  - Incorrect `ON` conditions or missing `END` in `CASE`.
+  - Filtering out NULLs unintentionally with `WHERE` in outer joins.
+  - Performance issues with large datasets (consider indexes, covered later).
+
+**Practice (1-1.5 hours)**:
+- **Activity 1: Review Exercises**:
+  - In your journal, write one query per day (8-13) to test key concepts:
+    - Day 8: Count employees per department with average salary > 70000.
+    - Day 9: Concatenate employee names and calculate years employed.
+    - Day 10: Round order totals and convert to string format.
+    - Day 11: Categorize employees by salary using `CASE` or `IIF`.
+    - Day 12: Join `Employees` and `Departments` with `INNER JOIN`.
+    - Day 13: Use `LEFT JOIN` to include all customers, even without orders.
+  - Example queries:
+    ```sql
+    -- Day 8
+    SELECT DepartmentID, COUNT(*) AS EmployeeCount, AVG(Salary) AS AvgSalary
+    FROM HR.Employees
+    GROUP BY DepartmentID
+    HAVING AVG(Salary) > 70000;
+    -- Day 9
+    SELECT CONCAT(FirstName, ' ', LastName) AS FullName, DATEDIFF(year, HireDate, GETDATE()) AS Tenure
+    FROM HR.Employees;
+    -- Day 10
+    SELECT OrderID, ROUND(TotalAmount, 0) AS WholeAmount, CONVERT(VARCHAR, TotalAmount, 1) AS FormattedAmount
+    FROM Sales.Orders;
+    -- Day 11
+    SELECT FirstName, CASE WHEN Salary > 75000 THEN 'High' ELSE 'Low' END AS SalaryCategory
+    FROM HR.Employees;
+    -- Day 12
+    SELECT e.FirstName, d.DepartmentName
+    FROM HR.Employees AS e
+    INNER JOIN HR.Departments AS d ON e.DepartmentID = d.DepartmentID;
+    -- Day 13
+    SELECT c.CustomerName, o.OrderID
+    FROM Sales.Customers AS c
+    LEFT JOIN Sales.Orders AS o ON c.CustomerID = o.CustomerID;
+    ```
+- **Activity 2: Run Review Queries in SSMS**:
+  - Use the `EmployeeDB` from Day 12/13. If not available, recreate:
+    ```sql
+    CREATE DATABASE EmployeeDB;
+    USE EmployeeDB;
+    CREATE SCHEMA HR;
+    CREATE SCHEMA Sales;
+    CREATE TABLE HR.Departments (
+        DepartmentID INT PRIMARY KEY,
+        DepartmentName VARCHAR(50) NOT NULL,
+        Location VARCHAR(50)
+    );
+    INSERT INTO HR.Departments (DepartmentID, DepartmentName, Location)
+    VALUES 
+        (1, 'IT', 'New York'),
+        (2, 'HR', 'Chicago'),
+        (3, 'Finance', 'Boston'),
+        (4, 'Marketing', 'San Francisco');
+    CREATE TABLE HR.Employees (
+        EmployeeID INT PRIMARY KEY,
+        FirstName VARCHAR(50) NOT NULL,
+        LastName VARCHAR(50) NOT NULL,
+        Email VARCHAR(100) UNIQUE,
+        DepartmentID INT,
+        Salary DECIMAL(10,2),
+        HireDate DATE DEFAULT GETDATE(),
+        CONSTRAINT FK_Employee_Dept FOREIGN KEY (DepartmentID) REFERENCES HR.Departments(DepartmentID)
+    );
+    INSERT INTO HR.Employees (EmployeeID, FirstName, LastName, Email, DepartmentID, Salary, HireDate)
+    VALUES 
+        (1, 'Alice', 'Smith', 'alice.smith@company.com', 1, 75000.67, '2023-01-15'),
+        (2, 'Bob', 'Johnson', 'bob.johnson@company.com', 2, 65000.33, '2023-02-20'),
+        (3, 'Cathy', 'Lee', 'cathy.lee@company.com', 1, 80000.99, '2023-03-10'),
+        (4, 'David', 'Wong', 'david.wong@company.com', 3, 70000.45, '2023-04-05'),
+        (5, 'Emma', 'Brown', 'emma.brown@company.com', NULL, 60000.12, '2023-05-01');
+    CREATE TABLE Sales.Customers (
+        CustomerID INT PRIMARY KEY,
+        CustomerName VARCHAR(50) NOT NULL,
+        Email VARCHAR(100),
+        Region VARCHAR(50)
+    );
+    INSERT INTO Sales.Customers (CustomerID, CustomerName, Email, Region)
+    VALUES 
+        (1, 'John Doe', 'john.doe@customer.com', 'East'),
+        (2, 'Jane Smith', 'jane.smith@customer.com', 'West'),
+        (3, 'Mike Brown', 'mike.brown@customer.com', 'North'),
+        (4, 'Lisa Green', 'lisa.green@customer.com', 'South');
+    CREATE TABLE Sales.Orders (
+        OrderID INT PRIMARY KEY,
+        CustomerID INT NOT NULL,
+        OrderDate DATE NOT NULL,
+        TotalAmount DECIMAL(10,2),
+        Status VARCHAR(20),
+        CONSTRAINT FK_Order_Customer FOREIGN KEY (CustomerID) REFERENCES Sales.Customers(CustomerID)
+    );
+    INSERT INTO Sales.Orders (OrderID, CustomerID, OrderDate, TotalAmount, Status)
+    VALUES 
+        (1, 1, '2025-08-01', 199.99, 'Completed'),
+        (2, 2, '2025-08-02', 49.99, 'Pending'),
+        (3, 1, '2025-08-03', 299.99, 'Completed'),
+        (4, 3, '2025-08-04', 99.99, 'Cancelled'),
+        (5, 2, '2025-08-05', 149.99, 'Completed');
+    CREATE TABLE Sales.SalesTransactions (
+        TransactionID INT PRIMARY KEY,
+        OrderID INT,
+        ProductID INT,
+        Quantity INT NOT NULL,
+        UnitPrice DECIMAL(10,2),
+        TransactionDate DATE DEFAULT GETDATE(),
+        CONSTRAINT FK_Transaction_Order FOREIGN KEY (OrderID) REFERENCES Sales.Orders(OrderID)
+    );
+    INSERT INTO Sales.SalesTransactions (TransactionID, OrderID, ProductID, Quantity, UnitPrice, TransactionDate)
+    VALUES 
+        (1, 1, 1, 2, 99.995, '2025-08-01'),
+        (2, 1, 2, 1, 49.99, '2025-08-01'),
+        (3, 2, 3, 3, 16.663, '2025-08-02'),
+        (4, 3, 5, 1, 199.99, '2025-08-03'),
+        (5, 4, 4, 5, 19.998, '2025-08-04');
+    ```
+  - Run review queries:
+    ```sql
+    -- Day 8: Aggregates
+    SELECT d.DepartmentName, COUNT(e.EmployeeID) AS EmployeeCount
+    FROM HR.Employees AS e
+    INNER JOIN HR.Departments AS d ON e.DepartmentID = d.DepartmentID
+    GROUP BY d.DepartmentName;
+    -- Day 9: String/Date
+    SELECT UPPER(e.FirstName) AS FirstName, FORMAT(e.HireDate, 'MM/dd/yyyy') AS HireDate
+    FROM HR.Employees AS e;
+    -- Day 10: Numeric/Conversion
+    SELECT o.OrderID, ROUND(o.TotalAmount, 0) AS WholeAmount
+    FROM Sales.Orders AS o;
+    -- Day 11: Conditional Logic
+    SELECT e.FirstName, IIF(e.Salary > 70000, 'High', 'Low') AS SalaryCategory
+    FROM HR.Employees AS e;
+    -- Day 12: INNER JOIN
+    SELECT c.CustomerName, o.OrderID
+    FROM Sales.Customers AS c
+    INNER JOIN Sales.Orders AS o ON c.CustomerID = o.CustomerID;
+    -- Day 13: OUTER JOIN
+    SELECT c.CustomerName, COALESCE(o.OrderID, 0) AS OrderID
+    FROM Sales.Customers AS c
+    LEFT JOIN Sales.Orders AS o ON c.CustomerID = o.CustomerID;
+    ```
+  - Verify: Check Results pane for correct outputs.
+- **Activity 3: Debug Common Errors**:
+  - Try: `SELECT DepartmentName, COUNT(*) FROM HR.Employees INNER JOIN HR.Departments ON DepartmentID = DepartmentID GROUP BY DepartmentName;` (fails; ambiguous `DepartmentID`).
+  - Fix: Use `e.DepartmentID = d.DepartmentID`.
+  - Try: `SELECT e.FirstName, d.DepartmentName FROM HR.Employees AS e LEFT JOIN HR.Departments AS d ON e.DepartmentID = d.DepartmentID WHERE d.DepartmentName = 'IT';` (excludes NULLs).
+  - Fix: Move condition to `ON` clause or use `OR d.DepartmentName IS NULL`.
+- **Activity 4: Journal Notes**:
+  - Summarize key concepts from Days 8-13.
+  - Note one challenge per day and how you overcame it.
+  - Example: “Day 13: Confused `LEFT` vs. `RIGHT JOIN`; clarified by testing both and checking NULLs.”
+
+**Resources**:
+- Microsoft Docs: Review sections on aggregates, functions, and joins.
+- W3Schools: SQL aggregate, function, and join tutorials.
+- SQLZoo: Interactive exercises for Days 8-13 topics.
+
+---
+
+#### 2. Extend Employee Database with Joins and Functions (1.5-2 hours)
+**Goal**: Expand `EmployeeDB` with new tables and data, incorporating joins and functions to support complex queries.
+
+**Practice (1.5-2 hours)**:
+- **Step 1: Extend Database**:
+  - Add tables for employee performance and sales products:
+    ```sql
+    CREATE TABLE HR.EmployeePerformance (
+        PerformanceID INT PRIMARY KEY,
+        EmployeeID INT,
+        ReviewDate DATE,
+        PerformanceScore INT,
+        Comments VARCHAR(200),
+        CONSTRAINT FK_Performance_Employee FOREIGN KEY (EmployeeID) REFERENCES HR.Employees(EmployeeID)
+    );
+    INSERT INTO HR.EmployeePerformance (PerformanceID, EmployeeID, ReviewDate, PerformanceScore, Comments)
+    VALUES 
+        (1, 1, '2025-01-15', 85, 'Excellent work'),
+        (2, 2, '2025-02-20', 70, 'Needs improvement'),
+        (3, 3, '2025-03-10', 90, 'Outstanding'),
+        (4, 4, '2025-04-05', 65, 'Below expectations'),
+        (5, 5, '2025-05-01', 80, 'Good performance');
+    CREATE TABLE Sales.Products (
+        ProductID INT PRIMARY KEY,
+        ProductName VARCHAR(50) NOT NULL,
+        UnitPrice DECIMAL(10,2)
+    );
+    INSERT INTO Sales.Products (ProductID, ProductName, UnitPrice)
+    VALUES 
+        (1, 'Laptop', 99.995),
+        (2, 'Mouse', 49.99),
+        (3, 'Keyboard', 16.663),
+        (4, 'Printer', 19.998),
+        (5, 'Monitor', 199.99);
+    ```
+  - Update `Sales.SalesTransactions` to include `ProductID` foreign key:
+    ```sql
+    DROP TABLE Sales.SalesTransactions;
+    CREATE TABLE Sales.SalesTransactions (
+        TransactionID INT PRIMARY KEY,
+        OrderID INT,
+        ProductID INT,
+        Quantity INT NOT NULL,
+        UnitPrice DECIMAL(10,2),
+        TransactionDate DATE DEFAULT GETDATE(),
+        CONSTRAINT FK_Transaction_Order FOREIGN KEY (OrderID) REFERENCES Sales.Orders(OrderID),
+        CONSTRAINT FK_Transaction_Product FOREIGN KEY (ProductID) REFERENCES Sales.Products(ProductID)
+    );
+    INSERT INTO Sales.SalesTransactions (TransactionID, OrderID, ProductID, Quantity, UnitPrice, TransactionDate)
+    VALUES 
+        (1, 1, 1, 2, 99.995, '2025-08-01'),
+        (2, 1, 2, 1, 49.99, '2025-08-01'),
+        (3, 2, 3, 3, 16.663, '2025-08-02'),
+        (4, 3, 5, 1, 199.99, '2025-08-03'),
+        (5, 4, 4, 5, 19.998, '2025-08-04');
+    ```
+- **Step 2: Write Queries with Joins and Functions**:
+  - Create 5 queries combining joins with functions:
+    1. Employee performance: 
+       ```sql
+       SELECT CONCAT(e.FirstName, ' ', e.LastName) AS FullName, p.PerformanceScore, 
+              IIF(p.PerformanceScore >= 80, 'High', 'Low') AS Rating
+       FROM HR.Employees AS e
+       INNER JOIN HR.EmployeePerformance AS p ON e.EmployeeID = p.EmployeeID;
+       ```
+    2. Department salaries: 
+       ```sql
+       SELECT d.DepartmentName, ROUND(AVG(e.Salary), 2) AS AvgSalary
+       FROM HR.Employees AS e
+       LEFT JOIN HR.Departments AS d ON e.DepartmentID = d.DepartmentID
+       GROUP BY d.DepartmentName;
+       ```
+    3. Order details: 
+       ```sql
+       SELECT o.OrderID, p.ProductName, CONVERT(VARCHAR, t.TransactionDate, 101) AS TransDate
+       FROM Sales.Orders AS o
+       INNER JOIN Sales.SalesTransactions AS t ON o.OrderID = t.OrderID
+       INNER JOIN Sales.Products AS p ON t.ProductID = p.ProductID;
+       ```
+    4. Customer orders: 
+       ```sql
+       SELECT c.CustomerName, COALESCE(SUM(o.TotalAmount), 0) AS TotalSpent
+       FROM Sales.Customers AS c
+       LEFT JOIN Sales.Orders AS o ON c.CustomerID = o.CustomerID
+       GROUP BY c.CustomerName;
+       ```
+    5. Recent reviews: 
+       ```sql
+       SELECT e.FirstName, p.ReviewDate, DATEDIFF(day, p.ReviewDate, GETDATE()) AS DaysSinceReview
+       FROM HR.Employees AS e
+       LEFT JOIN HR.EmployeePerformance AS p ON e.EmployeeID = p.EmployeeID;
+       ```
+- **Step 3: Verify and Debug**:
+  - Verify: Check Results pane for correct joined and formatted outputs.
+  - Debug errors: Fix ambiguous columns, incorrect joins, or NULL handling issues.
+  - Test NULLs: Ensure `COALESCE` or `ISNULL` handles unmatched rows correctly.
+
+---
+
+#### 3. Query Aggregated Reports (1.5-2 hours)
+**Goal**: Create 10-15 aggregated reports combining joins, functions, and conditional logic to solve real-world business problems.
+
+**Practice (1.5-2 hours)**:
+- **Step 1: Define Report Scenarios**:
+  - Scenarios: Department salary summaries, employee performance ratings, customer order totals, product sales analysis, recent transactions.
+- **Step 2: Write 10-15 Aggregated Report Queries**:
+  - Examples (run each in SSMS and verify):
+    1. Department employee count: 
+       ```sql
+       SELECT d.DepartmentName, COUNT(e.EmployeeID) AS EmployeeCount
+       FROM HR.Departments AS d
+       LEFT JOIN HR.Employees AS e ON d.DepartmentID = e.DepartmentID
+       GROUP BY d.DepartmentName;
+       ```
+    2. Average salary by department: 
+       ```sql
+       SELECT d.DepartmentName, ROUND(AVG(e.Salary), 2) AS AvgSalary
+       FROM HR.Employees AS e
+       INNER JOIN HR.Departments AS d ON e.DepartmentID = d.DepartmentID
+       GROUP BY d.DepartmentName
+       HAVING AVG(e.Salary) > 70000;
+       ```
+    3. Employee performance ratings: 
+       ```sql
+       SELECT CONCAT(e.FirstName, ' ', e.LastName) AS FullName, 
+              p.PerformanceScore, 
+              CASE WHEN p.PerformanceScore >= 90 THEN 'Outstanding' 
+                   WHEN p.PerformanceScore >= 80 THEN 'Good' 
+                   ELSE 'Needs Improvement' END AS Rating
+       FROM HR.Employees AS e
+       INNER JOIN HR.EmployeePerformance AS p ON e.EmployeeID = p.EmployeeID;
+       ```
+    4. Customer order summary: 
+       ```sql
+       SELECT c.CustomerName, COUNT(o.OrderID) AS OrderCount, SUM(o.TotalAmount) AS TotalSpent
+       FROM Sales.Customers AS c
+       LEFT JOIN Sales.Orders AS o ON c.CustomerID = o.CustomerID
+       GROUP BY c.CustomerName;
+       ```
+    5. Product sales totals: 
+       ```sql
+       SELECT p.ProductName, SUM(t.Quantity * t.UnitPrice) AS TotalSales
+       FROM Sales.Products AS p
+       LEFT JOIN Sales.SalesTransactions AS t ON p.ProductID = t.ProductID
+       GROUP BY p.ProductName;
+       ```
+    6. Recent orders: 
+       ```sql
+       SELECT c.CustomerName, o.OrderID, FORMAT(o.OrderDate, 'MM/dd/yyyy') AS OrderDate
+       FROM Sales.Customers AS c
+       INNER JOIN Sales.Orders AS o ON c.CustomerID = o.CustomerID
+       WHERE o.OrderDate >= DATEADD(month, -1, GETDATE());
+       ```
+    7. High-value orders: 
+       ```sql
+       SELECT o.OrderID, c.CustomerName, ROUND(o.TotalAmount, 0) AS WholeAmount
+       FROM Sales.Orders AS o
+       INNER JOIN Sales.Customers AS c ON o.CustomerID = c.CustomerID
+       WHERE o.TotalAmount > 150;
+       ```
+    8. Performance by department: 
+       ```sql
+       SELECT d.DepartmentName, AVG(p.PerformanceScore) AS AvgScore
+       FROM HR.Employees AS e
+       INNER JOIN HR.EmployeePerformance AS p ON e.EmployeeID = p.EmployeeID
+       INNER JOIN HR.Departments AS d ON e.DepartmentID = d.DepartmentID
+       GROUP BY d.DepartmentName;
+       ```
+    9. Unassigned employees: 
+       ```sql
+       SELECT e.FirstName, COALESCE(d.DepartmentName, 'Unassigned') AS DepartmentName
+       FROM HR.Employees AS e
+       LEFT JOIN HR.Departments AS d ON e.DepartmentID = d.DepartmentID
+       WHERE d.DepartmentName IS NULL;
+       ```
+    10. Transaction counts: 
+        ```sql
+        SELECT o.OrderID, COUNT(t.TransactionID) AS ItemCount
+        FROM Sales.Orders AS o
+        LEFT JOIN Sales.SalesTransactions AS t ON o.OrderID = t.OrderID
+        GROUP BY o.OrderID;
+        ```
+    11. Employee tenure: 
+        ```sql
+        SELECT d.DepartmentName, 
+               AVG(DATEDIFF(year, e.HireDate, GETDATE())) AS AvgTenure
+        FROM HR.Emplo
