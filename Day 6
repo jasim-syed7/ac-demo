@@ -1,0 +1,429 @@
+### Detailed Explanation of Day 6: Sorting and Limiting Results
+
+**Objective**: Enhance your ability to query and present data in Microsoft SQL Server (MSSQL) by mastering techniques to sort and limit results. By the end of Day 6, you’ll be proficient in using the `ORDER BY` clause to sort data, the `TOP` clause to limit the number of rows returned, and aliases with the `AS` keyword to improve query readability. You’ll also learn to combine these techniques with `SELECT` and `WHERE` statements to create precise and well-organized query results. This day builds on your Day 4 and Day 5 skills in querying, updating, and deleting data, enabling you to refine how data is displayed and retrieved.
+
+**Duration**: 4-6 hours (split into theory, hands-on practice, and review). Adjust based on your comfort with SQL Server Management Studio (SSMS) and SQL syntax.
+
+---
+
+### Sub-Syllabus Breakdown
+1. **ORDER BY (ASC/DESC)** (1-1.5 hours)
+   - Learn the `ORDER BY` clause to sort query results in ascending (`ASC`) or descending (`DESC`) order.
+   - Understand sorting by single or multiple columns.
+2. **TOP Clause for Limiting Rows** (1 hour)
+   - Use the `TOP` clause to retrieve a specified number or percentage of rows.
+   - Explore advanced features like `WITH TIES`.
+3. **Aliases with AS** (1 hour)
+   - Apply aliases to columns and tables using the `AS` keyword for clarity and readability.
+   - Use aliases in expressions and computed columns.
+4. **Combine with SELECT and WHERE** (1-1.5 hours)
+   - Integrate `ORDER BY`, `TOP`, and aliases with `SELECT` and `WHERE` to create powerful queries.
+   - Practice writing 10-20 queries on a sample dataset to solidify skills.
+
+---
+
+### Step-by-Step Detailed Plan for Day 6
+
+#### 1. ORDER BY (ASC/DESC) (1-1.5 hours)
+**Goal**: Master the `ORDER BY` clause to sort query results, enabling organized and meaningful data presentation.
+
+**Theory (45-60 minutes)**:
+- **What is ORDER BY?**
+  - The `ORDER BY` clause sorts the result set of a `SELECT` query based on one or more columns.
+  - Essential for presenting data in a user-friendly way (e.g., sorting orders by date, products by price).
+  - Default sort order is ascending (`ASC`); descending (`DESC`) is explicitly specified.
+- **ORDER BY Syntax**:
+  - Basic syntax:
+    ```sql
+    SELECT Column1, Column2
+    FROM [SchemaName].[TableName]
+    ORDER BY Column1 [ASC|DESC], Column2 [ASC|DESC];
+    ```
+    - Example:
+      ```sql
+      SELECT ItemName, UnitPrice
+      FROM Inventory.Items
+      ORDER BY UnitPrice DESC;
+      ```
+  - **Sorting by Multiple Columns**:
+    - Sort by multiple columns in priority order (left to right).
+    - Example:
+      ```sql
+      SELECT CustomerID, OrderDate
+      FROM Sales.Orders
+      ORDER BY CustomerID ASC, OrderDate DESC;
+      ```
+      - Sorts by `CustomerID` first (ascending), then `OrderDate` (descending) within each `CustomerID`.
+  - **Sorting with Expressions**:
+    - Sort by computed values or aliases.
+    - Example:
+      ```sql
+      SELECT ItemName, StockQuantity * UnitPrice AS TotalValue
+      FROM Inventory.Items
+      ORDER BY TotalValue DESC;
+      ```
+  - **Key Points**:
+    - `ORDER BY` is applied last in a query’s logical processing order (after `FROM`, `WHERE`, etc.).
+    - Columns in `ORDER BY` don’t need to be in the `SELECT` list.
+    - Sorting is case-sensitive for strings if the database collation is case-sensitive (e.g., `Latin1_General_CS_AS`).
+    - NULL values are sorted first (ASC) or last (DESC) by default.
+  - **Best Practices**:
+    - Specify `ASC` or `DESC` explicitly for clarity.
+    - Use meaningful sort columns to align with business needs (e.g., newest orders first).
+    - Avoid sorting on large datasets without indexes (performance impact; covered later).
+    - Test sorting on small datasets to verify order.
+  - **Common Pitfalls**:
+    - Invalid column names in `ORDER BY` cause errors.
+    - Sorting by ambiguous columns (e.g., same column name in multiple tables) requires schema qualification.
+    - Overusing `ORDER BY` on large tables can slow queries.
+  - **SSMS Tools**:
+    - View sorted results: Results pane displays ordered output.
+    - Debug errors: Messages pane shows error details (e.g., “Invalid column name”).
+    - Script queries: Right-click table > Script Table as > SELECT To.
+
+**Practice (30-45 minutes)**:
+- **Activity 1: Write ORDER BY Statements**:
+  - In your journal, write `SELECT` queries with `ORDER BY` for:
+    - Sorting `Inventory.Items` by `UnitPrice` (descending).
+    - Sorting `Sales.Orders` by `OrderDate` (ascending) and `TotalAmount` (descending).
+    - Sorting `Sales.Customers` by `JoinDate` (descending).
+  - Example:
+    ```sql
+    SELECT ItemName, UnitPrice
+    FROM Inventory.Items
+    ORDER BY UnitPrice DESC;
+    ```
+- **Activity 2: Sort Data in SSMS**:
+  - Use the `RetailDB` database from Day 4 (`USE RetailDB;`).
+  - Ensure `Sales.Orders` exists (from Day 4). If not, recreate:
+    ```sql
+    CREATE TABLE Sales.Orders (
+        OrderID INT PRIMARY KEY,
+        CustomerID INT NOT NULL,
+        OrderDate DATE NOT NULL,
+        TotalAmount DECIMAL(10,2),
+        Status VARCHAR(20)
+    );
+    INSERT INTO Sales.Orders (OrderID, CustomerID, OrderDate, TotalAmount, Status)
+    VALUES 
+        (1, 1, '2025-08-01', 199.99, 'Completed'),
+        (2, 2, '2025-08-02', 49.99, 'Pending'),
+        (3, 1, '2025-08-03', 299.99, 'Completed'),
+        (4, 3, '2025-08-04', 99.99, 'Cancelled'),
+        (5, 2, '2025-08-05', 149.99, 'Completed');
+    ```
+  - Run sorting queries:
+    ```sql
+    -- Sort by TotalAmount (descending)
+    SELECT OrderID, TotalAmount
+    FROM Sales.Orders
+    ORDER BY TotalAmount DESC;
+    -- Sort by CustomerID and OrderDate
+    SELECT CustomerID, OrderDate, TotalAmount
+    FROM Sales.Orders
+    ORDER BY CustomerID ASC, OrderDate DESC;
+    -- Sort by expression
+    SELECT OrderID, TotalAmount * 1.1 AS TaxedAmount
+    FROM Sales.Orders
+    ORDER BY TaxedAmount DESC;
+    ```
+  - Verify: Check Results pane for correct order.
+- **Activity 3: Test Sorting**:
+  - Sort with NULLs:
+    ```sql
+    INSERT INTO Sales.Orders (OrderID, CustomerID, OrderDate, Status)
+    VALUES (6, 4, '2025-08-06', 'Pending');
+    SELECT * FROM Sales.Orders ORDER BY TotalAmount ASC;
+    ```
+    - Observe where NULLs appear (first in ASC).
+  - Try invalid column: `ORDER BY NonExistentColumn;` (note error and fix).
+- **Activity 4: Experiment**:
+  - Sort by a string column:
+    ```sql
+    SELECT Status, OrderID
+    FROM Sales.Orders
+    ORDER BY Status ASC;
+    ```
+  - Check collation impact: Run `SELECT SERVERPROPERTY('Collation');` to see database collation.
+
+**Resources**:
+- Microsoft Docs: “ORDER BY (Transact-SQL)” (search “SQL Server ORDER BY”).
+- W3Schools: SQL ORDER BY tutorial.
+- SQLZoo: Interactive ORDER BY exercises.
+
+---
+
+#### 2. TOP Clause for Limiting Rows (1 hour)
+**Goal**: Use the `TOP` clause to retrieve a limited number of rows, enabling focused query results.
+
+**Theory (30 minutes)**:
+- **What is TOP?**
+  - The `TOP` clause limits the number of rows returned by a `SELECT` query.
+  - Useful for retrieving top records (e.g., top 5 orders by amount) or sampling data.
+- **TOP Syntax**:
+  - Basic syntax:
+    ```sql
+    SELECT TOP (N) [Column1, Column2, ...]
+    FROM [SchemaName].[TableName]
+    [ORDER BY Column];
+    ```
+    - Example:
+      ```sql
+      SELECT TOP (3) ItemName, UnitPrice
+      FROM Inventory.Items
+      ORDER BY UnitPrice DESC;
+      ```
+  - **Variations**:
+    - **Fixed Number**: `TOP (N)` (e.g., `TOP (5)` for 5 rows).
+    - **Percentage**: `TOP (N) PERCENT` (e.g., `TOP (10) PERCENT` for 10% of rows).
+    - **WITH TIES**: Includes all rows tied for the last value in the `ORDER BY`.
+      - Example:
+        ```sql
+        SELECT TOP (2) WITH TIES ItemName, UnitPrice
+        FROM Inventory.Items
+        ORDER BY UnitPrice DESC;
+        ```
+        - If the 2nd and 3rd rows have the same `UnitPrice`, both are included.
+- **Key Points**:
+  - `TOP` requires `ORDER BY` to make results meaningful (otherwise, row order is arbitrary).
+  - `TOP` can be used with `UPDATE` and `DELETE` (e.g., `DELETE TOP (10) FROM Table`).
+  - `WITH TIES` requires `ORDER BY`.
+- **Best Practices**:
+  - Always use `ORDER BY` with `TOP` for predictable results.
+  - Use `TOP` for performance when querying large tables.
+  - Test `WITH TIES` to understand tie-breaking behavior.
+- **Common Pitfalls**:
+  - Omitting `ORDER BY` leads to random results.
+  - Using `TOP` with `PERCENT` on small datasets may return unexpected row counts.
+  - `WITH TIES` can return more rows than specified.
+- **SSMS Tools**:
+  - Verify row count: Messages pane shows “X rows affected.”
+  - Compare results: Run `SELECT` with and without `TOP` to see differences.
+
+**Practice (30 minutes)**:
+- **Activity 1: Write TOP Statements**:
+  - In your journal, write `SELECT` queries with `TOP` for:
+    - Top 3 orders by `TotalAmount`.
+    - Top 10% of items by `StockQuantity`.
+    - Top 2 orders with ties by `CustomerID`.
+- **Activity 2: Use TOP in SSMS**:
+  - Use `Sales.Orders`:
+    ```sql
+    -- Top 3 orders by amount
+    SELECT TOP (3) OrderID, TotalAmount
+    FROM Sales.Orders
+    ORDER BY TotalAmount DESC;
+    -- Top 10% of orders
+    SELECT TOP (10) PERCENT OrderID, OrderDate
+    FROM Sales.Orders
+    ORDER BY OrderDate ASC;
+    -- Top 2 with ties
+    SELECT TOP (2) WITH TIES CustomerID, OrderID
+    FROM Sales.Orders
+    ORDER BY CustomerID ASC;
+    ```
+  - Verify: Check row counts and order in Results pane.
+- **Activity 3: Test TOP with DELETE**:
+  - Run:
+    ```sql
+    SELECT * INTO Sales.OrdersBackup FROM Sales.Orders;
+    DELETE TOP (2) FROM Sales.OrdersBackup
+    WHERE Status = 'Pending';
+    SELECT * FROM Sales.OrdersBackup;
+    ```
+  - Verify: Check rows deleted in Messages pane.
+- **Activity 4: Experiment**:
+  - Test `TOP` without `ORDER BY` (observe random results).
+  - Test `WITH TIES` with duplicate values in `TotalAmount`.
+
+---
+
+#### 3. Aliases with AS (1 hour)
+**Goal**: Use the `AS` keyword to create aliases for columns and tables, improving query readability and usability.
+
+**Theory (30 minutes)**:
+- **What are Aliases?**
+  - Aliases are temporary names assigned to columns or tables in a query using the `AS` keyword.
+  - Improve readability, shorten long names, and clarify computed columns.
+- **Alias Syntax**:
+  - **Column Alias**:
+    ```sql
+    SELECT ColumnName AS AliasName
+    FROM TableName;
+    ```
+    - Example:
+      ```sql
+      SELECT ItemName AS Product, UnitPrice AS Cost
+      FROM Inventory.Items;
+      ```
+  - **Table Alias**:
+    ```sql
+    SELECT t.ColumnName
+    FROM TableName AS t;
+    ```
+    - Example:
+      ```sql
+      SELECT i.ItemName, i.UnitPrice
+      FROM Inventory.Items AS i;
+      ```
+  - **Implicit Aliases**:
+    - `AS` is optional for column aliases (e.g., `SELECT ItemName Product`).
+    - Not recommended for clarity.
+- **Use Cases**:
+  - Rename columns for reports (e.g., `UnitPrice AS Price`).
+  - Simplify complex queries with long table names.
+  - Clarify computed columns (e.g., `StockQuantity * UnitPrice AS TotalValue`).
+- **Key Points**:
+  - Aliases exist only for the query’s duration.
+  - Cannot use column aliases in `WHERE` or `ORDER BY` directly (use column name or expression).
+  - Table aliases are essential in joins (covered later).
+- **Best Practices**:
+  - Use descriptive aliases (e.g., `TotalValue` vs. `TV`).
+  - Keep aliases short but meaningful.
+  - Always use `AS` for clarity.
+- **Common Pitfalls**:
+  - Using reserved words as aliases (e.g., `SELECT OrderID AS Order` fails).
+  - Referencing column aliases in `WHERE` (e.g., `WHERE TotalValue > 100` fails; use `StockQuantity * UnitPrice`).
+- **SSMS Tools**:
+  - View aliases: Results pane shows aliased column names.
+  - Format queries: Query > Format SQL for readability.
+
+**Practice (30 minutes)**:
+- **Activity 1: Write Alias Statements**:
+  - In your journal, write queries with aliases for:
+    - Renaming `OrderID` to `OrderNumber` and `TotalAmount` to `OrderValue`.
+    - Using table alias `o` for `Sales.Orders`.
+  - Example:
+    ```sql
+    SELECT OrderID AS OrderNumber, TotalAmount AS OrderValue
+    FROM Sales.Orders AS o;
+    ```
+- **Activity 2: Use Aliases in SSMS**:
+  - Run:
+    ```sql
+    SELECT i.ItemName AS ProductName, i.UnitPrice AS Cost, i.StockQuantity * i.UnitPrice AS TotalValue
+    FROM Inventory.Items AS i;
+    SELECT o.OrderID AS OrderNumber, o.OrderDate AS DatePlaced
+    FROM Sales.Orders AS o;
+    ```
+  - Verify: Check column headers in Results pane.
+- **Activity 3: Test Errors**:
+  - Try: `SELECT OrderID AS Order FROM Sales.Orders;` (fails due to reserved word).
+  - Fix: Use `SELECT OrderID AS OrderNum FROM Sales.Orders;`.
+
+---
+
+#### 4. Combine with SELECT and WHERE (1-1.5 hours)
+**Goal**: Integrate `ORDER BY`, `TOP`, and aliases with `SELECT` and `WHERE` to create powerful, well-organized queries.
+
+**Practice (1-1.5 hours)**:
+- **Step 1: Set Up Sample Data**:
+  - Use `RetailDB` and ensure `Sales.Orders` and `Inventory.Items` exist (from Day 4/5). If not, recreate:
+    ```sql
+    USE RetailDB;
+    CREATE TABLE Inventory.Items (
+        ItemID INT PRIMARY KEY,
+        ItemName VARCHAR(100) NOT NULL,
+        StockQuantity INT,
+        UnitPrice DECIMAL(8,2)
+    );
+    INSERT INTO Inventory.Items (ItemID, ItemName, StockQuantity, UnitPrice)
+    VALUES 
+        (1, 'Smartphone', 20, 599.99),
+        (2, 'Headphones', 50, 79.99),
+        (3, 'Tablet', 15, 299.99),
+        (4, 'Charger', 100, 19.99),
+        (5, 'Keyboard', 30, 49.99);
+    ```
+- **Step 2: Write 10-20 Queries**:
+  - Examples (run each in SSMS and verify results):
+    1. Basic sorting: `SELECT ItemName AS Product, UnitPrice AS Price FROM Inventory.Items ORDER BY Price DESC;`
+    2. Top 3 items: `SELECT TOP (3) ItemName, UnitPrice FROM Inventory.Items ORDER BY UnitPrice DESC;`
+    3. Top with ties: `SELECT TOP (2) WITH TIES ItemName, StockQuantity FROM Inventory.Items ORDER BY StockQuantity ASC;`
+    4. Filter and sort: `SELECT ItemName, UnitPrice AS Cost FROM Inventory.Items WHERE UnitPrice > 50 ORDER BY Cost ASC;`
+    5. Top 10% with filter: `SELECT TOP (10) PERCENT ItemName, StockQuantity FROM Inventory.Items WHERE StockQuantity > 0 ORDER BY StockQuantity DESC;`
+    6. Aliases with expression: `SELECT ItemName, StockQuantity * UnitPrice AS TotalValue FROM Inventory.Items ORDER BY TotalValue DESC;`
+    7. Complex filter: `SELECT OrderID AS OrderNum, TotalAmount AS Amount FROM Sales.Orders WHERE Status = 'Completed' ORDER BY Amount DESC;`
+    8. Multi-column sort: `SELECT CustomerID, OrderDate, TotalAmount FROM Sales.Orders WHERE TotalAmount IS NOT NULL ORDER BY CustomerID ASC, TotalAmount DESC;`
+    9. Pattern match: `SELECT ItemName AS Product FROM Inventory.Items WHERE ItemName LIKE '%phone%' ORDER BY ItemName ASC;`
+    10. Combined: `SELECT TOP (2) i.ItemName AS Product, i.UnitPrice AS Cost FROM Inventory.Items AS i WHERE i.StockQuantity < 50 ORDER BY Cost DESC;`
+    11. NULL filter: `SELECT OrderID, TotalAmount FROM Sales.Orders WHERE TotalAmount IS NULL ORDER BY OrderDate ASC;`
+    12. IN clause: `SELECT ItemName, UnitPrice FROM Inventory.Items WHERE ItemID IN (1, 3, 5) ORDER BY UnitPrice ASC;`
+    13. BETWEEN: `SELECT ItemName, StockQuantity FROM Inventory.Items WHERE StockQuantity BETWEEN 20 AND 60 ORDER BY StockQuantity DESC;`
+    14. Complex expression: `SELECT ItemName, UnitPrice * 0.9 AS DiscountedPrice FROM Inventory.Items WHERE UnitPrice > 100 ORDER BY DiscountedPrice DESC;`
+    15. Table alias: `SELECT o.OrderID AS ID, o.Status AS OrderStatus FROM Sales.Orders AS o WHERE o.OrderDate >= '2025-08-03' ORDER BY o.OrderDate ASC;`
+    16. Top with percentage: `SELECT TOP (20) PERCENT ItemName, UnitPrice FROM Inventory.Items ORDER BY UnitPrice ASC;`
+    17. Sort by alias: `SELECT ItemName, StockQuantity * UnitPrice AS TotalValue FROM Inventory.Items ORDER BY TotalValue DESC;`
+    18. Combined filter/sort: `SELECT TOP (3) OrderID, CustomerID FROM Sales.Orders WHERE Status <> 'Cancelled' ORDER BY CustomerID ASC;`
+    19. NULL handling: `SELECT ItemName, StockQuantity FROM Inventory.Items WHERE StockQuantity IS NOT NULL ORDER BY StockQuantity ASC;`
+    20. Error test: `SELECT ItemName AS Product FROM Inventory.Items WHERE Product > 100 ORDER BY Product;` (fails; fix by using `UnitPrice`).
+- **Step 3: Debug and Validate**:
+  - Check Results pane for correct sorting and row counts.
+  - Verify `TOP` limits (e.g., exactly 3 rows or correct percentage).
+  - Check alias names in column headers.
+  - Debug errors (e.g., invalid column, incorrect `WHERE` logic).
+- **Step 4: Mini-Project**:
+  - Create a table `Sales.Customers`:
+    ```sql
+    CREATE TABLE Sales.Customers (
+        CustomerID INT PRIMARY KEY,
+        FirstName VARCHAR(50) NOT NULL,
+        Email VARCHAR(100) UNIQUE,
+        JoinDate DATE
+    );
+    INSERT INTO Sales.Customers (CustomerID, FirstName, Email, JoinDate)
+    VALUES 
+        (1, 'Alice Smith', 'alice@example.com', '2025-07-01'),
+        (2, 'Bob Johnson', 'bob@example.com', '2025-07-02'),
+        (3, 'Cathy Lee', 'cathy@example.com', '2025-07-03'),
+        (4, 'David Wong', 'david@example.com', '2025-07-04'),
+        (5, 'Emma Brown', 'emma@example.com', '2025-07-05');
+    ```
+  - Write 5 queries combining `SELECT`, `WHERE`, `ORDER BY`, `TOP`, and aliases:
+    1. Top 2 customers by `JoinDate`: `SELECT TOP (2) FirstName AS Name, JoinDate AS SignupDate FROM Sales.Customers ORDER BY JoinDate DESC;`
+    2. Customers with specific emails: `SELECT c.FirstName AS Name, c.Email FROM Sales.Customers AS c WHERE c.Email LIKE '%example.com' ORDER BY c.FirstName ASC;`
+    3. Top 50% by ID: `SELECT TOP (50) PERCENT CustomerID AS ID, FirstName FROM Sales.Customers ORDER BY CustomerID ASC;`
+    4. Recent customers: `SELECT FirstName, JoinDate AS Registration FROM Sales.Customers WHERE JoinDate >= '2025-07-03' ORDER BY JoinDate DESC;`
+    5. Combined: `SELECT TOP (3) WITH TIES c.FirstName AS Name, c.JoinDate AS Date FROM Sales.Customers AS c WHERE c.CustomerID IN (1, 2, 3, 4) ORDER BY c.JoinDate ASC;`
+- **Step 5: Journal Reflection**:
+  - Write answers to:
+    - How does `ORDER BY` improve query results?
+    - When is `TOP` useful in real-world scenarios?
+    - Why use aliases for columns and tables?
+    - Any errors faced and how you resolved them.
+
+**Resources**:
+- Microsoft Docs: “TOP (Transact-SQL)” and “SELECT (Transact-SQL)”.
+- W3Schools: SQL ORDER BY and SELECT tutorials.
+- SQLZoo: Interactive TOP and ORDER BY exercises.
+- YouTube: Search “SQL Server ORDER BY TOP tutorial” for demos.
+
+---
+
+### Day 6 Deliverables
+- **Journal Entries**:
+  - Examples of `ORDER BY` with single and multiple columns.
+  - Examples of `TOP` with fixed number, percentage, and `WITH TIES`.
+  - Examples of column and table aliases.
+  - List of 10-20 queries with expected outputs.
+  - Notes on errors encountered and solutions.
+  - Reflection on the mini-project (e.g., how `TOP` and aliases improved queries).
+- **Practical Output**:
+  - Executed queries with `ORDER BY`, `TOP`, and aliases on `Sales.Orders` and `Inventory.Items`.
+  - Tested sorting, limiting, and aliasing with various conditions.
+  - Completed the `Sales.Customers` mini-project with 5 queries.
+  - Validated query results and debugged errors.
+- **Self-Assessment**:
+  - Can you sort data in ascending and descending order?
+  - Can you limit query results using `TOP` with and without `WITH TIES`?
+  - Can you use aliases to improve query readability?
+  - Can you combine `SELECT`, `WHERE`, `ORDER BY`, `TOP`, and aliases effectively?
+
+---
+
+### Tips for Success
+- **Practice Extensively**: Run 20+ queries to build fluency in sorting and limiting.
+- **Use SSMS Effectively**: Check Results pane for sorted output and Messages pane for row counts.
+- **Debug Actively**: Read error messages and search solutions on Microsoft Docs or Stack Overflow.
+- **Experiment**: Try sorting by different columns, using `TOP` with small percentages, or creating complex aliases.
+- **Organize Scripts**: Save al
