@@ -1,0 +1,481 @@
+### Detailed Explanation of Day 5: Updating and Deleting Data
+
+**Objective**: Master the manipulation of existing data in Microsoft SQL Server (MSSQL) by learning to update and delete records safely and efficiently. By the end of Day 5, you’ll be proficient in using the `UPDATE` statement to modify data, the `DELETE` statement to remove records, and understand the differences between `TRUNCATE` and `DELETE`. You’ll also learn to handle errors and adopt best practices for safe data changes. This day builds on your Day 4 skills in inserting and querying data, enabling you to manage the full lifecycle of data within tables.
+
+**Duration**: 4-6 hours (split into theory, hands-on practice, and review). Adjust based on your comfort with SQL Server Management Studio (SSMS) and SQL syntax.
+
+---
+
+### Sub-Syllabus Breakdown
+1. **UPDATE Statement with SET and WHERE** (1-1.5 hours)
+   - Learn the `UPDATE` statement to modify existing data in tables.
+   - Use `SET` to change column values and `WHERE` to target specific rows.
+2. **DELETE with Conditions** (1-1.5 hours)
+   - Master the `DELETE` statement to remove specific rows based on conditions.
+   - Understand how to filter deletions to avoid unintended data loss.
+3. **TRUNCATE vs. DELETE** (1 hour)
+   - Compare `TRUNCATE` and `DELETE` for removing data.
+   - Explore their use cases, performance differences, and limitations.
+4. **Handle Errors and Practice Safe Data Changes** (1-1.5 hours)
+   - Learn to anticipate and resolve common errors in `UPDATE` and `DELETE` operations.
+   - Implement best practices for safe data manipulation, including backups and transactions.
+
+---
+
+### Step-by-Step Detailed Plan for Day 5
+
+#### 1. UPDATE Statement with SET and WHERE (1-1.5 hours)
+**Goal**: Learn to modify existing data in tables using the `UPDATE` statement, targeting specific rows with `WHERE` and changing values with `SET`.
+
+**Theory (45-60 minutes)**:
+- **What is UPDATE?**
+  - The `UPDATE` statement modifies existing rows in a table by changing column values.
+  - Essential for correcting data, updating statuses, or adjusting values (e.g., increasing prices, updating customer details).
+  - Must be used carefully to avoid unintended changes to large datasets.
+- **UPDATE Syntax**:
+  - Basic syntax:
+    ```sql
+    UPDATE [SchemaName].[TableName]
+    SET Column1 = Value1, Column2 = Value2, ...
+    [WHERE Condition];
+    ```
+    - Example:
+      ```sql
+      UPDATE Sales.Customers
+      SET Email = 'alice.smith@example.com'
+      WHERE CustomerID = 1;
+      ```
+  - **SET Clause**:
+    - Specifies the columns to update and their new values.
+    - Supports expressions, functions, or calculations (e.g., `SET Price = Price * 1.1`).
+    - Example:
+      ```sql
+      UPDATE Inventory.Items
+      SET UnitPrice = UnitPrice + 10, StockQuantity = StockQuantity - 5;
+      ```
+  - **WHERE Clause**:
+    - Filters which rows to update, using conditions like Day 4’s `SELECT` (e.g., `=`, `>`, `LIKE`, `IN`).
+    - Omitting `WHERE` updates all rows, which can be dangerous.
+    - Example:
+      ```sql
+      UPDATE Sales.Orders
+      SET Status = 'Completed'
+      WHERE OrderID = 2;
+      ```
+  - **Advanced Features**:
+    - Update multiple columns: `SET Column1 = Value1, Column2 = Value2`.
+    - Use subqueries: `SET Column = (SELECT Value FROM AnotherTable WHERE Condition)`.
+    - Example:
+      ```sql
+      UPDATE Sales.Orders
+      SET TotalAmount = (SELECT AVG(UnitPrice) FROM Inventory.Items)
+      WHERE OrderID = 6;
+      ```
+- **Key Points**:
+  - Values in `SET` must match column data types (e.g., `'2025-09-03'` for `DATE`, `123` for `INT`).
+  - Constraints (e.g., `PRIMARY KEY`, `UNIQUE`, `NOT NULL`) can prevent updates if violated.
+  - `UPDATE` affects only the specified table and columns.
+- **Best Practices**:
+  - Always use a `WHERE` clause unless intentionally updating all rows.
+  - Test `UPDATE` with a `SELECT` query first to preview affected rows.
+    - Example: `SELECT * FROM Sales.Orders WHERE Status = 'Pending';` before updating.
+  - Use transactions (introduced later) for critical updates to allow rollback.
+  - Include comments in scripts for clarity (e.g., `-- Update customer email`).
+- **Common Pitfalls**:
+  - Missing `WHERE` updates all rows, potentially corrupting data.
+  - Violating constraints (e.g., updating `Email` to a duplicate in a `UNIQUE` column).
+  - Incorrect data types (e.g., setting a `VARCHAR` column to an invalid format).
+- **SSMS Tools**:
+  - Preview changes: Run `SELECT` before `UPDATE` to verify rows.
+  - View affected rows: Check the Messages pane (e.g., “3 rows affected”).
+  - Edit data manually: Right-click table > Edit Top 200 Rows (avoid for learning).
+
+**Practice (30-45 minutes)**:
+- **Activity 1: Write UPDATE Statements**:
+  - In your journal, write `UPDATE` statements for:
+    - Changing `UnitPrice` to 1099.99 for `ItemID = 1` in `Inventory.Items`.
+    - Updating `Status` to ‘Shipped’ for orders after ‘2025-08-05’ in `Sales.Orders`.
+    - Increasing `StockQuantity` by 10 for items with `UnitPrice` < 100.
+  - Example:
+    ```sql
+    UPDATE Inventory.Items
+    SET UnitPrice = 1099.99
+    WHERE ItemID = 1;
+    ```
+- **Activity 2: Update Data in SSMS**:
+  - Use the `RetailDB` database from Day 4 (`USE RetailDB;`).
+  - Ensure `Sales.Orders` exists (from Day 4). If not, recreate:
+    ```sql
+    CREATE TABLE Sales.Orders (
+        OrderID INT PRIMARY KEY,
+        CustomerID INT NOT NULL,
+        OrderDate DATE NOT NULL,
+        TotalAmount DECIMAL(10,2),
+        Status VARCHAR(20)
+    );
+    INSERT INTO Sales.Orders (OrderID, CustomerID, OrderDate, TotalAmount, Status)
+    VALUES 
+        (1, 1, '2025-08-01', 199.99, 'Completed'),
+        (2, 2, '2025-08-02', 49.99, 'Pending'),
+        (3, 1, '2025-08-03', 299.99, 'Completed'),
+        (4, 3, '2025-08-04', 99.99, 'Cancelled');
+    ```
+  - Run updates:
+    ```sql
+    -- Update single order status
+    UPDATE Sales.Orders
+    SET Status = 'Shipped'
+    WHERE OrderID = 2;
+    -- Increase TotalAmount by 10%
+    UPDATE Sales.Orders
+    SET TotalAmount = TotalAmount * 1.1
+    WHERE Status = 'Completed';
+    -- Update multiple columns
+    UPDATE Sales.Orders
+    SET TotalAmount = 149.99, Status = 'Pending'
+    WHERE OrderID = 4;
+    ```
+  - Verify: `SELECT * FROM Sales.Orders;`.
+- **Activity 3: Test Constraints**:
+  - Try updating to violate constraints:
+    ```sql
+    -- Should fail (duplicate OrderID if PRIMARY KEY)
+    UPDATE Sales.Orders
+    SET OrderID = 1
+    WHERE OrderID = 2;
+    ```
+  - Note error and resolve (e.g., use a unique `OrderID`).
+- **Activity 4: Preview Changes**:
+  - Before updating, run:
+    ```sql
+    SELECT * FROM Sales.Orders WHERE Status = 'Pending';
+    ```
+  - Then update: `UPDATE Sales.Orders SET Status = 'Completed' WHERE Status = 'Pending';`.
+  - Verify: Check rows affected in Messages pane.
+
+**Resources**:
+- Microsoft Docs: “UPDATE (Transact-SQL)” (search “SQL Server UPDATE”).
+- W3Schools: SQL UPDATE tutorial.
+- SQLZoo: Interactive UPDATE exercises.
+
+---
+
+#### 2. DELETE with Conditions (1-1.5 hours)
+**Goal**: Learn to remove specific rows from tables using the `DELETE` statement, ensuring precise and safe data deletion.
+
+**Theory (45-60 minutes)**:
+- **What is DELETE?**
+  - The `DELETE` statement removes rows from a table based on a condition.
+  - Critical for cleaning up outdated or incorrect data (e.g., removing cancelled orders).
+  - Unlike `DROP TABLE`, `DELETE` only removes data, not the table structure.
+- **DELETE Syntax**:
+  - Basic syntax:
+    ```sql
+    DELETE FROM [SchemaName].[TableName]
+    [WHERE Condition];
+    ```
+    - Example:
+      ```sql
+      DELETE FROM Sales.Orders
+      WHERE OrderID = 4;
+      ```
+  - **WHERE Clause**:
+    - Filters rows to delete, using conditions like Day 4’s `SELECT` (e.g., `=`, `LIKE`, `IN`).
+    - Omitting `WHERE` deletes all rows, which is risky.
+    - Example:
+      ```sql
+      DELETE FROM Sales.Orders
+      WHERE Status = 'Cancelled';
+      ```
+  - **Advanced Features**:
+    - Use subqueries: `DELETE FROM Table WHERE Column IN (SELECT ...);`.
+    - Example:
+      ```sql
+      DELETE FROM Sales.Orders
+      WHERE CustomerID IN (SELECT CustomerID FROM Sales.Customers WHERE JoinDate < '2025-07-01');
+      ```
+- **Key Points**:
+  - `DELETE` respects constraints (e.g., cannot delete rows referenced by `FOREIGN KEY` unless cascading is enabled).
+  - Deleted rows are logged in the transaction log, allowing recovery with transactions.
+  - Use `TOP` to limit deletions (e.g., `DELETE TOP (10) FROM Table;`).
+- **Best Practices**:
+  - Always use a `WHERE` clause unless deleting all rows intentionally.
+  - Preview rows with `SELECT` before deleting.
+  - Use transactions for critical deletions to allow rollback.
+  - Document deletions in scripts with comments (e.g., `-- Remove old orders`).
+- **Common Pitfalls**:
+  - Missing `WHERE` deletes all rows.
+  - Violating `FOREIGN KEY` constraints (e.g., deleting a customer with orders).
+  - Slow performance on large tables (consider batching or `TRUNCATE`).
+- **SSMS Tools**:
+  - Preview deletions: Run `SELECT` with the same `WHERE` condition.
+  - Check rows affected: Messages pane shows number of rows deleted.
+  - Manual deletion: Right-click table > Edit Top 200 Rows (avoid for learning).
+
+**Practice (30-45 minutes)**:
+- **Activity 1: Write DELETE Statements**:
+  - In your journal, write `DELETE` statements for:
+    - Removing orders with `Status = 'Cancelled'` from `Sales.Orders`.
+    - Deleting items with `StockQuantity = 0` from `Inventory.Items`.
+    - Deleting a specific customer by `CustomerID`.
+  - Example:
+    ```sql
+    DELETE FROM Sales.Orders
+    WHERE Status = 'Cancelled';
+    ```
+- **Activity 2: Delete Data in SSMS**:
+  - Use `RetailDB` and `Sales.Orders`:
+    ```sql
+    -- Delete single order
+    DELETE FROM Sales.Orders
+    WHERE OrderID = 4;
+    -- Delete by status
+    DELETE FROM Sales.Orders
+    WHERE Status = 'Pending';
+    ```
+  - Verify: `SELECT * FROM Sales.Orders;`.
+- **Activity 3: Test Constraints**:
+  - If `Sales.Orders` has a `FOREIGN KEY` to `Sales.Customers`, try:
+    ```sql
+    DELETE FROM Sales.Customers
+    WHERE CustomerID = 1;
+    ```
+  - Note error (if `FOREIGN KEY` exists) and resolve by deleting dependent orders first.
+- **Activity 4: Preview Deletions**:
+  - Before deleting, run:
+    ```sql
+    SELECT * FROM Sales.Orders WHERE TotalAmount < 100;
+    ```
+  - Then delete: `DELETE FROM Sales.Orders WHERE TotalAmount < 100;`.
+  - Verify: Check rows affected.
+
+---
+
+#### 3. TRUNCATE vs. DELETE (1 hour)
+**Goal**: Understand the differences between `TRUNCATE` and `DELETE`, including their use cases and limitations.
+
+**Theory (30 minutes)**:
+- **What is TRUNCATE?**
+  - The `TRUNCATE TABLE` statement removes all rows from a table, resetting it to empty.
+  - Syntax:
+    ```sql
+    TRUNCATE TABLE [SchemaName].[TableName];
+    ```
+    - Example:
+      ```sql
+      TRUNCATE TABLE Sales.Orders;
+      ```
+- **TRUNCATE vs. DELETE**:
+  - **DELETE**:
+    - Removes specific rows (with `WHERE`) or all rows (without `WHERE`).
+    - Logs each deleted row in the transaction log, allowing rollback.
+    - Respects `FOREIGN KEY` constraints (may fail if referenced).
+    - Slower for large tables due to logging.
+    - Preserves table structure, indexes, and constraints.
+    - Resets identity columns only if explicitly requested (covered later).
+  - **TRUNCATE**:
+    - Removes all rows without a `WHERE` clause.
+    - Minimal logging (faster for large tables).
+    - Cannot be used if table is referenced by `FOREIGN KEY` constraints.
+    - Resets identity columns (e.g., `IDENTITY(1,1)` starts back at 1).
+    - Preserves table structure, indexes, and constraints.
+  - **Use Cases**:
+    - **DELETE**: Use for selective removal (e.g., delete old orders) or when transactions/rollbacks are needed.
+    - **TRUNCATE**: Use for clearing entire tables in non-production environments or when resetting data (e.g., test data).
+  - **Limitations**:
+    - `TRUNCATE` cannot be used with `WHERE`.
+    - `TRUNCATE` fails if the table is referenced by a `FOREIGN KEY`.
+    - `TRUNCATE` is not allowed in some replication scenarios.
+- **Best Practices**:
+  - Use `DELETE` for most scenarios to maintain control and safety.
+  - Use `TRUNCATE` only when clearing entire tables and no `FOREIGN KEY` constraints exist.
+  - Always backup data before `TRUNCATE` or large `DELETE` operations.
+- **Common Pitfalls**:
+  - Using `TRUNCATE` on a referenced table causes errors.
+  - Forgetting that `TRUNCATE` resets identity columns.
+  - Assuming `TRUNCATE` can be rolled back in all cases (depends on transaction settings).
+
+**Practice (30 minutes)**:
+- **Activity 1: Compare DELETE and TRUNCATE**:
+  - In your journal, write differences between `DELETE` and `TRUNCATE` (e.g., logging, identity reset, `WHERE` support).
+- **Activity 2: Test DELETE and TRUNCATE**:
+  - Create a test table:
+    ```sql
+    CREATE TABLE Sales.TestOrders (
+        OrderID INT IDENTITY(1,1) PRIMARY KEY,
+        OrderDate DATE
+    );
+    INSERT INTO Sales.TestOrders (OrderDate)
+    VALUES ('2025-09-01'), ('2025-09-02');
+    ```
+  - Run `DELETE`:
+    ```sql
+    DELETE FROM Sales.TestOrders WHERE OrderID = 1;
+    ```
+  - Insert another row: `INSERT INTO Sales.TestOrders (OrderDate) VALUES ('2025-09-03');` (OrderID becomes 3).
+  - Run `TRUNCATE`:
+    ```sql
+    TRUNCATE TABLE Sales.TestOrders;
+    ```
+  - Insert again: `INSERT INTO Sales.TestOrders (OrderDate) VALUES ('2025-09-04');` (OrderID resets to 1).
+  - Verify: `SELECT * FROM Sales.TestOrders;`.
+- **Activity 3: Test Constraints**:
+  - If `Sales.Orders` is referenced by a `FOREIGN KEY`, try `TRUNCATE TABLE Sales.Orders;` (should fail).
+  - Use `DELETE FROM Sales.Orders;` instead and verify.
+
+---
+
+#### 4. Handle Errors and Practice Safe Data Changes (1-1.5 hours)
+**Goal**: Learn to anticipate, debug, and prevent errors in `UPDATE` and `DELETE` operations, ensuring safe data manipulation.
+
+**Theory (30-45 minutes)**:
+- **Common Errors**:
+  - **Constraint Violations**:
+    - `PRIMARY KEY`/`UNIQUE`: Updating to duplicate values or deleting referenced rows.
+    - `NOT NULL`: Updating to `NULL` in a `NOT NULL` column.
+    - `FOREIGN KEY`: Deleting rows referenced by another table.
+    - Example error: “Cannot insert duplicate key in object 'Sales.Customers'.”
+  - **Syntax Errors**:
+    - Missing `SET`, `FROM`, or incorrect column names.
+    - Example: `UPDATE Sales.Orders SET NonExistentColumn = 10;` (invalid column).
+  - **Data Type Mismatches**:
+    - Example: `UPDATE Sales.Orders SET OrderDate = 'InvalidDate';` (invalid `DATE` format).
+  - **No Rows Affected**:
+    - `WHERE` condition matches no rows (e.g., `WHERE OrderID = 999` when no such ID exists).
+  - **Unintended Updates/Deletes**:
+    - Missing `WHERE` clause updates/deletes all rows.
+- **Safe Data Changes**:
+  - **Preview Changes**: Run `SELECT` with the same `WHERE` condition to see affected rows.
+    - Example: `SELECT * FROM Sales.Orders WHERE Status = 'Pending';` before `UPDATE`.
+  - **Use Transactions**:
+    - Wrap `UPDATE`/`DELETE` in a transaction to allow rollback:
+      ```sql
+      BEGIN TRANSACTION;
+      UPDATE Sales.Orders SET TotalAmount = 0 WHERE OrderID = 1;
+      -- Verify
+      SELECT * FROM Sales.Orders WHERE OrderID = 1;
+      -- Undo if needed
+      ROLLBACK;
+      ```
+  - **Backup Data**: Create a backup table before major changes:
+    ```sql
+    SELECT * INTO Sales.OrdersBackup FROM Sales.Orders;
+    ```
+  - **Limit Scope**: Use `TOP` or precise `WHERE` conditions to limit changes.
+    - Example: `DELETE TOP (10) FROM Sales.Orders WHERE Status = 'Cancelled';`.
+  - **Test on Copies**: Test `UPDATE`/`DELETE` on a duplicate table or database.
+- **Debugging Tips**:
+  - Read error messages in SSMS’s Messages pane for clues (e.g., constraint name, line number).
+  - Use `SELECT * FROM sys.key_constraints;` to find constraint names.
+  - Check affected rows: Messages pane shows “X rows affected.”
+  - Query data before/after changes to verify results.
+- **SSMS Tools**:
+  - Error details: Messages pane in query window.
+  - View constraints: Right-click table > Design > Constraints.
+  - Backup table: Right-click table > Script Table as > CREATE To, then modify to create a copy.
+
+**Practice (45-60 minutes)**:
+- **Activity 1: Write Safe UPDATE/DELETE Statements**:
+  - In your journal, write statements with safety measures:
+    - Update with `SELECT` preview.
+    - Delete with transaction.
+    - Example:
+      ```sql
+      -- Preview
+      SELECT * FROM Sales.Orders WHERE TotalAmount < 50;
+      -- Update with transaction
+      BEGIN TRANSACTION;
+      UPDATE Sales.Orders SET TotalAmount = 50 WHERE TotalAmount < 50;
+      SELECT * FROM Sales.Orders WHERE TotalAmount = 50;
+      ROLLBACK;
+      ```
+- **Activity 2: Test Error Scenarios**:
+  - Try violating constraints:
+    ```sql
+    UPDATE Sales.Customers
+    SET Email = 'alice@example.com'
+    WHERE CustomerID = 2; -- Duplicate UNIQUE value
+    DELETE FROM Sales.Customers
+    WHERE CustomerID = 1; -- FOREIGN KEY violation if orders exist
+    ```
+  - Note errors and resolve (e.g., update to unique email, delete orders first).
+- **Activity 3: Safe Data Changes**:
+  - Create a backup:
+    ```sql
+    SELECT * INTO Sales.OrdersBackup FROM Sales.Orders;
+    ```
+  - Update with transaction:
+    ```sql
+    BEGIN TRANSACTION;
+    UPDATE Sales.Orders
+    SET Status = 'Processed'
+    WHERE OrderDate < '2025-08-03';
+    SELECT * FROM Sales.Orders WHERE Status = 'Processed';
+    -- Commit or rollback
+    COMMIT; -- or ROLLBACK;
+    ```
+  - Delete with limit:
+    ```sql
+    DELETE TOP (2) FROM Sales.Orders
+    WHERE Status = 'Cancelled';
+    ```
+  - Verify: `SELECT * FROM Sales.Orders; SELECT * FROM Sales.OrdersBackup;`.
+- **Activity 4: Mini-Project**:
+  - Create a table `Inventory.StockAdjustments`:
+    ```sql
+    CREATE TABLE Inventory.StockAdjustments (
+        AdjustmentID INT PRIMARY KEY,
+        ItemID INT NOT NULL,
+        AdjustmentDate DATE DEFAULT GETDATE(),
+        Quantity INT,
+        Reason VARCHAR(100)
+    );
+    INSERT INTO Inventory.StockAdjustments (AdjustmentID, ItemID, Quantity, Reason)
+    VALUES 
+        (1, 1, 10, 'Restock'),
+        (2, 2, -5, 'Damaged'),
+        (3, 3, 20, 'Restock'),
+        (4, 1, -2, 'Returned');
+    ```
+  - Update `Inventory.Items` based on adjustments:
+    ```sql
+    BEGIN TRANSACTION;
+    UPDATE Inventory.Items
+    SET StockQuantity = StockQuantity + (SELECT SUM(Quantity) FROM Inventory.StockAdjustments WHERE ItemID = Inventory.Items.ItemID)
+    WHERE ItemID IN (SELECT ItemID FROM Inventory.StockAdjustments);
+    SELECT * FROM Inventory.Items;
+    COMMIT;
+    ```
+  - Delete adjustments for damaged items:
+    ```sql
+    SELECT * INTO Inventory.StockAdjustmentsBackup FROM Inventory.StockAdjustments;
+    DELETE FROM Inventory.StockAdjustments
+    WHERE Reason = 'Damaged';
+    SELECT * FROM Inventory.StockAdjustments;
+    ```
+- **Activity 5: Journal Reflection**:
+  - Write answers to:
+    - How does `WHERE` prevent unintended updates/deletes?
+    - What’s the key difference between `TRUNCATE` and `DELETE`?
+    - How did transactions help in the mini-project?
+    - Any errors faced and how you resolved them.
+
+**Resources**:
+- Microsoft Docs: “DELETE (Transact-SQL)” and “TRUNCATE TABLE (Transact-SQL)”.
+- W3Schools: SQL DELETE and UPDATE tutorials.
+- SQLZoo: Interactive DELETE exercises.
+- YouTube: Search “SQL Server UPDATE DELETE tutorial” for demos.
+
+---
+
+### Day 5 Deliverables
+- **Journal Entries**:
+  - Examples of `UPDATE` with `SET` and `WHERE`.
+  - Examples of `DELETE` with conditions.
+  - Comparison of `TRUNCATE` vs. `DELETE` (use cases, limitations).
+  - Notes on errors encountered and solutions.
+  - Reflection on the mini-project (e.g., how transactions ensured safety).
+- **Practical Output**:
+  - Updated and deleted data in `Sales.Orders` and `Inventory.StockAdjustments`.
+  - Tested `TRUNCATE` vs. `DELETE` on a test table.
+  - Implemented safe data changes with backups and tra
