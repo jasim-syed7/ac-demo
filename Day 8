@@ -1,0 +1,464 @@
+### Detailed Explanation of Day 8: Aggregate Functions
+
+**Objective**: Master the use of aggregate functions in Microsoft SQL Server (MSSQL) to summarize and analyze data. By the end of Day 8, you’ll be proficient in using `COUNT`, `SUM`, `AVG`, `MIN`, and `MAX` to compute summary statistics, grouping data with `GROUP BY`, and filtering aggregated results with `HAVING`. You’ll also practice these skills on numeric data to reinforce your understanding. This day builds on your Days 1-7 skills, particularly `SELECT`, `WHERE`, `ORDER BY`, and table creation, enabling you to perform powerful data analysis tasks.
+
+**Duration**: 4-6 hours (split into theory, hands-on practice, and review). Adjust based on your comfort with SQL Server Management Studio (SSMS) and SQL syntax.
+
+---
+
+### Sub-Syllabus Breakdown
+1. **COUNT, SUM, AVG, MIN, MAX** (1-1.5 hours)
+   - Learn the core aggregate functions to summarize data.
+   - Understand their syntax, use cases, and behavior with NULL values.
+2. **GROUP BY Clause** (1-1.5 hours)
+   - Use `GROUP BY` to group rows for aggregation.
+   - Explore grouping by single and multiple columns.
+3. **HAVING for Filtered Aggregates** (1 hour)
+   - Apply `HAVING` to filter grouped results based on aggregate conditions.
+   - Understand the difference between `HAVING` and `WHERE`.
+4. **Practice on Numeric Data** (1-1.5 hours)
+   - Apply aggregate functions, `GROUP BY`, and `HAVING` on a sample dataset.
+   - Write 10-20 queries to analyze numeric data and handle common errors.
+
+---
+
+### Step-by-Step Detailed Plan for Day 8
+
+#### 1. COUNT, SUM, AVG, MIN, MAX (1-1.5 hours)
+**Goal**: Learn to use aggregate functions to compute summary statistics on data, such as counts, totals, averages, and extremes.
+
+**Theory (45-60 minutes)**:
+- **What are Aggregate Functions?**
+  - Aggregate functions perform calculations on a set of rows and return a single value.
+  - Commonly used for summarizing data (e.g., total sales, average salary, number of orders).
+  - Applied in the `SELECT` clause and often used with `GROUP BY`.
+- **Core Aggregate Functions**:
+  - **COUNT**:
+    - Counts the number of rows (or non-NULL values in a column).
+    - Syntax: `COUNT(*)` (all rows) or `COUNT(ColumnName)` (non-NULL values).
+    - Example:
+      ```sql
+      SELECT COUNT(*) AS TotalOrders
+      FROM Sales.Orders;
+      ```
+      - Counts all rows in `Sales.Orders`.
+    - Example:
+      ```sql
+      SELECT COUNT(TotalAmount) AS NonNullAmounts
+      FROM Sales.Orders;
+      ```
+      - Counts rows where `TotalAmount` is not NULL.
+  - **SUM**:
+    - Calculates the total of a numeric column.
+    - Syntax: `SUM(ColumnName)`.
+    - Example:
+      ```sql
+      SELECT SUM(TotalAmount) AS TotalSales
+      FROM Sales.Orders;
+      ```
+      - Sums all non-NULL `TotalAmount` values.
+  - **AVG**:
+    - Computes the average of a numeric column.
+    - Syntax: `AVG(ColumnName)`.
+    - Example:
+      ```sql
+      SELECT AVG(Salary) AS AverageSalary
+      FROM HR.Employees;
+      ```
+      - Averages non-NULL `Salary` values.
+  - **MIN**:
+    - Finds the smallest value in a column (numeric, string, or date).
+    - Syntax: `MIN(ColumnName)`.
+    - Example:
+      ```sql
+      SELECT MIN(HireDate) AS EarliestHire
+      FROM HR.Employees;
+      ```
+  - **MAX**:
+    - Finds the largest value in a column.
+    - Syntax: `MAX(ColumnName)`.
+    - Example:
+      ```sql
+      SELECT MAX(UnitPrice) AS HighestPrice
+      FROM Inventory.Items;
+      ```
+- **Key Points**:
+  - Aggregate functions ignore NULL values (except `COUNT(*)` which counts all rows).
+  - Can be used with numeric (`INT`, `DECIMAL`), date (`DATE`, `DATETIME`), or string (`VARCHAR`) columns.
+  - Combine with aliases (`AS`) for readable output (e.g., `TotalSales`).
+  - Use with `WHERE` to filter rows before aggregation.
+    - Example:
+      ```sql
+      SELECT SUM(TotalAmount) AS CompletedSales
+      FROM Sales.Orders
+      WHERE Status = 'Completed';
+      ```
+- **Best Practices**:
+  - Use descriptive aliases for aggregate results (e.g., `TotalSales` vs. `Sum`).
+  - Verify data with `SELECT` before aggregating to understand the dataset.
+  - Use `ROUND` for `AVG` or `SUM` results if precision is needed (e.g., `ROUND(AVG(Salary), 2)`).
+  - Test aggregates on small datasets to confirm behavior.
+- **Common Pitfalls**:
+  - Using `COUNT(ColumnName)` instead of `COUNT(*)` may exclude NULLs unexpectedly.
+  - Applying aggregates to non-numeric columns (e.g., `SUM(Name)` fails).
+  - Forgetting `WHERE` can include unwanted rows in calculations.
+- **SSMS Tools**:
+  - View results: Results pane shows single-value outputs for aggregates.
+  - Debug errors: Messages pane shows errors (e.g., “Invalid column name”).
+  - Explore data: Right-click table > Select Top 1000 Rows to understand values.
+
+**Practice (30-45 minutes)**:
+- **Activity 1: Write Aggregate Queries**:
+  - In your journal, write queries using each aggregate function:
+    - Count total orders in `Sales.Orders`.
+    - Sum salaries in `HR.Employees`.
+    - Average unit price in `Inventory.Items`.
+    - Find earliest `HireDate` and highest `Salary` in `HR.Employees`.
+  - Example:
+    ```sql
+    SELECT COUNT(*) AS OrderCount FROM Sales.Orders;
+    SELECT SUM(Salary) AS TotalPayroll FROM HR.Employees;
+    ```
+- **Activity 2: Run Aggregates in SSMS**:
+  - Use the `EmployeeDB` from Day 7 (`USE EmployeeDB;`). If not available, recreate:
+    ```sql
+    CREATE DATABASE EmployeeDB;
+    USE EmployeeDB;
+    CREATE SCHEMA HR;
+    CREATE TABLE HR.Employees (
+        EmployeeID INT PRIMARY KEY,
+        FirstName VARCHAR(50) NOT NULL,
+        LastName VARCHAR(50) NOT NULL,
+        Email VARCHAR(100) UNIQUE,
+        DepartmentID INT,
+        Salary DECIMAL(10,2),
+        HireDate DATE DEFAULT GETDATE()
+    );
+    INSERT INTO HR.Employees (EmployeeID, FirstName, LastName, Email, DepartmentID, Salary, HireDate)
+    VALUES 
+        (1, 'Alice', 'Smith', 'alice.smith@company.com', 1, 75000.00, '2023-01-15'),
+        (2, 'Bob', 'Johnson', 'bob.johnson@company.com', 2, 65000.00, '2023-02-20'),
+        (3, 'Cathy', 'Lee', 'cathy.lee@company.com', 1, 80000.00, '2023-03-10'),
+        (4, 'David', 'Wong', 'david.wong@company.com', 3, 70000.00, '2023-04-05'),
+        (5, 'Emma', 'Brown', 'emma.brown@company.com', NULL, 60000.00, '2023-05-01');
+    ```
+  - Run:
+    ```sql
+    -- Count employees
+    SELECT COUNT(*) AS TotalEmployees FROM HR.Employees;
+    -- Sum salaries
+    SELECT SUM(Salary) AS TotalPayroll FROM HR.Employees;
+    -- Average salary
+    SELECT ROUND(AVG(Salary), 2) AS AvgSalary FROM HR.Employees;
+    -- Earliest hire date
+    SELECT MIN(HireDate) AS FirstHire FROM HR.Employees;
+    -- Highest salary
+    SELECT MAX(Salary) AS MaxSalary FROM HR.Employees;
+    ```
+  - Verify: Check single-value results in the Results pane.
+- **Activity 3: Test with WHERE**:
+  - Run:
+    ```sql
+    SELECT COUNT(*) AS ITEmployees
+    FROM HR.Employees
+    WHERE DepartmentID = 1;
+    SELECT SUM(Salary) AS ITPayroll
+    FROM HR.Employees
+    WHERE DepartmentID = 1;
+    ```
+  - Verify: Ensure results match expected counts and totals.
+- **Activity 4: Test Errors**:
+  - Try: `SELECT SUM(FirstName) FROM HR.Employees;` (fails; non-numeric column).
+  - Fix: Use `SUM(Salary)` or `COUNT(FirstName)`.
+
+**Resources**:
+- Microsoft Docs: “Aggregate Functions (Transact-SQL)” (search “SQL Server aggregate functions”).
+- W3Schools: SQL COUNT, SUM, AVG, MIN, MAX tutorials.
+- SQLZoo: Interactive aggregate function exercises.
+
+---
+
+#### 2. GROUP BY Clause (1-1.5 hours)
+**Goal**: Use `GROUP BY` to group rows by one or more columns before applying aggregate functions, enabling detailed data summaries.
+
+**Theory (45-60 minutes)**:
+- **What is GROUP BY?**
+  - The `GROUP BY` clause groups rows with identical values in specified columns into summary rows for aggregation.
+  - Essential for breaking down data by categories (e.g., total sales by customer, average salary by department).
+- **GROUP BY Syntax**:
+  - Basic syntax:
+    ```sql
+    SELECT Column1, AggregateFunction(Column2)
+    FROM [SchemaName].[TableName]
+    GROUP BY Column1;
+    ```
+    - Example:
+      ```sql
+      SELECT DepartmentID, COUNT(*) AS EmployeeCount
+      FROM HR.Employees
+      GROUP BY DepartmentID;
+      ```
+      - Groups employees by `DepartmentID` and counts rows per group.
+  - **Multiple Columns**:
+    - Group by multiple columns for finer granularity.
+    - Example:
+      ```sql
+      SELECT DepartmentID, YEAR(HireDate) AS HireYear, AVG(Salary) AS AvgSalary
+      FROM HR.Employees
+      GROUP BY DepartmentID, YEAR(HireDate);
+      ```
+      - Groups by `DepartmentID` and hire year, computing average salary per group.
+- **Key Points**:
+  - Columns in the `SELECT` clause must either be in `GROUP BY` or aggregated (e.g., `COUNT`, `SUM`).
+  - `GROUP BY` is processed before `ORDER BY` but after `WHERE`.
+  - NULL values form their own group.
+  - Use with `WHERE` to filter rows before grouping.
+    - Example:
+      ```sql
+      SELECT Status, SUM(TotalAmount) AS TotalSales
+      FROM Sales.Orders
+      WHERE OrderDate >= '2025-08-01'
+      GROUP BY Status;
+      ```
+- **Best Practices**:
+  - Include all non-aggregated columns in `GROUP BY`.
+  - Use `ORDER BY` to sort grouped results for clarity.
+  - Test grouping on small datasets to verify group formation.
+  - Use meaningful aliases for aggregated columns.
+- **Common Pitfalls**:
+  - Missing columns in `GROUP BY` (e.g., `SELECT FirstName, COUNT(*)` fails unless `FirstName` is in `GROUP BY`).
+  - Incorrect `WHERE` conditions can skew groups.
+  - Forgetting `GROUP BY` when using aggregates causes errors.
+- **SSMS Tools**:
+  - View grouped results: Results pane shows one row per group.
+  - Debug errors: Messages pane shows “column not in GROUP BY” errors.
+  - Explore data: Use `SELECT *` to understand grouping columns.
+
+**Practice (30-45 minutes)**:
+- **Activity 1: Write GROUP BY Queries**:
+  - In your journal, write queries for:
+    - Count employees per department in `HR.Employees`.
+    - Sum `TotalAmount` by `Status` in `Sales.Orders`.
+    - Average salary by department and hire year in `HR.Employees`.
+  - Example:
+    ```sql
+    SELECT DepartmentID, COUNT(*) AS EmployeeCount
+    FROM HR.Employees
+    GROUP BY DepartmentID;
+    ```
+- **Activity 2: Group Data in SSMS**:
+  - Use `EmployeeDB` and `Sales.Orders` (from Day 7 or recreate):
+    ```sql
+    CREATE TABLE Sales.Orders (
+        OrderID INT PRIMARY KEY,
+        CustomerID INT NOT NULL,
+        OrderDate DATE NOT NULL,
+        TotalAmount DECIMAL(10,2),
+        Status VARCHAR(20)
+    );
+    INSERT INTO Sales.Orders (OrderID, CustomerID, OrderDate, TotalAmount, Status)
+    VALUES 
+        (1, 1, '2025-08-01', 199.99, 'Completed'),
+        (2, 2, '2025-08-02', 49.99, 'Pending'),
+        (3, 1, '2025-08-03', 299.99, 'Completed'),
+        (4, 3, '2025-08-04', 99.99, 'Cancelled'),
+        (5, 2, '2025-08-05', 149.99, 'Completed');
+    ```
+  - Run:
+    ```sql
+    -- Employees per department
+    SELECT DepartmentID, COUNT(*) AS EmployeeCount
+    FROM HR.Employees
+    GROUP BY DepartmentID;
+    -- Total sales by status
+    SELECT Status, SUM(TotalAmount) AS TotalSales
+    FROM Sales.Orders
+    GROUP BY Status;
+    -- Average salary by department
+    SELECT DepartmentID, ROUND(AVG(Salary), 2) AS AvgSalary
+    FROM HR.Employees
+    GROUP BY DepartmentID
+    ORDER BY AvgSalary DESC;
+    ```
+  - Verify: Check Results pane for grouped rows.
+- **Activity 3: Test NULLs**:
+  - Run:
+    ```sql
+    SELECT DepartmentID, COUNT(Salary) AS SalaryCount
+    FROM HR.Employees
+    GROUP BY DepartmentID;
+    ```
+    - Note how NULL `DepartmentID` forms a group.
+- **Activity 4: Test Errors**:
+  - Try: `SELECT FirstName, COUNT(*) FROM HR.Employees GROUP BY DepartmentID;` (fails).
+  - Fix: Include `FirstName` in `GROUP BY` or remove it from `SELECT`.
+
+---
+
+#### 3. HAVING for Filtered Aggregates (1 hour)
+**Goal**: Use `HAVING` to filter grouped results based on aggregate conditions, distinguishing it from `WHERE`.
+
+**Theory (30 minutes)**:
+- **What is HAVING?**
+  - The `HAVING` clause filters grouped results after `GROUP BY` is applied, based on aggregate conditions.
+  - Unlike `WHERE` (filters individual rows before grouping), `HAVING` filters groups.
+  - Syntax:
+    ```sql
+    SELECT Column1, AggregateFunction(Column2)
+    FROM [SchemaName].[TableName]
+    GROUP BY Column1
+    HAVING AggregateCondition;
+    ```
+    - Example:
+      ```sql
+      SELECT DepartmentID, COUNT(*) AS EmployeeCount
+      FROM HR.Employees
+      GROUP BY DepartmentID
+      HAVING COUNT(*) > 1;
+      ```
+      - Returns departments with more than one employee.
+- **HAVING vs. WHERE**:
+  - **WHERE**: Filters rows before aggregation.
+    - Example: `WHERE Salary > 70000` filters individual employees.
+  - **HAVING**: Filters groups after aggregation.
+    - Example: `HAVING AVG(Salary) > 70000` filters department groups.
+  - Example combining both:
+    ```sql
+    SELECT DepartmentID, AVG(Salary) AS AvgSalary
+    FROM HR.Employees
+    WHERE HireDate >= '2023-01-01'
+    GROUP BY DepartmentID
+    HAVING AVG(Salary) > 70000;
+    ```
+- **Key Points**:
+  - `HAVING` requires `GROUP BY`.
+  - Use aggregate functions (e.g., `COUNT`, `SUM`) in `HAVING` conditions.
+  - Combine with `ORDER BY` for sorted results.
+- **Best Practices**:
+  - Use `WHERE` to reduce rows before grouping for performance.
+  - Test `HAVING` conditions with `SELECT` to verify group filtering.
+  - Use aliases in `SELECT` but not in `HAVING` (e.g., `HAVING AVG(Salary) > 70000`, not `HAVING AvgSalary > 70000`).
+- **Common Pitfalls**:
+  - Using `HAVING` without `GROUP BY` causes errors.
+  - Confusing `HAVING` with `WHERE` leads to incorrect filtering.
+  - Invalid aggregate conditions (e.g., `HAVING FirstName = 'Alice'` fails).
+- **SSMS Tools**:
+  - Verify filtering: Results pane shows filtered groups.
+  - Debug errors: Messages pane shows “invalid in HAVING clause” errors.
+
+**Practice (30 minutes)**:
+- **Activity 1: Write HAVING Queries**:
+  - In your journal, write queries for:
+    - Departments with more than 1 employee.
+    - Order statuses with total sales above 200.
+    - Departments with average salary above 70000.
+  - Example:
+    ```sql
+    SELECT DepartmentID, COUNT(*) AS EmployeeCount
+    FROM HR.Employees
+    GROUP BY DepartmentID
+    HAVING COUNT(*) > 1;
+    ```
+- **Activity 2: Run HAVING in SSMS**:
+  - Run:
+    ```sql
+    -- Departments with multiple employees
+    SELECT DepartmentID, COUNT(*) AS EmployeeCount
+    FROM HR.Employees
+    GROUP BY DepartmentID
+    HAVING COUNT(*) > 1;
+    -- High-sales statuses
+    SELECT Status, SUM(TotalAmount) AS TotalSales
+    FROM Sales.Orders
+    GROUP BY Status
+    HAVING SUM(TotalAmount) > 200;
+    -- High-average departments
+    SELECT DepartmentID, ROUND(AVG(Salary), 2) AS AvgSalary
+    FROM HR.Employees
+    WHERE HireDate >= '2023-01-01'
+    GROUP BY DepartmentID
+    HAVING AVG(Salary) > 70000
+    ORDER BY AvgSalary DESC;
+    ```
+  - Verify: Check Results pane for filtered groups.
+- **Activity 3: Test Errors**:
+  - Try: `SELECT DepartmentID, COUNT(*) FROM HR.Employees HAVING COUNT(*) > 1;` (fails; missing `GROUP BY`).
+  - Fix: Add `GROUP BY DepartmentID`.
+
+---
+
+#### 4. Practice on Numeric Data (1-1.5 hours)
+**Goal**: Apply aggregate functions, `GROUP BY`, and `HAVING` on a numeric dataset to analyze data and handle errors.
+
+**Practice (1-1.5 hours)**:
+- **Step 1: Set Up Sample Data**:
+  - Use `EmployeeDB` and ensure `Sales.Orders` and `HR.Employees` exist. If not, recreate:
+    ```sql
+    USE EmployeeDB;
+    CREATE TABLE Sales.Orders (
+        OrderID INT PRIMARY KEY,
+        CustomerID INT NOT NULL,
+        OrderDate DATE NOT NULL,
+        TotalAmount DECIMAL(10,2),
+        Status VARCHAR(20)
+    );
+    INSERT INTO Sales.Orders (OrderID, CustomerID, OrderDate, TotalAmount, Status)
+    VALUES 
+        (1, 1, '2025-08-01', 199.99, 'Completed'),
+        (2, 2, '2025-08-02', 49.99, 'Pending'),
+        (3, 1, '2025-08-03', 299.99, 'Completed'),
+        (4, 3, '2025-08-04', 99.99, 'Cancelled'),
+        (5, 2, '2025-08-05', 149.99, 'Completed'),
+        (6, 4, '2025-08-06', NULL, 'Pending'),
+        (7, 1, '2025-08-07', 399.99, 'Completed'),
+        (8, 3, '2025-08-08', 79.99, 'Pending');
+    ```
+- **Step 2: Write 10-20 Queries**:
+  - Examples (run each in SSMS and verify):
+    1. Total orders: `SELECT COUNT(*) AS TotalOrders FROM Sales.Orders;`
+    2. Total sales: `SELECT SUM(TotalAmount) AS TotalRevenue FROM Sales.Orders;`
+    3. Average order amount: `SELECT ROUND(AVG(TotalAmount), 2) AS AvgOrder FROM Sales.Orders;`
+    4. Earliest order date: `SELECT MIN(OrderDate) AS FirstOrder FROM Sales.Orders;`
+    5. Highest order amount: `SELECT MAX(TotalAmount) AS MaxOrder FROM Sales.Orders;`
+    6. Orders by status: `SELECT Status, COUNT(*) AS OrderCount FROM Sales.Orders GROUP BY Status;`
+    7. Sales by customer: `SELECT CustomerID, SUM(TotalAmount) AS TotalSpent FROM Sales.Orders GROUP BY CustomerID;`
+    8. Average salary by department: `SELECT DepartmentID, ROUND(AVG(Salary), 2) AS AvgSalary FROM HR.Employees GROUP BY DepartmentID;`
+    9. High-count departments: `SELECT DepartmentID, COUNT(*) AS EmployeeCount FROM HR.Employees GROUP BY DepartmentID HAVING COUNT(*) > 1;`
+    10. High-sales customers: `SELECT CustomerID, SUM(TotalAmount) AS TotalSpent FROM Sales.Orders GROUP BY CustomerID HAVING SUM(TotalAmount) > 300;`
+    11. Completed orders total: `SELECT SUM(TotalAmount) AS CompletedSales FROM Sales.Orders WHERE Status = 'Completed';`
+    12. Orders by date: `SELECT YEAR(OrderDate) AS OrderYear, COUNT(*) AS OrderCount FROM Sales.Orders GROUP BY YEAR(OrderDate);`
+    13. High-average salaries: `SELECT DepartmentID, AVG(Salary) AS AvgSalary FROM HR.Employees GROUP BY DepartmentID HAVING AVG(Salary) > 70000;`
+    14. Top 3 customers by spend: `SELECT TOP (3) CustomerID, SUM(TotalAmount) AS TotalSpent FROM Sales.Orders GROUP BY CustomerID ORDER BY TotalSpent DESC;`
+    15. Orders with NULL amounts: `SELECT COUNT(*) AS NullOrders FROM Sales.Orders WHERE TotalAmount IS NULL;`
+    16. Combined filter: `SELECT Status, COUNT(*) AS OrderCount FROM Sales.Orders WHERE OrderDate >= '2025-08-03' GROUP BY Status HAVING COUNT(*) > 1;`
+    17. Min/Max salary by department: `SELECT DepartmentID, MIN(Salary) AS MinSalary, MAX(Salary) AS MaxSalary FROM HR.Employees GROUP BY DepartmentID;`
+    18. Orders by month: `SELECT MONTH(OrderDate) AS OrderMonth, SUM(TotalAmount) AS MonthlySales FROM Sales.Orders GROUP BY MONTH(OrderDate) ORDER BY OrderMonth;`
+    19. High-spend statuses: `SELECT Status, SUM(TotalAmount) AS TotalSales FROM Sales.Orders GROUP BY Status HAVING SUM(TotalAmount) > 100 ORDER BY TotalSales DESC;`
+    20. Error test: `SELECT FirstName, COUNT(*) FROM HR.Employees GROUP BY DepartmentID;` (fails; fix by grouping by `FirstName`).
+- **Step 3: Debug and Validate**:
+  - Verify results: Check Results pane for correct counts, sums, etc.
+  - Debug errors: Fix syntax or logical errors (e.g., missing `GROUP BY` columns).
+  - Test NULL handling: Ensure aggregates handle NULLs as expected.
+- **Step 4: Mini-Project**:
+  - Create a table `Sales.SalesTransactions`:
+    ```sql
+    CREATE TABLE Sales.SalesTransactions (
+        TransactionID INT PRIMARY KEY,
+        OrderID INT,
+        ProductID INT,
+        Quantity INT NOT NULL,
+        UnitPrice DECIMAL(10,2),
+        TransactionDate DATE DEFAULT GETDATE()
+    );
+    INSERT INTO Sales.SalesTransactions (TransactionID, OrderID, ProductID, Quantity, UnitPrice, TransactionDate)
+    VALUES 
+        (1, 1, 1, 2, 199.99, '2025-08-01'),
+        (2, 1, 2, 1, 49.99, '2025-08-01'),
+        (3, 2, 3, 3, 99.99, '2025-08-02'),
+        (4, 3, 1, 1, 199.99, '2025-08-03'),
+        (5, 4, 4, 5, 29.99, '2025-08-04');
+    ```
+  - Write 5 queries:
+    1. Total transactions: `SELECT COUNT(*) AS TransactionCount FROM Sales.SalesTransactions;`
+    2. Total sales value: `SELECT SUM(Quantity * UnitPrice) AS TotalSales FROM Sales.SalesTransactions;`
+    3. Transactions by or
