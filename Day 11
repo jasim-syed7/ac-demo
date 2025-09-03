@@ -1,0 +1,404 @@
+### Detailed Explanation of Day 11: Conditional Logic in Queries
+
+**Objective**: Master the use of conditional logic in Microsoft SQL Server (MSSQL) queries to create dynamic and customized outputs. By the end of Day 11, you’ll be proficient in using the `CASE` statement (both simple and searched forms) and the `IIF` function to implement conditional logic in `SELECT` queries. You’ll also learn to create custom columns based on conditions, enhancing your ability to transform and analyze data. This day builds on your Days 1-10 skills, particularly `SELECT`, `WHERE`, string, date, numeric, and conversion functions, enabling you to add logic-driven transformations to your queries for real-world applications.
+
+**Duration**: 4-6 hours (split into theory, hands-on practice, and review). Adjust based on your comfort with SQL Server Management Studio (SSMS) and SQL syntax.
+
+---
+
+### Sub-Syllabus Breakdown
+1. **CASE Statement (Simple/Searched)** (1.5-2 hours)
+   - Learn the `CASE` statement to implement conditional logic in queries.
+   - Understand the difference between simple and searched `CASE` forms.
+2. **IIF Function** (1-1.5 hours)
+   - Use the `IIF` function for concise conditional logic.
+   - Compare `IIF` with `CASE` for appropriate use cases.
+3. **Use in SELECT for Custom Columns** (1.5-2 hours)
+   - Apply `CASE` and `IIF` in `SELECT` to create custom columns based on conditions.
+   - Practice 10-20 queries on a sample dataset to solve real-world scenarios.
+
+---
+
+### Step-by-Step Detailed Plan for Day 11
+
+#### 1. CASE Statement (Simple/Searched) (1.5-2 hours)
+**Goal**: Master the `CASE` statement to add conditional logic to queries, enabling dynamic data transformations based on specified conditions.
+
+**Theory (45-60 minutes)**:
+- **What is the CASE Statement?**
+  - The `CASE` statement is SQL Server’s primary tool for conditional logic, similar to `if-else` in programming.
+  - It evaluates conditions and returns a value based on the first condition met.
+  - Used in `SELECT`, `WHERE`, `ORDER BY`, or computed columns to customize output.
+  - Two forms: **Simple CASE** (compares a single expression to values) and **Searched CASE** (evaluates multiple conditions).
+- **Simple CASE Syntax**:
+  - Compares a single expression to a set of values.
+  - Syntax:
+    ```sql
+    CASE Expression
+        WHEN Value1 THEN Result1
+        WHEN Value2 THEN Result2
+        ...
+        [ELSE ElseResult]
+    END
+    ```
+  - Example:
+    ```sql
+    SELECT FirstName, DepartmentID,
+           CASE DepartmentID
+               WHEN 1 THEN 'IT'
+               WHEN 2 THEN 'HR'
+               WHEN 3 THEN 'Finance'
+               ELSE 'Unassigned'
+           END AS DepartmentName
+    FROM HR.Employees;
+    ```
+    - Maps `DepartmentID` to department names.
+- **Searched CASE Syntax**:
+  - Evaluates multiple boolean conditions.
+  - Syntax:
+    ```sql
+    CASE
+        WHEN Condition1 THEN Result1
+        WHEN Condition2 THEN Result2
+        ...
+        [ELSE ElseResult]
+    END
+    ```
+  - Example:
+    ```sql
+    SELECT FirstName, Salary,
+           CASE
+               WHEN Salary > 75000 THEN 'High'
+               WHEN Salary BETWEEN 65000 AND 75000 THEN 'Medium'
+               ELSE 'Low'
+           END AS SalaryCategory
+    FROM HR.Employees;
+    ```
+    - Categorizes employees based on salary ranges.
+- **Key Points**:
+  - `CASE` returns a single value per row, determined by the first matching condition.
+  - The `ELSE` clause is optional; if omitted and no condition matches, NULL is returned.
+  - Use in `SELECT` for custom columns, `WHERE` for filtering, or `ORDER BY` for sorting.
+  - Example in `ORDER BY`:
+    ```sql
+    SELECT FirstName, Salary
+    FROM HR.Employees
+    ORDER BY CASE DepartmentID
+                 WHEN 1 THEN 1
+                 WHEN 2 THEN 2
+                 ELSE 3
+             END;
+    ```
+  - Can nest `CASE` statements for complex logic (though avoid excessive nesting for readability).
+- **Best Practices**:
+  - Use descriptive aliases for `CASE` results (e.g., `SalaryCategory`).
+  - Keep conditions simple and mutually exclusive to avoid confusion.
+  - Test `CASE` logic on small datasets to verify outputs.
+  - Use `ELSE` to handle unexpected values and avoid NULLs.
+- **Common Pitfalls**:
+  - Overlapping conditions in searched `CASE` (e.g., `WHEN Salary > 70000` and `WHEN Salary > 65000` may cause ambiguity; order matters).
+  - Forgetting `END` causes syntax errors.
+  - Using incompatible data types in `THEN` clauses (e.g., mixing `VARCHAR` and `INT`).
+- **SSMS Tools**:
+  - View results: Results pane shows custom column values.
+  - Debug errors: Messages pane shows syntax errors (e.g., “Incorrect syntax near END”).
+  - Test logic: Use `SELECT *` to verify input data before applying `CASE`.
+
+**Practice (45-60 minutes)**:
+- **Activity 1: Write CASE Queries**:
+  - In your journal, write queries using simple and searched `CASE`:
+    - Map `Status` in `Sales.Orders` to ‘Active’ or ‘Inactive’.
+    - Categorize employee salaries as ‘High’, ‘Medium’, or ‘Low’.
+    - Assign priority based on `TotalAmount` in `Sales.Orders`.
+  - Example:
+    ```sql
+    SELECT OrderID, Status,
+           CASE Status
+               WHEN 'Completed' THEN 'Active'
+               WHEN 'Pending' THEN 'Active'
+               ELSE 'Inactive'
+           END AS OrderStatus
+    FROM Sales.Orders;
+    ```
+- **Activity 2: Run CASE in SSMS**:
+  - Use the `EmployeeDB` from Day 7 (`USE EmployeeDB;`). If not available, recreate:
+    ```sql
+    CREATE DATABASE EmployeeDB;
+    USE EmployeeDB;
+    CREATE SCHEMA HR;
+    CREATE SCHEMA Sales;
+    CREATE TABLE HR.Employees (
+        EmployeeID INT PRIMARY KEY,
+        FirstName VARCHAR(50) NOT NULL,
+        LastName VARCHAR(50) NOT NULL,
+        Email VARCHAR(100) UNIQUE,
+        DepartmentID INT,
+        Salary DECIMAL(10,2),
+        HireDate DATE DEFAULT GETDATE()
+    );
+    INSERT INTO HR.Employees (EmployeeID, FirstName, LastName, Email, DepartmentID, Salary, HireDate)
+    VALUES 
+        (1, 'Alice', 'Smith', 'alice.smith@company.com', 1, 75000.67, '2023-01-15'),
+        (2, 'Bob', 'Johnson', 'bob.johnson@company.com', 2, 65000.33, '2023-02-20'),
+        (3, 'Cathy', 'Lee', 'cathy.lee@company.com', 1, 80000.99, '2023-03-10'),
+        (4, 'David', 'Wong', 'david.wong@company.com', 3, 70000.45, '2023-04-05'),
+        (5, 'Emma', 'Brown', 'emma.brown@company.com', NULL, 60000.12, '2023-05-01');
+    CREATE TABLE Sales.Orders (
+        OrderID INT PRIMARY KEY,
+        CustomerID INT NOT NULL,
+        OrderDate DATE NOT NULL,
+        TotalAmount DECIMAL(10,2),
+        Status VARCHAR(20)
+    );
+    INSERT INTO Sales.Orders (OrderID, CustomerID, OrderDate, TotalAmount, Status)
+    VALUES 
+        (1, 1, '2025-08-01', 199.99, 'Completed'),
+        (2, 2, '2025-08-02', 49.99, 'Pending'),
+        (3, 1, '2025-08-03', 299.99, 'Completed'),
+        (4, 3, '2025-08-04', 99.99, 'Cancelled'),
+        (5, 2, '2025-08-05', 149.99, 'Completed');
+    ```
+  - Run:
+    ```sql
+    -- Simple CASE: Department names
+    SELECT FirstName, DepartmentID,
+           CASE DepartmentID
+               WHEN 1 THEN 'IT'
+               WHEN 2 THEN 'HR'
+               WHEN 3 THEN 'Finance'
+               ELSE 'Unassigned'
+           END AS DepartmentName
+    FROM HR.Employees;
+    -- Searched CASE: Salary categories
+    SELECT FirstName, Salary,
+           CASE
+               WHEN Salary > 75000 THEN 'High'
+               WHEN Salary BETWEEN 65000 AND 75000 THEN 'Medium'
+               ELSE 'Low'
+           END AS SalaryCategory
+    FROM HR.Employees;
+    -- CASE in ORDER BY
+    SELECT OrderID, TotalAmount
+    FROM Sales.Orders
+    ORDER BY CASE
+                 WHEN TotalAmount > 200 THEN 1
+                 ELSE 2
+             END;
+    ```
+  - Verify: Check Results pane for custom column values.
+- **Activity 3: Combine with WHERE**:
+  - Run:
+    ```sql
+    SELECT FirstName, Salary,
+           CASE
+               WHEN Salary > 70000 THEN 'Above Average'
+               ELSE 'Below Average'
+           END AS SalaryStatus
+    FROM HR.Employees
+    WHERE DepartmentID = 1;
+    ```
+- **Activity 4: Test Errors**:
+  - Try: `SELECT CASE FirstName WHEN 'Alice' THEN 'A' END FROM HR.Employees;` (fails; missing `END`).
+  - Fix: Add `END AS Alias`.
+  - Try mixing types: `SELECT CASE DepartmentID WHEN 1 THEN 'IT' WHEN 2 THEN 2 END FROM HR.Employees;` (fails; inconsistent types).
+  - Fix: Ensure consistent return types (e.g., all `VARCHAR`).
+
+**Resources**:
+- Microsoft Docs: “CASE (Transact-SQL)” (search “SQL Server CASE statement”).
+- W3Schools: SQL CASE tutorial.
+- SQLZoo: Interactive CASE exercises.
+
+---
+
+#### 2. IIF Function (1-1.5 hours)
+**Goal**: Use the `IIF` function for concise conditional logic in queries, understanding its role as a simpler alternative to `CASE`.
+
+**Theory (30-45 minutes)**:
+- **What is the IIF Function?**
+  - The `IIF` function (introduced in SQL Server 2012) evaluates a boolean condition and returns one of two values.
+  - Syntax: `IIF(Condition, TrueValue, FalseValue)`.
+  - Example:
+    ```sql
+    SELECT FirstName, Salary,
+           IIF(Salary > 70000, 'High', 'Low') AS SalaryCategory
+    FROM HR.Employees;
+    ```
+    - Returns ‘High’ if `Salary > 70000`, else ‘Low’.
+  - Equivalent to a simple `CASE`:
+    ```sql
+    CASE WHEN Salary > 70000 THEN 'High' ELSE 'Low' END
+    ```
+- **Key Points**:
+  - `IIF` is a shorthand for binary (true/false) conditions.
+  - Limited to one condition and two outcomes (unlike `CASE` which supports multiple conditions).
+  - Use in `SELECT`, `WHERE`, or computed columns.
+  - Returns NULL if inputs are NULL (unless handled with `COALESCE`).
+  - Example with nesting:
+    ```sql
+    SELECT OrderID, TotalAmount,
+           IIF(TotalAmount > 200, 'High', IIF(TotalAmount > 100, 'Medium', 'Low')) AS AmountCategory
+    FROM Sales.Orders;
+    ```
+- **IIF vs. CASE**:
+  - Use `IIF` for simple true/false logic (more readable).
+  - Use `CASE` for multiple conditions or complex logic.
+  - `IIF` is less flexible but more concise.
+- **Best Practices**:
+  - Use `IIF` for single-condition logic to improve readability.
+  - Avoid excessive nesting of `IIF` (use `CASE` for complex logic).
+  - Ensure `TrueValue` and `FalseValue` have compatible data types.
+  - Test `IIF` conditions on small datasets.
+- **Common Pitfalls**:
+  - Incompatible data types in `TrueValue` and `FalseValue` (e.g., `IIF(Salary > 70000, 'High', 1)` fails).
+  - Overusing `IIF` for multi-condition logic (hard to read).
+  - Forgetting to handle NULL inputs.
+- **SSMS Tools**:
+  - View results: Results pane shows `IIF` outputs.
+  - Debug errors: Messages pane shows type mismatch errors.
+  - Compare with `CASE`: Run equivalent `CASE` and `IIF` queries to verify.
+
+**Practice (30-45 minutes)**:
+- **Activity 1: Write IIF Queries**:
+  - In your journal, write queries using `IIF`:
+    - Categorize orders as ‘High’ or ‘Low’ based on `TotalAmount`.
+    - Flag employees with salaries above 70000.
+    - Mark active/inactive orders based on `Status`.
+  - Example:
+    ```sql
+    SELECT OrderID, TotalAmount,
+           IIF(TotalAmount > 100, 'High', 'Low') AS AmountCategory
+    FROM Sales.Orders;
+    ```
+- **Activity 2: Run IIF in SSMS**:
+  - Run:
+    ```sql
+    -- Salary categories
+    SELECT FirstName, Salary,
+           IIF(Salary > 70000, 'Above Average', 'Below Average') AS SalaryStatus
+    FROM HR.Employees;
+    -- Order status
+    SELECT OrderID, Status,
+           IIF(Status IN ('Completed', 'Pending'), 'Active', 'Inactive') AS OrderStatus
+    FROM Sales.Orders;
+    -- Nested IIF
+    SELECT FirstName, Salary,
+           IIF(Salary > 75000, 'High', IIF(Salary > 65000, 'Medium', 'Low')) AS SalaryCategory
+    FROM HR.Employees;
+    ```
+  - Verify: Check Results pane for correct categories.
+- **Activity 3: Compare CASE and IIF**:
+  - Run equivalent queries:
+    ```sql
+    SELECT FirstName, Salary,
+           IIF(Salary > 70000, 'High', 'Low') AS IIF_Category,
+           CASE WHEN Salary > 70000 THEN 'High' ELSE 'Low' END AS CASE_Category
+    FROM HR.Employees;
+    ```
+  - Verify: Ensure outputs match.
+- **Activity 4: Test Errors**:
+  - Try: `SELECT IIF(Salary > 70000, 'High', 1) FROM HR.Employees;` (fails; type mismatch).
+  - Fix: Use `IIF(Salary > 70000, 'High', 'Low')`.
+
+---
+
+#### 3. Use in SELECT for Custom Columns (1.5-2 hours)
+**Goal**: Apply `CASE` and `IIF` in `SELECT` to create custom columns for real-world scenarios, such as categorizing data or generating formatted outputs.
+
+**Practice (1.5-2 hours)**:
+- **Step 1: Set Up Sample Data**:
+  - Use `EmployeeDB` with `HR.Employees`, `Sales.Orders`, and `Sales.SalesTransactions` (from Day 9). If not available, recreate as above.
+  - Add a table for employee performance:
+    ```sql
+    CREATE TABLE HR.EmployeePerformance (
+        PerformanceID INT PRIMARY KEY,
+        EmployeeID INT,
+        ReviewDate DATE,
+        PerformanceScore INT,
+        Comments VARCHAR(200)
+    );
+    INSERT INTO HR.EmployeePerformance (PerformanceID, EmployeeID, ReviewDate, PerformanceScore, Comments)
+    VALUES 
+        (1, 1, '2025-01-15', 85, 'Excellent work'),
+        (2, 2, '2025-02-20', 70, 'Needs improvement'),
+        (3, 3, '2025-03-10', 90, 'Outstanding'),
+        (4, 4, '2025-04-05', 65, 'Below expectations'),
+        (5, 5, '2025-05-01', 80, 'Good performance');
+    ```
+- **Step 2: Write 10-20 Queries for Real Scenarios**:
+  - Examples (run each in SSMS and verify):
+    1. Salary categories (CASE): `SELECT FirstName, Salary, CASE WHEN Salary > 75000 THEN 'High' WHEN Salary BETWEEN 65000 AND 75000 THEN 'Medium' ELSE 'Low' END AS SalaryCategory FROM HR.Employees;`
+    2. Order status (IIF): `SELECT OrderID, TotalAmount, IIF(TotalAmount > 200, 'High Value', 'Low Value') AS OrderValue FROM Sales.Orders;`
+    3. Department names (CASE): `SELECT FirstName, DepartmentID, CASE DepartmentID WHEN 1 THEN 'IT' WHEN 2 THEN 'HR' WHEN 3 THEN 'Finance' ELSE 'Unassigned' END AS DeptName FROM HR.Employees;`
+    4. Performance rating (IIF): `SELECT EmployeeID, PerformanceScore, IIF(PerformanceScore >= 80, 'Excellent', 'Needs Work') AS Rating FROM HR.EmployeePerformance;`
+    5. Active orders (CASE): `SELECT OrderID, Status, CASE WHEN Status IN ('Completed', 'Pending') THEN 'Active' ELSE 'Inactive' END AS OrderStatus FROM Sales.Orders;`
+    6. Salary bonus (CASE): `SELECT FirstName, Salary, CASE WHEN Salary > 70000 THEN Salary * 0.1 ELSE Salary * 0.05 END AS Bonus FROM HR.Employees;`
+    7. Performance tiers (IIF): `SELECT EmployeeID, PerformanceScore, IIF(PerformanceScore > 85, 'Top', IIF(PerformanceScore > 75, 'Good', 'Average')) AS PerformanceTier FROM HR.EmployeePerformance;`
+    8. Order priority (CASE): `SELECT OrderID, TotalAmount, CASE WHEN TotalAmount > 200 THEN 'High' WHEN TotalAmount BETWEEN 100 AND 200 THEN 'Medium' ELSE 'Low' END AS Priority FROM Sales.Orders;`
+    9. Recent reviews (IIF): `SELECT EmployeeID, ReviewDate, IIF(ReviewDate >= DATEADD(month, -6, GETDATE()), 'Recent', 'Old') AS ReviewStatus FROM HR.EmployeePerformance;`
+    10. Formatted comments (CASE): `SELECT PerformanceID, Comments, CASE WHEN LEN(Comments) > 10 THEN 'Detailed' ELSE 'Brief' END AS CommentType FROM HR.EmployeePerformance;`
+    11. Combine with aggregates: `SELECT DepartmentID, COUNT(*), CASE WHEN COUNT(*) > 2 THEN 'Large Team' ELSE 'Small Team' END AS TeamSize FROM HR.Employees GROUP BY DepartmentID;`
+    12. Order amount tiers (IIF): `SELECT OrderID, TotalAmount, IIF(TotalAmount > 150, 'Premium', 'Standard') AS OrderType FROM Sales.Orders WHERE Status = 'Completed';`
+    13. Employee tenure (CASE): `SELECT FirstName, DATEDIFF(year, HireDate, GETDATE()), CASE WHEN DATEDIFF(year, HireDate, GETDATE()) > 2 THEN 'Veteran' ELSE 'New' END AS Tenure FROM HR.Employees;`
+    14. Transaction value (IIF): `SELECT TransactionID, Quantity * UnitPrice AS Total, IIF(Quantity * UnitPrice > 200, 'High', 'Low') AS ValueCategory FROM Sales.SalesTransactions;`
+    15. Performance feedback (CASE): `SELECT EmployeeID, PerformanceScore, CASE WHEN PerformanceScore >= 90 THEN 'Promote' WHEN PerformanceScore >= 80 THEN 'Retain' ELSE 'Review' END AS Action FROM HR.EmployeePerformance;`
+    16. Order sorting (CASE): `SELECT OrderID, TotalAmount FROM Sales.Orders ORDER BY CASE WHEN Status = 'Completed' THEN 1 ELSE 2 END, TotalAmount DESC;`
+    17. Salary adjustment (IIF): `SELECT FirstName, Salary, IIF(DepartmentID = 1, Salary * 1.1, Salary) AS AdjustedSalary FROM HR.Employees;`
+    18. Comment length (CASE): `SELECT Comments, CASE WHEN Comments IS NULL THEN 'No Comment' ELSE 'Has Comment' END AS CommentStatus FROM HR.EmployeePerformance;`
+    19. Combined logic: `SELECT FirstName, Salary, CASE WHEN Salary > 70000 AND DepartmentID = 1 THEN 'IT High Earner' ELSE 'Standard' END AS EmployeeType FROM HR.Employees;`
+    20. Error test: `SELECT IIF(Salary > 70000, 'High', 1) FROM HR.Employees;` (fails; fix with consistent types).
+- **Step 3: Debug and Validate**:
+  - Verify: Check Results pane for correct custom column values.
+  - Debug errors: Fix issues like missing `END`, type mismatches, or incorrect conditions.
+  - Test NULLs: Ensure `CASE` and `IIF` handle NULLs as expected (e.g., `ELSE` for `CASE`).
+- **Step 4: Mini-Project**:
+  - Create a table `Sales.OrderStatusLogs`:
+    ```sql
+    CREATE TABLE Sales.OrderStatusLogs (
+        LogID INT PRIMARY KEY,
+        OrderID INT,
+        StatusChangeDate DATE,
+        NewStatus VARCHAR(20),
+        ChangeReason VARCHAR(100)
+    );
+    INSERT INTO Sales.OrderStatusLogs (LogID, OrderID, StatusChangeDate, NewStatus, ChangeReason)
+    VALUES 
+        (1, 1, '2025-08-01', 'Completed', 'Payment received'),
+        (2, 2, '2025-08-02', 'Pending', 'Awaiting stock'),
+        (3, 3, '2025-08-03', 'Completed', 'Order fulfilled'),
+        (4, 4, '2025-08-04', 'Cancelled', 'Customer request'),
+        (5, 5, '2025-08-05', 'Completed', NULL);
+    ```
+  - Write 5 queries for real scenarios:
+    1. Status categories: `SELECT OrderID, NewStatus, CASE NewStatus WHEN 'Completed' THEN 'Finalized' WHEN 'Pending' THEN 'In Progress' ELSE 'Terminated' END AS StatusCategory FROM Sales.OrderStatusLogs;`
+    2. Reason length (IIF): `SELECT LogID, ChangeReason, IIF(LEN(ChangeReason) > 10, 'Detailed', 'Brief') AS ReasonType FROM Sales.OrderStatusLogs WHERE ChangeReason IS NOT NULL;`
+    3. Recent changes (CASE): `SELECT OrderID, StatusChangeDate, CASE WHEN StatusChangeDate >= DATEADD(month, -1, GETDATE()) THEN 'Recent' ELSE 'Old' END AS ChangeAge FROM Sales.OrderStatusLogs;`
+    4. Status priority (IIF): `SELECT LogID, NewStatus, IIF(NewStatus = 'Completed', 'High', 'Low') AS Priority FROM Sales.OrderStatusLogs;`
+    5. Combined logic: `SELECT OrderID, NewStatus, CASE WHEN NewStatus = 'Completed' AND ChangeReason IS NOT NULL THEN 'Confirmed' ELSE 'Pending Review' END AS ReviewStatus FROM Sales.OrderStatusLogs;`
+- **Step 5: Journal Reflection**:
+  - Write answers to:
+    - How does `CASE` enable dynamic outputs?
+    - When is `IIF` more appropriate than `CASE`?
+    - How do custom columns improve query usability?
+    - Any errors faced and how you resolved them.
+
+**Resources**:
+- Microsoft Docs: “IIF (Transact-SQL)” (search “SQL Server IIF function”).
+- W3Schools: SQL IIF and CASE tutorials.
+- SQLZoo: Interactive conditional logic exercises.
+- YouTube: Search “SQL Server CASE IIF tutorial” for demos.
+
+---
+
+### Day 11 Deliverables
+- **Journal Entries**:
+  - Examples of simple and searched `CASE` queries.
+  - Examples of `IIF` queries with single and nested conditions.
+  - List of 10-20 queries with real-world scenarios.
+  - Notes on errors encountered and solutions.
+  - Reflection on the mini-project (e.g., how conditional logic enhanced log analysis).
+- **Practical Output**:
+  - Executed queries with `CASE` and `IIF` on `HR.Employees`, `Sales.Orders`, and `HR.EmployeePerformance`.
+  - Created and queried `Sales.OrderStatusLogs` in the mini-project.
+  - Validated query results and debugged errors.
+- **Self-Assessment**:
+  - Can you create custom columns with `CASE` for multiple
