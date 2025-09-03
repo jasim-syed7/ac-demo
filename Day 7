@@ -1,0 +1,446 @@
+### Detailed Explanation of Day 7: Weekly Review and Mini-Project
+
+**Objective**: Consolidate your learning from Days 1-6 of the MSSQL roadmap by reviewing key concepts, applying them in a practical mini-project, and testing your understanding through a self-quiz. By the end of Day 7, you’ll have reinforced your skills in database setup, table creation, constraints, data manipulation, sorting, and limiting results. The mini-project will involve building a simple employee database, inserting data, and querying it, while the self-quiz will assess your grasp of basic SQL commands. This day is crucial for solidifying your foundational MSSQL skills and preparing for more advanced topics.
+
+**Duration**: 4-6 hours (split into review, mini-project, and self-quiz). Adjust based on your comfort with SQL Server Management Studio (SSMS) and SQL syntax.
+
+---
+
+### Sub-Syllabus Breakdown
+1. **Review Days 1-6** (1.5-2 hours)
+   - Recap key concepts from Days 1-6, including database setup, data types, table creation, constraints, data manipulation (`INSERT`, `UPDATE`, `DELETE`, `SELECT`), sorting (`ORDER BY`), and limiting (`TOP`).
+   - Revisit common errors and best practices.
+2. **Build a Simple Employee Database with Tables and Insert/Query Data** (2-2.5 hours)
+   - Design and create a database for employee management.
+   - Create tables with appropriate data types and constraints.
+   - Insert sample data and query it using techniques from Days 4-6.
+3. **Self-Quiz on Basic Commands** (1-1.5 hours)
+   - Test your understanding of Days 1-6 concepts through a self-administered quiz.
+   - Identify knowledge gaps and revisit weak areas.
+
+---
+
+### Step-by-Step Detailed Plan for Day 7
+
+#### 1. Review Days 1-6 (1.5-2 hours)
+**Goal**: Reinforce foundational MSSQL concepts to ensure a strong understanding before applying them in a mini-project.
+
+**Theory (1-1.5 hours)**:
+- **Day 1: Introduction to MSSQL and Setup**
+  - **Concepts**: RDBMS vs. NoSQL; SQL Server editions (Express, Developer); installing SQL Server Express and SSMS; connecting to a server; creating/deleting databases with `CREATE DATABASE` and `DROP DATABASE`.
+  - **Key Points**:
+    - RDBMS organizes data into tables with relationships, using SQL for querying.
+    - SQL Server Express is free and ideal for learning.
+    - SSMS is the primary tool for managing databases and writing queries.
+    - Common errors: Connection issues (e.g., wrong server name), firewall blocking port 1433.
+  - **Quick Practice**:
+    - Open SSMS, connect to your instance (e.g., `.\SQLEXPRESS`).
+    - Run: `CREATE DATABASE ReviewDB; USE ReviewDB; DROP DATABASE ReviewDB;`.
+    - Verify: `SELECT name FROM sys.databases;`.
+- **Day 2: SQL Basics – Data Types and Databases**
+  - **Concepts**: Databases, schemas, tables; common data types (`INT`, `VARCHAR`, `DATE`, etc.); `CREATE DATABASE`, `USE`, `DROP DATABASE`.
+  - **Key Points**:
+    - Databases contain schemas, which group tables.
+    - Data types ensure storage efficiency and data integrity (e.g., `INT` for IDs, `VARCHAR(50)` for names).
+    - Best practice: Use meaningful names and appropriate data types.
+    - Common errors: Duplicate database names, invalid data types.
+  - **Quick Practice**:
+    - Create a schema and table:
+      ```sql
+      CREATE DATABASE TempDB;
+      USE TempDB;
+      CREATE SCHEMA HR;
+      CREATE TABLE HR.Departments (DeptID INT, DeptName VARCHAR(50));
+      DROP DATABASE TempDB;
+      ```
+- **Day 3: Creating Tables**
+  - **Concepts**: `CREATE TABLE` syntax; constraints (`PRIMARY KEY`, `NOT NULL`, `UNIQUE`); `ALTER TABLE` for modifications; `INSERT INTO` for data.
+  - **Key Points**:
+    - Tables define structure with columns and data types.
+    - Constraints enforce data integrity (e.g., `PRIMARY KEY` ensures uniqueness).
+    - `ALTER TABLE` adds, modifies, or drops columns/constraints.
+    - Common errors: Constraint violations, syntax errors.
+  - **Quick Practice**:
+    - Run:
+      ```sql
+      CREATE DATABASE TempDB;
+      USE TempDB;
+      CREATE TABLE dbo.TestTable (
+          ID INT PRIMARY KEY,
+          Name VARCHAR(50) NOT NULL,
+          Code VARCHAR(10) UNIQUE
+      );
+      ALTER TABLE dbo.TestTable ADD Description VARCHAR(100);
+      INSERT INTO dbo.TestTable (ID, Name, Code) VALUES (1, 'Test', 'T1');
+      DROP DATABASE TempDB;
+      ```
+- **Day 4: Basic Data Manipulation – INSERT and SELECT**
+  - **Concepts**: `INSERT` for single/multiple rows; `SELECT` for querying; `WHERE` for filtering.
+  - **Key Points**:
+    - `INSERT` populates tables; respects constraints.
+    - `SELECT` retrieves specific/all columns; `WHERE` filters rows with operators (`=`, `LIKE`, `IN`).
+    - Common errors: Data type mismatches, constraint violations.
+  - **Quick Practice**:
+    - Run:
+      ```sql
+      CREATE DATABASE TempDB;
+      USE TempDB;
+      CREATE TABLE dbo.Items (ItemID INT PRIMARY KEY, Name VARCHAR(50));
+      INSERT INTO dbo.Items VALUES (1, 'Laptop'), (2, 'Phone');
+      SELECT Name FROM dbo.Items WHERE ItemID = 1;
+      DROP DATABASE TempDB;
+      ```
+- **Day 5: Updating and Deleting Data**
+  - **Concepts**: `UPDATE` with `SET` and `WHERE`; `DELETE` with conditions; `TRUNCATE` vs. `DELETE`; safe data changes with transactions.
+  - **Key Points**:
+    - `UPDATE` modifies data; `DELETE` removes rows.
+    - `TRUNCATE` is faster but removes all rows and resets identity columns.
+    - Use transactions and backups for safety.
+    - Common errors: Missing `WHERE`, constraint violations.
+  - **Quick Practice**:
+    - Run:
+      ```sql
+      CREATE DATABASE TempDB;
+      USE TempDB;
+      CREATE TABLE dbo.Orders (OrderID INT PRIMARY KEY, Status VARCHAR(20));
+      INSERT INTO dbo.Orders VALUES (1, 'Pending'), (2, 'Completed');
+      UPDATE dbo.Orders SET Status = 'Shipped' WHERE OrderID = 1;
+      DELETE FROM dbo.Orders WHERE Status = 'Completed';
+      TRUNCATE TABLE dbo.Orders;
+      DROP DATABASE TempDB;
+      ```
+- **Day 6: Sorting and Limiting Results**
+  - **Concepts**: `ORDER BY` (ASC/DESC); `TOP` for limiting rows; aliases with `AS`; combining with `SELECT` and `WHERE`.
+  - **Key Points**:
+    - `ORDER BY` sorts results; `TOP` limits rows.
+    - Aliases improve readability for columns/tables.
+    - Combine for precise, organized queries.
+    - Common errors: Invalid column names, using aliases in `WHERE`.
+  - **Quick Practice**:
+    - Run:
+      ```sql
+      CREATE DATABASE TempDB;
+      USE TempDB;
+      CREATE TABLE dbo.Sales (SaleID INT, Amount DECIMAL(10,2));
+      INSERT INTO dbo.Sales VALUES (1, 100.50), (2, 200.75);
+      SELECT TOP (1) SaleID AS ID, Amount AS Total FROM dbo.Sales ORDER BY Total DESC;
+      DROP DATABASE TempDB;
+      ```
+- **Review Best Practices**:
+  - Use meaningful names for databases, schemas, and tables.
+  - Always include `WHERE` in `UPDATE` and `DELETE` unless intentional.
+  - Test queries on small datasets before applying to large ones.
+  - Save scripts in `.sql` files for reuse.
+- **Common Errors to Revisit**:
+  - Connection issues (Day 1): Check server name, authentication mode.
+  - Constraint violations (Day 3-5): Ensure unique `PRIMARY KEY`/`UNIQUE` values.
+  - Syntax errors: Missing semicolons, incorrect column names.
+  - Logical errors: Incorrect `WHERE` conditions, sorting issues.
+
+**Practice (30-45 minutes)**:
+- **Activity 1: Quick Recap Queries**:
+  - Create a test database and table:
+    ```sql
+    CREATE DATABASE ReviewDB;
+    USE ReviewDB;
+    CREATE SCHEMA Test;
+    CREATE TABLE Test.Samples (
+        SampleID INT PRIMARY KEY,
+        Name VARCHAR(50) NOT NULL,
+        Value DECIMAL(10,2),
+        CreatedDate DATE DEFAULT GETDATE()
+    );
+    ```
+  - Run commands from Days 1-6:
+    ```sql
+    -- Insert data
+    INSERT INTO Test.Samples (SampleID, Name, Value)
+    VALUES (1, 'Item1', 99.99), (2, 'Item2', 49.99);
+    -- Select with filter and sort
+    SELECT Name AS Item, Value AS Price
+    FROM Test.Samples
+    WHERE Value > 50
+    ORDER BY Price DESC;
+    -- Update
+    UPDATE Test.Samples SET Value = Value * 1.1 WHERE SampleID = 1;
+    -- Delete
+    DELETE FROM Test.Samples WHERE SampleID = 2;
+    -- Drop database
+    DROP DATABASE ReviewDB;
+    ```
+- **Activity 2: Error Review**:
+  - Try common errors:
+    - Duplicate `SampleID`: `INSERT INTO Test.Samples (SampleID, Name, Value) VALUES (1, 'Item3', 29.99);`.
+    - Missing `NOT NULL`: `INSERT INTO Test.Samples (SampleID, Value) VALUES (3, 39.99);`.
+    - Invalid column in `ORDER BY`: `SELECT * FROM Test.Samples ORDER BY NonExistentColumn;`.
+  - Note errors and resolutions in your journal.
+- **Activity 3: Journal Notes**:
+  - Summarize one key concept from each day (e.g., Day 1: RDBMS structure, Day 3: Constraints).
+  - List three common errors and their fixes (e.g., “Duplicate PRIMARY KEY: Use unique values”).
+
+**Resources**:
+- Microsoft Docs: Review “CREATE DATABASE”, “CREATE TABLE”, “INSERT”, “SELECT”, “UPDATE”, “DELETE”, “ORDER BY”, “TOP”.
+- W3Schools: SQL tutorials for basics.
+- SQLZoo: Interactive exercises for all commands.
+
+---
+
+#### 2. Build a Simple Employee Database with Tables and Insert/Query Data (2-2.5 hours)
+**Goal**: Apply Days 1-6 skills to create a functional employee database, insert sample data, and query it to solve practical scenarios.
+
+**Theory (30-45 minutes)**:
+- **Project Overview**:
+  - Build a database (`EmployeeDB`) to manage employee information, including departments and employee details.
+  - Tables:
+    - `HR.Departments`: Stores department data (e.g., ID, name).
+    - `HR.Employees`: Stores employee data (e.g., ID, name, department, salary, hire date).
+  - Tasks:
+    - Create database and schema.
+    - Define tables with appropriate data types and constraints.
+    - Insert sample data.
+    - Write queries to retrieve and manipulate data.
+- **Design Considerations**:
+  - Use `INT` for IDs, `VARCHAR` for names, `DECIMAL` for salaries, `DATE` for hire dates.
+  - Apply `PRIMARY KEY`, `NOT NULL`, and `UNIQUE` constraints.
+  - Plan for relationships (e.g., `Employees` references `Departments` via `DepartmentID`).
+  - Use `ORDER BY`, `TOP`, and aliases for meaningful query results.
+- **Best Practices**:
+  - Name tables and columns descriptively (e.g., `EmployeeID` vs. `ID`).
+  - Use transactions for data modifications.
+  - Test queries before applying updates/deletes.
+  - Backup tables before major changes.
+
+**Practice (1.5-2 hours)**:
+- **Step 1: Create the Database and Schema**:
+  - Run:
+    ```sql
+    CREATE DATABASE EmployeeDB;
+    USE EmployeeDB;
+    CREATE SCHEMA HR;
+    ```
+  - Verify: `SELECT name FROM sys.databases; SELECT * FROM sys.schemas;`.
+- **Step 2: Create Tables**:
+  - Create `HR.Departments`:
+    ```sql
+    CREATE TABLE HR.Departments (
+        DepartmentID INT PRIMARY KEY,
+        DepartmentName VARCHAR(50) NOT NULL,
+        Location VARCHAR(50)
+    );
+    ```
+  - Create `HR.Employees`:
+    ```sql
+    CREATE TABLE HR.Employees (
+        EmployeeID INT PRIMARY KEY,
+        FirstName VARCHAR(50) NOT NULL,
+        LastName VARCHAR(50) NOT NULL,
+        Email VARCHAR(100) UNIQUE,
+        DepartmentID INT,
+        Salary DECIMAL(10,2),
+        HireDate DATE DEFAULT GETDATE(),
+        CONSTRAINT FK_Employee_Dept FOREIGN KEY (DepartmentID) REFERENCES HR.Departments(DepartmentID)
+    );
+    ```
+  - Verify: In Object Explorer, expand `EmployeeDB > Schemas > HR > Tables`.
+- **Step 3: Insert Sample Data**:
+  - Insert into `HR.Departments`:
+    ```sql
+    INSERT INTO HR.Departments (DepartmentID, DepartmentName, Location)
+    VALUES 
+        (1, 'IT', 'New York'),
+        (2, 'HR', 'Chicago'),
+        (3, 'Finance', 'Boston'),
+        (4, 'Marketing', 'San Francisco');
+    ```
+  - Insert into `HR.Employees`:
+    ```sql
+    INSERT INTO HR.Employees (EmployeeID, FirstName, LastName, Email, DepartmentID, Salary, HireDate)
+    VALUES 
+        (1, 'Alice', 'Smith', 'alice.smith@company.com', 1, 75000.00, '2023-01-15'),
+        (2, 'Bob', 'Johnson', 'bob.johnson@company.com', 2, 65000.00, '2023-02-20'),
+        (3, 'Cathy', 'Lee', 'cathy.lee@company.com', 1, 80000.00, '2023-03-10'),
+        (4, 'David', 'Wong', 'david.wong@company.com', 3, 70000.00, '2023-04-05'),
+        (5, 'Emma', 'Brown', 'emma.brown@company.com', NULL, 60000.00, '2023-05-01');
+    ```
+  - Verify: `SELECT * FROM HR.Departments; SELECT * FROM HR.Employees;`.
+- **Step 4: Query the Database**:
+  - Write 10 queries combining Days 4-6 skills:
+    1. All employees: `SELECT EmployeeID AS ID, FirstName + ' ' + LastName AS FullName FROM HR.Employees;`
+    2. Top 3 salaries: `SELECT TOP (3) FirstName, LastName, Salary FROM HR.Employees ORDER BY Salary DESC;`
+    3. IT department employees: `SELECT e.FirstName, e.LastName, e.Salary FROM HR.Employees AS e WHERE e.DepartmentID = 1;`
+    4. Employees hired after 2023-03-01: `SELECT FirstName, HireDate FROM HR.Employees WHERE HireDate > '2023-03-01' ORDER BY HireDate ASC;`
+    5. Employees without department: `SELECT FirstName, LastName FROM HR.Employees WHERE DepartmentID IS NULL;`
+    6. Department names: `SELECT DepartmentName AS Dept, Location FROM HR.Departments ORDER BY DepartmentName ASC;`
+    7. High earners: `SELECT TOP (2) WITH TIES FirstName, Salary AS AnnualSalary FROM HR.Employees ORDER BY Salary DESC;`
+    8. Email pattern: `SELECT Email FROM HR.Employees WHERE Email LIKE '%@company.com';`
+    9. Salary range: `SELECT FirstName, Salary FROM HR.Employees WHERE Salary BETWEEN 60000 AND 75000 ORDER BY Salary ASC;`
+    10. Full name with department: `SELECT e.FirstName + ' ' + e.LastName AS FullName, d.DepartmentName FROM HR.Employees AS e, HR.Departments AS d WHERE e.DepartmentID = d.DepartmentID ORDER BY e.FirstName;`
+- **Step 5: Update and Delete Data**:
+  - Update:
+    ```sql
+    BEGIN TRANSACTION;
+    UPDATE HR.Employees
+    SET Salary = Salary * 1.1
+    WHERE DepartmentID = 1;
+    SELECT * FROM HR.Employees WHERE DepartmentID = 1;
+    COMMIT; -- or ROLLBACK;
+    ```
+  - Delete:
+    ```sql
+    SELECT * INTO HR.EmployeesBackup FROM HR.Employees;
+    DELETE FROM HR.Employees
+    WHERE HireDate < '2023-02-01';
+    SELECT * FROM HR.Employees;
+    ```
+- **Step 6: Test Constraints**:
+  - Try inserting duplicate `EmployeeID` or `Email` (should fail).
+  - Try deleting a department with employees (should fail due to `FOREIGN KEY`).
+  - Resolve: Delete dependent employees first or use `ON DELETE CASCADE` (advanced, covered later).
+- **Step 7: Cleanup**:
+  - Optionally drop: `DROP DATABASE EmployeeDB;`.
+
+**Resources**:
+- Microsoft Docs: Review commands from Days 1-6.
+- SQLZoo: Interactive exercises for creating and querying tables.
+- YouTube: Search “SQL Server employee database tutorial” for demos.
+
+---
+
+#### 3. Self-Quiz on Basic Commands (1-1.5 hours)
+**Goal**: Assess your understanding of Days 1-6 concepts through a self-administered quiz and identify areas for improvement.
+
+**Theory (15-30 minutes)**:
+- **Quiz Design**:
+  - Create questions covering:
+    - Database creation/deletion (Day 1).
+    - Data types and schemas (Day 2).
+    - Table creation and constraints (Day 3).
+    - `INSERT` and `SELECT` with `WHERE` (Day 4).
+    - `UPDATE`, `DELETE`, `TRUNCATE` (Day 5).
+    - `ORDER BY`, `TOP`, aliases (Day 6).
+  - Include multiple-choice, true/false, and practical questions (e.g., write SQL).
+  - Aim for 10-15 questions to test breadth and depth.
+- **Evaluation**:
+  - Answer questions without referring to notes initially.
+  - Check answers against Microsoft Docs or your journal.
+  - Note weak areas for further review.
+
+**Practice (45-60 minutes)**:
+- **Sample Quiz**:
+  1. **Multiple Choice**: What is the purpose of a `PRIMARY KEY` constraint?
+     - A) Ensures non-NULL values
+     - B) Ensures unique and non-NULL values
+     - C) Links tables
+     - D) Sets default values
+     - **Answer**: B
+  2. **True/False**: `TRUNCATE TABLE` can use a `WHERE` clause. (**False**)
+  3. **Practical**: Write a `CREATE TABLE` statement for a table `Projects` with columns `ProjectID` (INT, PRIMARY KEY), `ProjectName` (VARCHAR(100), NOT NULL), `StartDate` (DATE).
+     - **Answer**:
+       ```sql
+       CREATE TABLE Projects (
+           ProjectID INT PRIMARY KEY,
+           ProjectName VARCHAR(100) NOT NULL,
+           StartDate DATE
+       );
+       ```
+  4. **Practical**: Insert two rows into `Projects`.
+     - **Answer**:
+       ```sql
+       INSERT INTO Projects (ProjectID, ProjectName, StartDate)
+       VALUES (1, 'Website Redesign', '2025-09-01'), (2, 'App Development', '2025-09-15');
+       ```
+  5. **Multiple Choice**: What does `SELECT TOP (10) PERCENT` do?
+     - A) Selects top 10 rows
+     - B) Selects 10% of rows
+     - C) Selects rows with 10% highest values
+     - D) Selects rows randomly
+     - **Answer**: B
+  6. **Practical**: Write a query to select the top 3 employees by salary from `HR.Employees`, aliasing `Salary` as `AnnualPay`.
+     - **Answer**:
+       ```sql
+       SELECT TOP (3) FirstName, LastName, Salary AS AnnualPay
+       FROM HR.Employees
+       ORDER BY Salary DESC;
+       ```
+  7. **True/False**: `UPDATE` without `WHERE` updates all rows. (**True**)
+  8. **Practical**: Update `HR.Employees` to increase salaries by 5% for employees in department 2.
+     - **Answer**:
+       ```sql
+       UPDATE HR.Employees
+       SET Salary = Salary * 1.05
+       WHERE DepartmentID = 2;
+       ```
+  9. **Multiple Choice**: Which clause sorts query results?
+     - A) WHERE
+     - B) ORDER BY
+     - C) TOP
+     - D) SET
+     - **Answer**: B
+  10. **Practical**: Delete employees hired before ‘2023-03-01’ from `HR.Employees`.
+      - **Answer**:
+        ```sql
+        DELETE FROM HR.Employees
+        WHERE HireDate < '2023-03-01';
+        ```
+  11. **True/False**: Aliases can be used in `WHERE` clauses. (**False**)
+  12. **Practical**: Select all departments from `HR.Departments`, sorted by `DepartmentName`.
+      - **Answer**:
+        ```sql
+        SELECT DepartmentName, Location
+        FROM HR.Departments
+        ORDER BY DepartmentName ASC;
+        ```
+  13. **Multiple Choice**: What happens if you `TRUNCATE` a table with a `FOREIGN KEY` reference?
+      - A) Succeeds
+      - B) Fails
+      - C) Deletes referenced rows
+      - D) Resets constraints
+      - **Answer**: B
+  14. **Practical**: Create a database `TestDB` and drop it.
+      - **Answer**:
+        ```sql
+        CREATE DATABASE TestDB;
+        DROP DATABASE TestDB;
+        ```
+  15. **Practical**: Write a query with `TOP`, `WHERE`, `ORDER BY`, and aliases.
+      - **Answer**:
+        ```sql
+        SELECT TOP (2) FirstName AS Name, Salary AS Pay
+        FROM HR.Employees
+        WHERE DepartmentID = 1
+        ORDER BY Salary DESC;
+        ```
+- **Activity 1: Take the Quiz**:
+  - Answer all questions in your journal or a text editor.
+  - Run practical questions in SSMS to verify correctness.
+  - Score yourself (e.g., 12/15 correct).
+- **Activity 2: Review Weak Areas**:
+  - For incorrect answers, revisit relevant day’s notes (e.g., Day 5 for `TRUNCATE`).
+  - Re-run related queries to reinforce understanding.
+- **Activity 3: Journal Reflection**:
+  - Write:
+    - Quiz score and areas of strength (e.g., “Strong in SELECT and ORDER BY”).
+    - Weak areas and plan to review (e.g., “Revisit TRUNCATE vs. DELETE”).
+    - Confidence level with Days 1-6 concepts.
+
+**Resources**:
+- Microsoft Docs: Review commands from Days 1-6.
+- W3Schools: SQL quizzes for practice.
+- SQLZoo: Interactive SQL challenges.
+
+---
+
+### Day 7 Deliverables
+- **Journal Entries**:
+  - Summary of key concepts from Days 1-6.
+  - Notes on common errors and resolutions.
+  - SQL scripts for the employee database mini-project (create, insert, query, update, delete).
+  - Quiz questions, answers, and score.
+  - Reflection on strengths, weaknesses, and review plan.
+- **Practical Output**:
+  - Created `EmployeeDB` with `HR.Departments` and `HR.Employees` tables.
+  - Inserted sample data and ran 10 queries.
+  - Performed updates and deletes with safety measures (transactions, backups).
+  - Completed and scored the self-quiz.
+- **Self-Assessment**:
+  - Can you create
