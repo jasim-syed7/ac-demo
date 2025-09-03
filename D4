@@ -1,0 +1,468 @@
+### Detailed Explanation of Day 4: Basic Data Manipulation – INSERT and SELECT
+
+**Objective**: Develop proficiency in manipulating data in Microsoft SQL Server (MSSQL) by mastering the `INSERT` statement for adding data and the `SELECT` statement for retrieving data. By the end of Day 4, you’ll be able to insert single and multiple rows into tables, query data with basic `SELECT` statements, filter results using the `WHERE` clause, and practice extensively with a sample table to solidify these skills. This day builds on your Day 3 knowledge of creating tables and applying constraints, enabling you to interact dynamically with data.
+
+**Duration**: 4-6 hours (split into theory, hands-on practice, and review). Adjust based on your comfort with SQL Server Management Studio (SSMS) and SQL syntax.
+
+---
+
+### Sub-Syllabus Breakdown
+1. **INSERT Variations (Single/Multiple Rows)** (1-1.5 hours)
+   - Learn the `INSERT` statement’s syntax and variations for adding single and multiple rows.
+   - Understand how constraints affect data insertion.
+2. **SELECT Statement Basics** (1-1.5 hours)
+   - Master the `SELECT` statement to retrieve data from tables.
+   - Learn to select specific columns, all columns, and use basic expressions.
+3. **WHERE Clause for Filtering** (1 hour)
+   - Use the `WHERE` clause to filter data based on conditions.
+   - Explore operators and common filtering patterns.
+4. **Practice with 10-20 Queries on a Sample Table** (1-1.5 hours)
+   - Apply `INSERT` and `SELECT` skills through extensive practice on a sample table.
+   - Debug errors and validate query results.
+
+---
+
+### Step-by-Step Detailed Plan for Day 4
+
+#### 1. INSERT Variations (Single/Multiple Rows) (1-1.5 hours)
+**Goal**: Master the `INSERT` statement to populate tables with data, including single-row and multi-row insertions, while respecting constraints.
+
+**Theory (45-60 minutes)**:
+- **What is INSERT?**
+  - The `INSERT` statement adds new rows to a table, populating it with data.
+  - Essential for creating datasets to query and analyze.
+  - Must respect table constraints (e.g., `PRIMARY KEY`, `NOT NULL`, `UNIQUE`) from Day 3.
+- **INSERT Syntax**:
+  - **Single Row**:
+    ```sql
+    INSERT INTO [SchemaName].[TableName] (Column1, Column2, ...)
+    VALUES (Value1, Value2, ...);
+    ```
+    - Example:
+      ```sql
+      INSERT INTO Sales.Customers (CustomerID, FirstName, Email)
+      VALUES (1, 'Alice Smith', 'alice@example.com');
+      ```
+  - **Multiple Rows**:
+    ```sql
+    INSERT INTO [SchemaName].[TableName] (Column1, Column2, ...)
+    VALUES 
+        (Value1a, Value2a, ...),
+        (Value1b, Value2b, ...);
+    ```
+    - Example:
+      ```sql
+      INSERT INTO Sales.Customers (CustomerID, FirstName, Email)
+      VALUES 
+          (2, 'Bob Johnson', 'bob@example.com'),
+          (3, 'Cathy Lee', 'cathy@example.com');
+      ```
+  - **Insert All Columns**:
+    - Omit column list if providing values for all columns in table order:
+      ```sql
+      INSERT INTO Sales.Customers
+      VALUES (4, 'David Wong', 'david@example.com');
+      ```
+  - **Other Variations**:
+    - **INSERT with SELECT**: Copy data from another table (covered later in the roadmap).
+    - **INSERT with Defaults**: Use `DEFAULT` or skip columns with default values (e.g., `CreatedDate DATE DEFAULT GETDATE()`).
+    - Example:
+      ```sql
+      INSERT INTO Sales.Customers (CustomerID, FirstName)
+      VALUES (5, 'Emma Brown');
+      ```
+      - If `Email` allows NULL or has a default, it’s optional.
+- **Key Points**:
+  - Column names are optional if inserting all columns in order, but including them improves clarity and avoids errors if table structure changes.
+  - Values must match column data types (e.g., `'2025-09-03'` for `DATE`, `123` for `INT`).
+  - Use single quotes for string literals (`'Alice'`) and no quotes for numbers or `NULL`.
+  - `GETDATE()` function inserts the current date/time for `DATE` or `DATETIME` columns.
+- **Constraints Impact**:
+  - `PRIMARY KEY`: Ensures no duplicate or NULL values.
+  - `NOT NULL`: Requires a value for the column.
+  - `UNIQUE`: Prevents duplicate values in the column.
+  - Example: Inserting a duplicate `CustomerID` into a `PRIMARY KEY` column will fail.
+- **Best Practices**:
+  - Always specify column names to avoid errors.
+  - Batch large inserts (e.g., 1000 rows at a time) for performance.
+  - Validate data before insertion to avoid constraint violations.
+  - Use meaningful data for practice (e.g., realistic names, dates).
+- **Common Pitfalls**:
+  - Missing `NOT NULL` values cause errors (e.g., omitting `FirstName` if `NOT NULL`).
+  - Data type mismatches (e.g., inserting `'abc'` into an `INT` column).
+  - Duplicate `PRIMARY KEY` or `UNIQUE` values trigger errors.
+- **SSMS Tools**:
+  - View inserted data: Right-click table > Select Top 1000 Rows.
+  - Debug errors: Check error messages in the Messages tab of the query window.
+
+**Practice (30-45 minutes)**:
+- **Activity 1: Write INSERT Statements**:
+  - In your journal, write `INSERT` statements for:
+    - Single row into a `Products` table (`ProductID` INT, `ProductName` VARCHAR(100), `Price` DECIMAL(10,2)).
+    - Multiple rows (3 rows) into an `Orders` table (`OrderID` INT, `CustomerID` INT, `OrderDate` DATE).
+  - Example:
+    ```sql
+    INSERT INTO Products (ProductID, ProductName, Price)
+    VALUES (1, 'Laptop', 999.99);
+    INSERT INTO Orders (OrderID, CustomerID, OrderDate)
+    VALUES 
+        (1, 1, '2025-09-01'),
+        (2, 2, '2025-09-02'),
+        (3, 1, '2025-09-03');
+    ```
+- **Activity 2: Insert Data in SSMS**:
+  - Use the `StoreDB` database from Day 3 (`CREATE DATABASE StoreDB; USE StoreDB;`).
+  - Ensure tables exist (e.g., `Inventory.Items` from Day 3). If not, recreate:
+    ```sql
+    CREATE TABLE Inventory.Items (
+        ItemID INT PRIMARY KEY,
+        ItemName VARCHAR(100) NOT NULL,
+        StockQuantity INT,
+        UnitPrice DECIMAL(8,2)
+    );
+    ```
+  - Insert single row:
+    ```sql
+    INSERT INTO Inventory.Items (ItemID, ItemName, StockQuantity, UnitPrice)
+    VALUES (1, 'Smartphone', 20, 599.99);
+    ```
+  - Insert multiple rows:
+    ```sql
+    INSERT INTO Inventory.Items (ItemID, ItemName, StockQuantity, UnitPrice)
+    VALUES 
+        (2, 'Headphones', 50, 79.99),
+        (3, 'Tablet', 15, 299.99),
+        (4, 'Charger', 100, 19.99);
+    ```
+  - Verify: `SELECT * FROM Inventory.Items;`.
+- **Activity 3: Test Constraints**:
+  - Try inserting invalid data:
+    ```sql
+    -- Should fail (duplicate ItemID)
+    INSERT INTO Inventory.Items (ItemID, ItemName, StockQuantity, UnitPrice)
+    VALUES (1, 'Mouse', 30, 29.99);
+    -- Should fail (missing NOT NULL ItemName)
+    INSERT INTO Inventory.Items (ItemID, StockQuantity, UnitPrice)
+    VALUES (5, 40, 49.99);
+    ```
+  - Note error messages and resolve (e.g., use unique `ItemID`, provide `ItemName`).
+- **Activity 4: Use Defaults**:
+  - Create a table with a default value:
+    ```sql
+    CREATE TABLE Sales.Orders (
+        OrderID INT PRIMARY KEY,
+        CustomerID INT NOT NULL,
+        OrderDate DATE DEFAULT GETDATE(),
+        OrderNumber VARCHAR(20) UNIQUE
+    );
+    ```
+  - Insert without `OrderDate`:
+    ```sql
+    INSERT INTO Sales.Orders (OrderID, CustomerID, OrderNumber)
+    VALUES (1, 1, 'ORD001');
+    ```
+  - Verify: `SELECT * FROM Sales.Orders;` (should show current date).
+
+**Resources**:
+- Microsoft Docs: “INSERT (Transact-SQL)” (search “SQL Server INSERT”).
+- W3Schools: SQL INSERT INTO tutorial.
+- SQLZoo: Interactive INSERT exercises.
+
+---
+
+#### 2. SELECT Statement Basics (1-1.5 hours)
+**Goal**: Learn to retrieve data from tables using the `SELECT` statement, including selecting specific columns and using basic expressions.
+
+**Theory (45-60 minutes)**:
+- **What is SELECT?**
+  - The `SELECT` statement retrieves data from one or more tables, returning a result set.
+  - Core operation for querying and analyzing data in SQL Server.
+- **SELECT Syntax**:
+  - Basic syntax:
+    ```sql
+    SELECT Column1, Column2, ...
+    FROM [SchemaName].[TableName];
+    ```
+    - Example:
+      ```sql
+      SELECT ItemName, UnitPrice
+      FROM Inventory.Items;
+      ```
+  - **Select All Columns**:
+    ```sql
+    SELECT *
+    FROM Inventory.Items;
+    ```
+    - Retrieves all columns; use sparingly for clarity and performance.
+  - **Expressions in SELECT**:
+    - Perform calculations or transformations in the result set.
+    - Example:
+      ```sql
+      SELECT ItemName, UnitPrice, UnitPrice * 1.1 AS PriceWithTax
+      FROM Inventory.Items;
+      ```
+    - `AS` assigns an alias (e.g., `PriceWithTax`) to the computed column.
+  - **DISTINCT**:
+    - Removes duplicate rows from the result set.
+    - Example:
+      ```sql
+      SELECT DISTINCT CustomerID
+      FROM Sales.Orders;
+      ```
+- **Key Points**:
+  - Column names are case-insensitive but should match table definitions.
+  - Use schema-qualified names (e.g., `Inventory.Items`) to avoid ambiguity.
+  - Result sets are displayed in SSMS’s Results pane.
+- **Best Practices**:
+  - Specify columns explicitly instead of `SELECT *` for clarity and performance.
+  - Use meaningful aliases for computed columns.
+  - Test queries on small datasets to understand output.
+- **Common Pitfalls**:
+  - Invalid column names cause errors.
+  - `SELECT *` can slow queries on large tables.
+  - Ambiguous column names (e.g., same column in multiple tables) require schema qualification.
+- **SSMS Tools**:
+  - View results: Results pane shows query output.
+  - Script tables: Right-click table > Script Table as > SELECT To.
+  - Format queries: Use SSMS’s Query > Format SQL for readability.
+
+**Practice (30-45 minutes)**:
+- **Activity 1: Write SELECT Statements**:
+  - In your journal, write `SELECT` statements for:
+    - Retrieving `ItemName` and `StockQuantity` from `Inventory.Items`.
+    - Calculating total value (`StockQuantity * UnitPrice`) with an alias `TotalValue`.
+    - Selecting unique `CustomerID` values from `Sales.Orders`.
+- **Activity 2: Query in SSMS**:
+  - Use `StoreDB` and `Inventory.Items`:
+    ```sql
+    SELECT ItemName, UnitPrice
+    FROM Inventory.Items;
+    SELECT ItemName, StockQuantity * UnitPrice AS TotalValue
+    FROM Inventory.Items;
+    SELECT DISTINCT ItemName
+    FROM Inventory.Items;
+    ```
+  - Verify output in the Results pane.
+- **Activity 3: Experiment with Expressions**:
+  - Run:
+    ```sql
+    SELECT ItemName, UnitPrice, UnitPrice * 0.9 AS DiscountedPrice
+    FROM Inventory.Items;
+    ```
+  - Try concatenating strings:
+    ```sql
+    SELECT ItemName + ' (ID: ' + CAST(ItemID AS VARCHAR) + ')' AS ItemDescription
+    FROM Inventory.Items;
+    ```
+- **Activity 4: Test Errors**:
+  - Try selecting a non-existent column (e.g., `SELECT Price FROM Inventory.Items;`) and note the error.
+  - Fix by using correct column names.
+
+---
+
+#### 3. WHERE Clause for Filtering (1 hour)
+**Goal**: Use the `WHERE` clause to filter data based on conditions, enhancing query precision.
+
+**Theory (30 minutes)**:
+- **What is WHERE?**
+  - The `WHERE` clause filters rows in a `SELECT` (or other statements like `UPDATE`, `DELETE`) based on conditions.
+  - Syntax:
+    ```sql
+    SELECT Column1, Column2
+    FROM TableName
+    WHERE Condition;
+    ```
+    - Example:
+      ```sql
+      SELECT ItemName, UnitPrice
+      FROM Inventory.Items
+      WHERE UnitPrice > 100;
+      ```
+- **Operators**:
+  - **Comparison**: `=`, `<>`, `>`, `<`, `>=`, `<=`.
+  - **Logical**: `AND`, `OR`, `NOT`.
+  - **Pattern Matching**: `LIKE` (e.g., `WHERE ItemName LIKE 'S%'` for names starting with ‘S’).
+  - **Range**: `BETWEEN` (e.g., `WHERE UnitPrice BETWEEN 50 AND 500`).
+  - **List**: `IN` (e.g., `WHERE ItemID IN (1, 2, 3)`).
+  - **NULL Check**: `IS NULL`, `IS NOT NULL`.
+- **Examples**:
+  - Filter by value: `WHERE StockQuantity = 50`.
+  - Combine conditions: `WHERE UnitPrice > 100 AND StockQuantity < 20`.
+  - Pattern match: `WHERE ItemName LIKE '%phone%'`.
+  - Null check: `WHERE StockQuantity IS NULL`.
+- **Best Practices**:
+  - Use parentheses for complex conditions (e.g., `WHERE (A AND B) OR C`).
+  - Avoid `LIKE` on large datasets for performance.
+  - Test conditions on small datasets to ensure correct filtering.
+- **Common Pitfalls**:
+  - Using `=` with `NULL` (use `IS NULL` instead).
+  - Incorrect `LIKE` patterns (e.g., `%phone` misses leading characters).
+  - Overly complex conditions reduce readability.
+
+**Practice (30 minutes)**:
+- **Activity 1: Write WHERE Statements**:
+  - In your journal, write `SELECT` statements with `WHERE` for:
+    - Items with `UnitPrice` > 200.
+    - Items with `ItemName` containing ‘phone’.
+    - Orders with `CustomerID` in (1, 2).
+- **Activity 2: Filter in SSMS**:
+  - Run:
+    ```sql
+    SELECT ItemName, UnitPrice
+    FROM Inventory.Items
+    WHERE UnitPrice >= 100;
+    SELECT ItemName
+    FROM Inventory.Items
+    WHERE ItemName LIKE '%phone%';
+    SELECT *
+    FROM Sales.Orders
+    WHERE CustomerID IN (1, 2);
+    ```
+  - Verify filtered results.
+- **Activity 3: Combine Conditions**:
+  - Run:
+    ```sql
+    SELECT ItemName, StockQuantity, UnitPrice
+    FROM Inventory.Items
+    WHERE StockQuantity < 50 AND UnitPrice BETWEEN 50 AND 500;
+    ```
+- **Activity 4: Test NULLs**:
+  - Insert a row with NULL:
+    ```sql
+    INSERT INTO Inventory.Items (ItemID, ItemName, UnitPrice)
+    VALUES (5, 'Keyboard', 49.99);
+    ```
+  - Query: `SELECT * FROM Inventory.Items WHERE StockQuantity IS NULL;`.
+
+---
+
+#### 4. Practice with 10-20 Queries on a Sample Table (1-1.5 hours)
+**Goal**: Apply `INSERT` and `SELECT` skills through extensive practice, reinforcing concepts and building query-writing confidence.
+
+**Practice (1-1.5 hours)**:
+- **Step 1: Set Up Sample Table**:
+  - Create a database and table if not already present:
+    ```sql
+    CREATE DATABASE RetailDB;
+    USE RetailDB;
+    CREATE SCHEMA Sales;
+    CREATE TABLE Sales.Orders (
+        OrderID INT PRIMARY KEY,
+        CustomerID INT NOT NULL,
+        OrderDate DATE NOT NULL,
+        TotalAmount DECIMAL(10,2),
+        Status VARCHAR(20)
+    );
+    ```
+- **Step 2: Insert Sample Data**:
+  - Insert 10 rows:
+    ```sql
+    INSERT INTO Sales.Orders (OrderID, CustomerID, OrderDate, TotalAmount, Status)
+    VALUES 
+        (1, 1, '2025-08-01', 199.99, 'Completed'),
+        (2, 2, '2025-08-02', 49.99, 'Pending'),
+        (3, 1, '2025-08-03', 299.99, 'Completed'),
+        (4, 3, '2025-08-04', 99.99, 'Cancelled'),
+        (5, 2, '2025-08-05', 149.99, 'Completed'),
+        (6, 4, '2025-08-06', NULL, 'Pending'),
+        (7, 1, '2025-08-07', 399.99, 'Completed'),
+        (8, 3, '2025-08-08', 79.99, 'Pending'),
+        (9, 2, '2025-08-09', 249.99, 'Completed'),
+        (10, 4, '2025-08-10', 59.99, 'Cancelled');
+    ```
+- **Step 3: Write 10-20 Queries**:
+  - Examples (run each in SSMS and verify results):
+    1. Select all orders: `SELECT * FROM Sales.Orders;`
+    2. Select specific columns: `SELECT OrderID, TotalAmount, Status FROM Sales.Orders;`
+    3. Filter by status: `SELECT * FROM Sales.Orders WHERE Status = 'Completed';`
+    4. Filter by customer: `SELECT OrderID, OrderDate FROM Sales.Orders WHERE CustomerID = 1;`
+    5. Filter by amount: `SELECT OrderID, TotalAmount FROM Sales.Orders WHERE TotalAmount > 100;`
+    6. Filter by date: `SELECT * FROM Sales.Orders WHERE OrderDate >= '2025-08-05';`
+    7. Use LIKE: `SELECT * FROM Sales.Orders WHERE Status LIKE '%ed%';`
+    8. Use IN: `SELECT * FROM Sales.Orders WHERE CustomerID IN (1, 3);`
+    9. Use BETWEEN: `SELECT * FROM Sales.Orders WHERE TotalAmount BETWEEN 50 AND 200;`
+    10. Check NULLs: `SELECT * FROM Sales.Orders WHERE TotalAmount IS NULL;`
+    11. Combine conditions: `SELECT * FROM Sales.Orders WHERE CustomerID = 2 AND Status = 'Completed';`
+    12. Calculate: `SELECT OrderID, TotalAmount * 1.05 AS TaxedAmount FROM Sales.Orders;`
+    13. Distinct values: `SELECT DISTINCT CustomerID FROM Sales.Orders;`
+    14. Complex filter: `SELECT * FROM Sales.Orders WHERE (TotalAmount > 100 OR Status = 'Cancelled') AND CustomerID <> 1;`
+    15. Insert new row: `INSERT INTO Sales.Orders (OrderID, CustomerID, OrderDate, TotalAmount, Status) VALUES (11, 5, '2025-08-11', 89.99, 'Pending');`
+    16. Verify insert: `SELECT * FROM Sales.Orders WHERE OrderID = 11;`
+    17. Filter by date range: `SELECT * FROM Sales.Orders WHERE OrderDate BETWEEN '2025-08-01' AND '2025-08-05';`
+    18. Use OR: `SELECT * FROM Sales.Orders WHERE Status = 'Completed' OR Status = 'Pending';`
+    19. Expression with concatenation: `SELECT OrderID, 'Order by Customer ' + CAST(CustomerID AS VARCHAR) AS OrderInfo FROM Sales.Orders;`
+    20. Test invalid query: `SELECT NonExistentColumn FROM Sales.Orders;` (note error and fix).
+- **Step 4: Debug and Validate**:
+  - For each query, check the Results pane for expected output.
+  - If errors occur (e.g., “Invalid column name”), verify column names with `SELECT * FROM sys.columns WHERE object_id = OBJECT_ID('Sales.Orders');`.
+  - Test constraint violations by inserting duplicates or missing `NOT NULL` values.
+- **Step 5: Mini-Project**:
+  - Create a new table `Sales.Customers`:
+    ```sql
+    CREATE TABLE Sales.Customers (
+        CustomerID INT PRIMARY KEY,
+        FirstName VARCHAR(50) NOT NULL,
+        Email VARCHAR(100) UNIQUE,
+        JoinDate DATE
+    );
+    ```
+  - Insert 5 rows:
+    ```sql
+    INSERT INTO Sales.Customers (CustomerID, FirstName, Email, JoinDate)
+    VALUES 
+        (1, 'Alice Smith', 'alice@example.com', '2025-07-01'),
+        (2, 'Bob Johnson', 'bob@example.com', '2025-07-02'),
+        (3, 'Cathy Lee', 'cathy@example.com', '2025-07-03'),
+        (4, 'David Wong', 'david@example.com', '2025-07-04'),
+        (5, 'Emma Brown', 'emma@example.com', '2025-07-05');
+    ```
+  - Write 5 `SELECT` queries:
+    1. All customers: `SELECT * FROM Sales.Customers;`
+    2. Names and emails: `SELECT FirstName, Email FROM Sales.Customers;`
+    3. Recent customers: `SELECT * FROM Sales.Customers WHERE JoinDate >= '2025-07-03';`
+    4. Specific customer: `SELECT * FROM Sales.Customers WHERE CustomerID = 2;`
+    5. Email pattern: `SELECT * FROM Sales.Customers WHERE Email LIKE '%@example.com';`.
+- **Step 6: Journal Reflection**:
+  - Write answers to:
+    - What’s the difference between single-row and multi-row `INSERT`?
+    - How does `WHERE` improve query precision?
+    - Any errors faced and how you resolved them.
+    - Why use `DISTINCT` or aliases in `SELECT`?
+
+**Resources**:
+- Microsoft Docs: “SELECT (Transact-SQL)” and “WHERE (Transact-SQL)”.
+- W3Schools: SQL SELECT and WHERE tutorials.
+- SQLZoo: Interactive SELECT and WHERE exercises.
+- YouTube: Search “SQL Server SELECT WHERE tutorial” for demos.
+
+---
+
+### Day 4 Deliverables
+- **Journal Entries**:
+  - Examples of single-row and multi-row `INSERT` statements.
+  - Examples of `SELECT` with and without `WHERE` clauses.
+  - List of 10-20 queries with expected outputs.
+  - Notes on errors encountered and solutions.
+  - Reflection on the mini-project (e.g., why you chose specific `WHERE` conditions).
+- **Practical Output**:
+  - Inserted data into `Sales.Orders` and `Sales.Customers` tables.
+  - Executed 10-20 `SELECT` queries with varying conditions.
+  - Completed the `Sales.Customers` mini-project with 5 queries.
+  - Validated query results and debugged errors.
+- **Self-Assessment**:
+  - Can you insert single and multiple rows without errors?
+  - Can you write `SELECT` queries to retrieve specific columns or computed values?
+  - Can you filter data using `WHERE` with various operators?
+  - Can you explain the impact of constraints on `INSERT`?
+
+---
+
+### Tips for Success
+- **Practice Extensively**: Write and run at least 20 queries to build fluency.
+- **Use SSMS Effectively**: Use the Results pane to verify output and Messages pane for errors.
+- **Debug Actively**: Read error messages carefully and search solutions on Microsoft Docs or Stack Overflow.
+- **Experiment**: Try complex `WHERE` conditions or invalid queries to understand error handling.
+- **Organize Scripts**: Save all queries in a `.sql` file for future reference.
+- **Community**: Search “SQL Server INSERT SELECT WHERE” on X or join a SQL Server forum for tips.
+
+This detailed Day 4 plan ensures you master data insertion and retrieval, critical skills for working with MSSQL databases. If you need help with specific queries, errors, or additional practice scenarios, let me know!
