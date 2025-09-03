@@ -1,0 +1,414 @@
+### Detailed Explanation of Day 10: Numeric and Conversion Functions
+
+**Objective**: Master the use of numeric and conversion functions in Microsoft SQL Server (MSSQL) to perform calculations and transform data types effectively. By the end of Day 10, you’ll be proficient in using numeric functions like `ROUND`, `CEILING`, and `FLOOR` to manipulate numeric data, and conversion functions like `CAST` and `CONVERT` to change data types. You’ll also learn to handle implicit and explicit conversions in queries to ensure data integrity and accuracy. This day builds on your Days 1-9 skills, particularly `SELECT`, `WHERE`, aggregate functions, and string/date functions, enabling you to process and format numeric data for real-world applications.
+
+**Duration**: 4-6 hours (split into theory, hands-on practice, and review). Adjust based on your comfort with SQL Server Management Studio (SSMS) and SQL syntax.
+
+---
+
+### Sub-Syllabus Breakdown
+1. **Numeric Functions: ROUND, CEILING, FLOOR** (1-1.5 hours)
+   - Learn key numeric functions to round or adjust numeric values.
+   - Understand their syntax, use cases, and precision control.
+2. **Conversion Functions: CAST and CONVERT** (1-1.5 hours)
+   - Use `CAST` and `CONVERT` to change data types explicitly.
+   - Explore common type conversions (e.g., string to numeric, numeric to string).
+3. **Handle Implicit/Explicit Conversions in Queries** (1.5-2 hours)
+   - Manage implicit and explicit conversions to avoid errors and ensure correct query results.
+   - Practice 10-20 queries on a sample dataset to apply numeric and conversion functions in real scenarios.
+
+---
+
+### Step-by-Step Detailed Plan for Day 10
+
+#### 1. Numeric Functions: ROUND, CEILING, FLOOR (1-1.5 hours)
+**Goal**: Master numeric functions to manipulate and format numeric data, such as rounding values or adjusting to whole numbers.
+
+**Theory (45-60 minutes)**:
+- **What are Numeric Functions?**
+  - Numeric functions process numeric data types (`INT`, `DECIMAL`, `FLOAT`, etc.) in SQL Server.
+  - Essential for formatting numbers in reports, performing calculations, or aligning data with business requirements (e.g., rounding prices, calculating whole units).
+  - Used in `SELECT`, `WHERE`, computed columns, or aggregate queries.
+- **Key Numeric Functions**:
+  - **ROUND**:
+    - Rounds a numeric value to a specified precision.
+    - Syntax: `ROUND(Number, Length, [Function])`.
+    - `Length`: Number of decimal places (positive for right of decimal, negative for left).
+    - `Function`: Optional; 0 (default, rounds) or 1 (truncates).
+    - Example:
+      ```sql
+      SELECT ROUND(123.4567, 2) AS RoundedValue; -- Returns 123.46
+      SELECT ROUND(123.4567, 0) AS WholeNumber; -- Returns 123
+      SELECT ROUND(123.4567, -1) AS Tens; -- Returns 120
+      ```
+    - Example with truncation:
+      ```sql
+      SELECT ROUND(123.4567, 2, 1) AS Truncated; -- Returns 123.45
+      ```
+  - **CEILING**:
+    - Rounds a number up to the next whole number.
+    - Syntax: `CEILING(Number)`.
+    - Example:
+      ```sql
+      SELECT CEILING(123.456) AS CeilingValue; -- Returns 124
+      SELECT CEILING(-123.456) AS CeilingValue; -- Returns -123
+      ```
+  - **FLOOR**:
+    - Rounds a number down to the previous whole number.
+    - Syntax: `FLOOR(Number)`.
+    - Example:
+      ```sql
+      SELECT FLOOR(123.456) AS FloorValue; -- Returns 123
+      SELECT FLOOR(-123.456) AS FloorValue; -- Returns -124
+      ```
+- **Key Points**:
+  - Work with numeric types (`DECIMAL`, `FLOAT`, `INT`).
+  - Combine with aggregates (e.g., `ROUND(AVG(Salary), 2)`).
+  - Use in `SELECT` for formatting or `WHERE` for filtering.
+  - Handle NULLs: Numeric functions return NULL if the input is NULL.
+- **Best Practices**:
+  - Use `ROUND` to control decimal precision for reports (e.g., 2 decimal places for currency).
+  - Use `CEILING` or `FLOOR` for whole-number calculations (e.g., inventory units).
+  - Test functions on sample data to confirm rounding behavior.
+  - Use aliases for clarity (e.g., `RoundedPrice`).
+- **Common Pitfalls**:
+  - Incorrect `Length` in `ROUND` (e.g., negative values round left of decimal).
+  - Using numeric functions on non-numeric columns (e.g., `ROUND(FirstName)` fails).
+  - Forgetting NULL handling in calculations.
+- **SSMS Tools**:
+  - View results: Results pane shows formatted numeric outputs.
+  - Debug errors: Messages pane shows errors (e.g., “Invalid input type”).
+  - Explore data: Right-click table > Select Top 1000 Rows to check numeric values.
+
+**Practice (30-45 minutes)**:
+- **Activity 1: Write Numeric Function Queries**:
+  - In your journal, write queries using each numeric function:
+    - Round employee salaries to 2 decimal places in `HR.Employees`.
+    - Ceiling of order amounts in `Sales.Orders`.
+    - Floor of transaction quantities in `Sales.SalesTransactions`.
+  - Example:
+    ```sql
+    SELECT Salary, ROUND(Salary, 2) AS RoundedSalary FROM HR.Employees;
+    SELECT TotalAmount, CEILING(TotalAmount) AS CeilingAmount FROM Sales.Orders;
+    ```
+- **Activity 2: Run Numeric Functions in SSMS**:
+  - Use the `EmployeeDB` from Day 7 (`USE EmployeeDB;`). If not available, recreate:
+    ```sql
+    CREATE DATABASE EmployeeDB;
+    USE EmployeeDB;
+    CREATE SCHEMA HR;
+    CREATE SCHEMA Sales;
+    CREATE TABLE HR.Employees (
+        EmployeeID INT PRIMARY KEY,
+        FirstName VARCHAR(50) NOT NULL,
+        LastName VARCHAR(50) NOT NULL,
+        Email VARCHAR(100) UNIQUE,
+        DepartmentID INT,
+        Salary DECIMAL(10,2),
+        HireDate DATE DEFAULT GETDATE()
+    );
+    INSERT INTO HR.Employees (EmployeeID, FirstName, LastName, Email, DepartmentID, Salary, HireDate)
+    VALUES 
+        (1, 'Alice', 'Smith', 'alice.smith@company.com', 1, 75000.67, '2023-01-15'),
+        (2, 'Bob', 'Johnson', 'bob.johnson@company.com', 2, 65000.33, '2023-02-20'),
+        (3, 'Cathy', 'Lee', 'cathy.lee@company.com', 1, 80000.99, '2023-03-10'),
+        (4, 'David', 'Wong', 'david.wong@company.com', 3, 70000.45, '2023-04-05'),
+        (5, 'Emma', 'Brown', 'emma.brown@company.com', NULL, 60000.12, '2023-05-01');
+    CREATE TABLE Sales.Orders (
+        OrderID INT PRIMARY KEY,
+        CustomerID INT NOT NULL,
+        OrderDate DATE NOT NULL,
+        TotalAmount DECIMAL(10,2),
+        Status VARCHAR(20)
+    );
+    INSERT INTO Sales.Orders (OrderID, CustomerID, OrderDate, TotalAmount, Status)
+    VALUES 
+        (1, 1, '2025-08-01', 199.99, 'Completed'),
+        (2, 2, '2025-08-02', 49.99, 'Pending'),
+        (3, 1, '2025-08-03', 299.99, 'Completed'),
+        (4, 3, '2025-08-04', 99.99, 'Cancelled'),
+        (5, 2, '2025-08-05', 149.99, 'Completed');
+    ```
+  - Run:
+    ```sql
+    -- Round salaries
+    SELECT FirstName, Salary, ROUND(Salary, 0) AS WholeSalary FROM HR.Employees;
+    -- Ceiling order amounts
+    SELECT OrderID, TotalAmount, CEILING(TotalAmount) AS CeilingAmount FROM Sales.Orders;
+    -- Floor order amounts
+    SELECT OrderID, TotalAmount, FLOOR(TotalAmount) AS FloorAmount FROM Sales.Orders;
+    -- Round with aggregates
+    SELECT DepartmentID, ROUND(AVG(Salary), 2) AS AvgSalary
+    FROM HR.Employees
+    GROUP BY DepartmentID;
+    ```
+  - Verify: Check Results pane for rounded or adjusted values.
+- **Activity 3: Combine with WHERE**:
+  - Run:
+    ```sql
+    SELECT FirstName, Salary, ROUND(Salary, 1) AS RoundedSalary
+    FROM HR.Employees
+    WHERE Salary > 70000;
+    SELECT OrderID, TotalAmount, CEILING(TotalAmount) AS CeilingAmount
+    FROM Sales.Orders
+    WHERE Status = 'Completed';
+    ```
+- **Activity 4: Test Errors**:
+  - Try: `SELECT ROUND(FirstName, 2) FROM HR.Employees;` (fails; non-numeric input).
+  - Fix: Use `ROUND(Salary, 2)`.
+  - Try: `SELECT ROUND(Salary, -5) FROM HR.Employees;` (test extreme negative precision).
+
+**Resources**:
+- Microsoft Docs: “Numeric Functions (Transact-SQL)” (search “SQL Server ROUND CEILING FLOOR”).
+- W3Schools: SQL ROUND, CEILING, FLOOR tutorials.
+- SQLZoo: Interactive numeric function exercises.
+
+---
+
+#### 2. Conversion Functions: CAST and CONVERT (1-1.5 hours)
+**Goal**: Use `CAST` and `CONVERT` to explicitly change data types, enabling flexible data manipulation and formatting.
+
+**Theory (45-60 minutes)**:
+- **What are Conversion Functions?**
+  - Conversion functions change data from one type to another (e.g., numeric to string, string to date).
+  - Essential for formatting output, joining tables with mismatched types, or validating data.
+  - Two main functions: `CAST` and `CONVERT`.
+- **Key Conversion Functions**:
+  - **CAST**:
+    - Converts a value to a specified data type.
+    - Syntax: `CAST(Expression AS DataType)`.
+    - Example:
+      ```sql
+      SELECT CAST(Salary AS INT) AS WholeSalary
+      FROM HR.Employees;
+      ```
+      - Converts `75000.67` to `75000`.
+    - Example:
+      ```sql
+      SELECT CAST(GETDATE() AS DATE) AS CurrentDate;
+      ```
+      - Removes time portion from `DATETIME`.
+  - **CONVERT**:
+    - Converts a value to a specified data type with optional style formatting (for dates/strings).
+    - Syntax: `CONVERT(DataType, Expression, [Style])`.
+    - Example:
+      ```sql
+      SELECT CONVERT(VARCHAR, TotalAmount, 1) AS FormattedAmount
+      FROM Sales.Orders;
+      ```
+      - Converts `199.99` to ‘199.99’ (string with commas in style 1).
+    - Example with date:
+      ```sql
+      SELECT CONVERT(VARCHAR, GETDATE(), 101) AS USDate;
+      ```
+      - Converts `2025-09-03` to ‘09/03/2025’ (MM/DD/YYYY, style 101).
+  - **Common Style Codes for CONVERT**:
+    - Dates: `101` (MM/DD/YYYY), `103` (DD/MM/YYYY), `120` (YYYY-MM-DD).
+    - Numbers: `0` (no commas), `1` (commas every three digits).
+    - Example:
+      ```sql
+      SELECT CONVERT(VARCHAR, GETDATE(), 103) AS UKDate; -- DD/MM/YYYY
+      ```
+- **Key Points**:
+  - `CAST` is simpler, ANSI-standard; `CONVERT` is SQL Server-specific with style options.
+  - Common conversions: `DECIMAL` to `INT`, `INT` to `VARCHAR`, `DATETIME` to `VARCHAR`.
+  - Use in `SELECT`, `WHERE`, or computed columns.
+  - Handle NULLs: Conversion functions preserve NULL values.
+- **Best Practices**:
+  - Use `CAST` for simple conversions; `CONVERT` for formatted output (e.g., dates).
+  - Test conversions to avoid data loss (e.g., `DECIMAL` to `INT` truncates decimals).
+  - Use explicit conversions to avoid implicit conversion errors.
+  - Combine with string/date functions for complex formatting.
+- **Common Pitfalls**:
+  - Invalid conversions (e.g., `CAST('abc' AS INT)` fails).
+  - Data loss (e.g., `CAST(123.456 AS INT)` loses decimals).
+  - Incorrect style codes in `CONVERT` (e.g., invalid date format).
+- **SSMS Tools**:
+  - View results: Results pane shows converted values.
+  - Debug errors: Messages pane shows “conversion failed” errors.
+  - Test types: Use `SELECT DATA_TYPE FROM information_schema.columns WHERE table_name = 'Employees';`.
+
+**Practice (30-45 minutes)**:
+- **Activity 1: Write Conversion Queries**:
+  - In your journal, write queries for:
+    - Convert salaries to integers in `HR.Employees`.
+    - Convert order dates to MM/DD/YYYY format in `Sales.Orders`.
+    - Convert total amounts to strings with commas.
+  - Example:
+    ```sql
+    SELECT Salary, CAST(Salary AS INT) AS WholeSalary FROM HR.Employees;
+    SELECT OrderDate, CONVERT(VARCHAR, OrderDate, 101) AS USDate FROM Sales.Orders;
+    ```
+- **Activity 2: Run Conversions in SSMS**:
+  - Run:
+    ```sql
+    -- Convert salary to integer
+    SELECT FirstName, Salary, CAST(Salary AS INT) AS WholeSalary FROM HR.Employees;
+    -- Convert date to string
+    SELECT OrderID, CONVERT(VARCHAR, OrderDate, 103) AS UKDate FROM Sales.Orders;
+    -- Convert amount to string with commas
+    SELECT TotalAmount, CONVERT(VARCHAR, TotalAmount, 1) AS FormattedAmount FROM Sales.Orders;
+    -- Combine with ROUND
+    SELECT Salary, CONVERT(VARCHAR, ROUND(Salary, 0)) AS RoundedString FROM HR.Employees;
+    ```
+  - Verify: Check Results pane for correct type conversions.
+- **Activity 3: Test Errors**:
+  - Try: `SELECT CAST(Email AS INT) FROM HR.Employees;` (fails; invalid conversion).
+  - Fix: Use `CAST(LEN(Email) AS INT)`.
+  - Try: `SELECT CONVERT(VARCHAR, OrderDate, 999) FROM Sales.Orders;` (fails; invalid style).
+  - Fix: Use style `101`.
+
+---
+
+#### 3. Handle Implicit/Explicit Conversions in Queries (1.5-2 hours)
+**Goal**: Manage implicit and explicit conversions to ensure accurate query results and avoid errors in real-world scenarios.
+
+**Theory (30-45 minutes)**:
+- **What are Implicit/Explicit Conversions?**
+  - **Implicit Conversion**: SQL Server automatically converts data types when needed (e.g., comparing `INT` and `DECIMAL`).
+    - Example: `WHERE Salary = 75000` (compares `DECIMAL` column to `INT` literal; SQL Server converts `INT` to `DECIMAL`).
+    - Risk: Can cause performance issues or errors if types are incompatible.
+  - **Explicit Conversion**: Using `CAST` or `CONVERT` to control type changes.
+    - Example:
+      ```sql
+      SELECT FirstName + ' ' + CAST(Salary AS VARCHAR) AS NameAndSalary
+      FROM HR.Employees;
+      ```
+  - **Common Scenarios**:
+    - Concatenating strings with numbers (requires `CAST`/`CONVERT`).
+    - Comparing different types (e.g., `VARCHAR` dates to `DATE`).
+    - Formatting output for reports (e.g., dates as strings).
+  - **Key Points**:
+    - Implicit conversions follow SQL Server’s data type precedence (e.g., `INT` < `DECIMAL` < `FLOAT`).
+    - Explicit conversions ensure control and prevent errors.
+    - Use `TRY_CAST` or `TRY_CONVERT` (SQL Server 2012+) to handle failed conversions gracefully (returns NULL instead of error).
+    - Example:
+      ```sql
+      SELECT TRY_CAST('abc' AS INT) AS TryResult; -- Returns NULL
+      ```
+  - **Best Practices**:
+    - Use explicit conversions (`CAST`/`CONVERT`) when types differ.
+    - Avoid implicit conversions in `WHERE` for performance (e.g., `WHERE Column = CAST(Value AS Type)`).
+    - Test conversions on sample data to avoid data loss.
+    - Use `ISNUMERIC` to check if a string can be converted to a number.
+  - **Common Pitfalls**:
+    - Implicit conversion errors (e.g., comparing `VARCHAR` ‘abc’ to `INT`).
+    - Data truncation (e.g., `CAST('LongString' AS VARCHAR(5))`).
+    - Performance issues from implicit conversions in large datasets.
+  - **SSMS Tools**:
+    - Check types: Use `SELECT DATA_TYPE FROM information_schema.columns;`.
+    - Debug errors: Messages pane shows “conversion failed” or “data truncation” errors.
+    - Test conversions: Run `SELECT CAST(Column AS Type)` to verify output.
+
+**Practice (1-1.5 hours)**:
+- **Step 1: Set Up Sample Data**:
+  - Use `EmployeeDB` with `HR.Employees`, `Sales.Orders`, and `Sales.SalesTransactions` (from Day 9). If not available, recreate as above.
+  - Add a table for mixed-type data:
+    ```sql
+    CREATE TABLE Sales.MixedData (
+        RecordID INT PRIMARY KEY,
+        Value VARCHAR(50),
+        RecordDate DATE,
+        Amount DECIMAL(10,2)
+    );
+    INSERT INTO Sales.MixedData (RecordID, Value, RecordDate, Amount)
+    VALUES 
+        (1, '123.45', '2025-09-01', 123.45),
+        (2, 'abc', '2025-09-02', 50.99),
+        (3, '678', '2025-09-03', 678.00),
+        (4, '99.99', '2025-09-04', 99.99),
+        (5, NULL, '2025-09-05', NULL);
+    ```
+- **Step 2: Write 10-20 Queries for Real Scenarios**:
+  - Examples (run each in SSMS and verify):
+    1. Round salaries: `SELECT FirstName, ROUND(Salary, 0) AS WholeSalary FROM HR.Employees;`
+    2. Ceiling amounts: `SELECT OrderID, CEILING(TotalAmount) AS CeilingAmount FROM Sales.Orders;`
+    3. Floor quantities: `SELECT TransactionID, FLOOR(Quantity * 1.5) AS AdjustedQuantity FROM Sales.SalesTransactions;`
+    4. Convert salary to string: `SELECT CONCAT(FirstName, ': $', CAST(Salary AS VARCHAR)) AS EmployeePay FROM HR.Employees;`
+    5. Convert date to string: `SELECT OrderID, CONVERT(VARCHAR, OrderDate, 101) AS USDate FROM Sales.Orders;`
+    6. Round and convert: `SELECT ROUND(TotalAmount, 1) AS Rounded, CONVERT(VARCHAR, ROUND(TotalAmount, 1), 1) AS Formatted FROM Sales.Orders;`
+    7. Implicit conversion test: `SELECT Value, Amount FROM Sales.MixedData WHERE Value = Amount;` (implicitly converts `VARCHAR` to `DECIMAL`).
+    8. Explicit conversion: `SELECT Value, CAST(Value AS DECIMAL(10,2)) AS NumericValue FROM Sales.MixedData WHERE ISNUMERIC(Value) = 1;`
+    9. Try conversion: `SELECT Value, TRY_CAST(Value AS INT) AS SafeInt FROM Sales.MixedData;`
+    10. Combine with aggregates: `SELECT DepartmentID, ROUND(AVG(Salary), 2) AS AvgSalary, CONVERT(VARCHAR, ROUND(AVG(Salary), 2)) AS FormattedAvg FROM HR.Employees GROUP BY DepartmentID;`
+    11. Format transaction totals: `SELECT CONCAT('Order ', OrderID, ': $', CONVERT(VARCHAR, ROUND(Quantity * UnitPrice, 2), 1)) AS OrderSummary FROM Sales.SalesTransactions;`
+    12. Ceiling with filter: `SELECT OrderID, CEILING(TotalAmount) AS CeilingAmount FROM Sales.Orders WHERE TotalAmount > 100;`
+    13. Floor sales totals: `SELECT TransactionID, FLOOR(Quantity * UnitPrice) AS WholeTotal FROM Sales.SalesTransactions;`
+    14. Convert date with style: `SELECT RecordID, CONVERT(VARCHAR, RecordDate, 103) AS UKDate FROM Sales.MixedData;`
+    15. Handle NULLs: `SELECT Value, CAST(COALESCE(Amount, 0) AS VARCHAR) AS AmountString FROM Sales.MixedData;`
+    16. Group by rounded values: `SELECT ROUND(TotalAmount, 0) AS RoundedAmount, COUNT(*) AS OrderCount FROM Sales.Orders GROUP BY ROUND(TotalAmount, 0);`
+    17. Error test: `SELECT CAST(Value AS INT) FROM Sales.MixedData;` (fails on ‘abc’).
+    18. Safe conversion: `SELECT Value, TRY_CONVERT(DECIMAL(10,2), Value) AS SafeDecimal FROM Sales.MixedData;`
+    19. Combine with string functions: `SELECT CONCAT(FirstName, ': ', CONVERT(VARCHAR, ROUND(Salary, 0))) AS EmployeePay FROM HR.Employees;`
+    20. Date and numeric: `SELECT OrderID, CONVERT(VARCHAR, OrderDate, 101) + ': $' + CONVERT(VARCHAR, ROUND(TotalAmount, 0)) AS OrderInfo FROM Sales.Orders;`
+- **Step 3: Debug and Validate**:
+  - Verify: Check Results pane for correct numeric and converted outputs.
+  - Debug errors: Fix issues like invalid conversions or incorrect styles.
+  - Test implicit conversions: Compare `WHERE Value = Amount` vs. `WHERE CAST(Value AS DECIMAL) = Amount`.
+- **Step 4: Mini-Project**:
+  - Create a table `Sales.InvoiceDetails`:
+    ```sql
+    CREATE TABLE Sales.InvoiceDetails (
+        InvoiceID INT PRIMARY KEY,
+        OrderID INT,
+        TotalAmount DECIMAL(10,2),
+        InvoiceDate DATE,
+        Notes VARCHAR(100)
+    );
+    INSERT INTO Sales.InvoiceDetails (InvoiceID, OrderID, TotalAmount, InvoiceDate, Notes)
+    VALUES 
+        (1, 1, 199.99, '2025-08-01', 'Paid in full'),
+        (2, 2, 49.99, '2025-08-02', 'Pending payment'),
+        (3, 3, 299.99, '2025-08-03', 'Partial payment'),
+        (4, 4, 99.99, '2025-08-04', NULL),
+        (5, 5, 149.99, '2025-08-05', 'Disputed');
+    ```
+  - Write 5 queries for real scenarios:
+    1. Rounded invoice totals: `SELECT InvoiceID, ROUND(TotalAmount, 0) AS WholeAmount FROM Sales.InvoiceDetails;`
+    2. Formatted invoice summary: `SELECT CONCAT('Invoice ', InvoiceID, ': $', CONVERT(VARCHAR, ROUND(TotalAmount, 2), 1)) AS InvoiceSummary FROM Sales.InvoiceDetails;`
+    3. Ceiling amounts: `SELECT OrderID, CEILING(TotalAmount) AS CeilingTotal FROM Sales.InvoiceDetails WHERE TotalAmount IS NOT NULL;`
+    4. Date formatting: `SELECT InvoiceID, CONVERT(VARCHAR, InvoiceDate, 101) AS USInvoiceDate FROM Sales.InvoiceDetails;`
+    5. Aggregated rounded totals: `SELECT Notes, ROUND(SUM(TotalAmount), 0) AS TotalByStatus, CONVERT(VARCHAR, ROUND(SUM(TotalAmount), 0), 1) AS FormattedTotal FROM Sales.InvoiceDetails GROUP BY Notes HAVING SUM(TotalAmount) > 100;`
+- **Step 5: Journal Reflection**:
+  - Write answers to:
+    - How do numeric functions improve data precision?
+    - When should you use `CAST` vs. `CONVERT`?
+    - What’s the risk of implicit conversions?
+    - Any errors faced and how you resolved them.
+
+**Resources**:
+- Microsoft Docs: “CAST and CONVERT (Transact-SQL)” (search “SQL Server CAST CONVERT”).
+- W3Schools: SQL CAST and CONVERT tutorials.
+- SQLZoo: Interactive conversion function exercises.
+- YouTube: Search “SQL Server numeric conversion functions tutorial” for demos.
+
+---
+
+### Day 10 Deliverables
+- **Journal Entries**:
+  - Examples of `ROUND`, `CEILING`, `FLOOR` queries.
+  - Examples of `CAST` and `CONVERT` with different types and styles.
+  - List of 10-20 queries with real-world scenarios.
+  - Notes on errors encountered and solutions.
+  - Reflection on the mini-project (e.g., how conversions enhanced invoice reporting).
+- **Practical Output**:
+  - Executed queries with numeric and conversion functions on `HR.Employees`, `Sales.Orders`, and `Sales.MixedData`.
+  - Created and queried `Sales.InvoiceDetails` in the mini-project.
+  - Validated query results and debugged errors.
+- **Self-Assessment**:
+  - Can you manipulate numeric data with `ROUND`, `CEILING`, and `FLOOR`?
+  - Can you perform explicit type conversions with `CAST` and `CONVERT`?
+  - Can you handle implicit/explicit conversions to avoid errors?
+  - Can you combine numeric and conversion functions with other SQL clauses?
+
+---
+
+### Tips for Success
+- **Practice Extensively**: Run 20+ queries to build fluency in numeric and conversion functions.
+- **Use SSMS Effectively**: Check Results pane for formatted outputs and Messages pane for errors.
+- **Debug Actively**: Read error messages and search solutions on Microsoft Docs or Stack Overflow.
+- **Experiment**: Try complex conversions or extreme rounding to test function limits.
+- **Organize Scripts**: Save all queries in a `.sql` file labeled “Day 10 Numeric Conversions”.
+- **Community**: Search “SQL Server numeric conversion functions” on X or join a SQL Server forum for tips.
+
+This detailed Day 10 plan ensures you master numeric and conversion functions, critical for precise data processing in MSSQL. If you need help with specific queries, errors, or additional practice scenarios, let me know!
