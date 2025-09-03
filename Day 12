@@ -1,0 +1,353 @@
+### Detailed Explanation of Day 12: Joins – Inner Join
+
+**Objective**: Master the `INNER JOIN` operation in Microsoft SQL Server (MSSQL) to combine data from multiple tables based on related columns. By the end of Day 12, you’ll understand table relationships, the syntax and use of `INNER JOIN` with the `ON` clause, and how to join two or three tables to retrieve meaningful data. This day builds on your Days 1-11 skills, particularly `SELECT`, `WHERE`, aggregate functions, and conditional logic, enabling you to work with relational data effectively in real-world scenarios.
+
+**Duration**: 4-6 hours (split into theory, hands-on practice, and review). Adjust based on your comfort with SQL Server Management Studio (SSMS) and SQL syntax.
+
+---
+
+### Sub-Syllabus Breakdown
+1. **Understanding Relationships** (1-1.5 hours)
+   - Learn how tables are related through keys (primary and foreign keys).
+   - Understand the role of relationships in relational databases.
+2. **INNER JOIN Syntax and ON Clause** (1-1.5 hours)
+   - Master the syntax of `INNER JOIN` and the `ON` clause to combine tables.
+   - Explore how to match rows based on conditions.
+3. **Practice Joining 2-3 Tables** (1.5-2 hours)
+   - Apply `INNER JOIN` to combine 2-3 tables in a sample database.
+   - Write 10-20 queries to solve real-world scenarios and handle common errors.
+
+---
+
+### Step-by-Step Detailed Plan for Day 12
+
+#### 1. Understanding Relationships (1-1.5 hours)
+**Goal**: Grasp the concept of table relationships, including primary and foreign keys, and their role in enabling joins in relational databases.
+
+**Theory (45-60 minutes)**:
+- **What are Table Relationships?**
+  - In a relational database, tables are linked through **keys** to represent relationships between entities (e.g., employees and departments).
+  - **Primary Key**: A unique identifier for each row in a table (e.g., `EmployeeID` in `HR.Employees`).
+  - **Foreign Key**: A column in one table that references the primary key of another table (e.g., `DepartmentID` in `HR.Employees` references `DepartmentID` in `HR.Departments`).
+  - Relationships ensure data integrity and enable data combination across tables.
+  - Common relationship types:
+    - **One-to-Many**: One department has many employees (e.g., `HR.Departments` to `HR.Employees`).
+    - **One-to-One**: One employee has one performance review (less common).
+    - **Many-to-Many**: Requires a junction table (e.g., orders and products; covered later).
+- **Why Relationships Matter for Joins**:
+  - Joins combine data from related tables based on matching key values.
+  - `INNER JOIN` retrieves only rows where there is a match in both tables.
+  - Example: Combine `HR.Employees` and `HR.Departments` to get employee names with their department names.
+- **Key Points**:
+  - Primary keys are typically `INT` or `GUID` and enforce uniqueness (`PRIMARY KEY` constraint).
+  - Foreign keys enforce referential integrity (`FOREIGN KEY` constraint) to ensure valid references.
+  - Relationships are defined during table creation (Day 3) or altered later.
+  - Example:
+    ```sql
+    CREATE TABLE HR.Departments (
+        DepartmentID INT PRIMARY KEY,
+        DepartmentName VARCHAR(50) NOT NULL
+    );
+    CREATE TABLE HR.Employees (
+        EmployeeID INT PRIMARY KEY,
+        FirstName VARCHAR(50),
+        DepartmentID INT,
+        CONSTRAINT FK_Employee_Dept FOREIGN KEY (DepartmentID) REFERENCES HR.Departments(DepartmentID)
+    );
+    ```
+  - NULL foreign keys indicate no relationship (e.g., an employee not assigned to a department).
+- **Best Practices**:
+  - Use clear, consistent naming for keys (e.g., `DepartmentID` in both tables).
+  - Define foreign key constraints to prevent invalid data.
+  - Document relationships in your database design (e.g., ER diagrams).
+  - Verify relationships using `SELECT * FROM sys.foreign_keys;` in SSMS.
+- **Common Pitfalls**:
+  - Missing foreign key constraints can lead to orphaned records (e.g., `DepartmentID` in `Employees` not existing in `Departments`).
+  - Incorrect key column names cause join errors.
+  - Large datasets require indexed keys for performance (covered later).
+- **SSMS Tools**:
+  - View relationships: In Object Explorer, expand a table > Keys to see primary and foreign keys.
+  - Diagram relationships: Right-click Database > Database Diagrams > New Diagram.
+  - Check data: Right-click table > Select Top 1000 Rows to inspect key values.
+
+**Practice (30-45 minutes)**:
+- **Activity 1: Document Relationships**:
+  - In your journal, draw or describe relationships for:
+    - `HR.Employees` and `HR.Departments` (one-to-many via `DepartmentID`).
+    - `Sales.Orders` and `Sales.SalesTransactions` (one-to-many via `OrderID`).
+  - Example:
+    - `HR.Employees.DepartmentID` → `HR.Departments.DepartmentID` (foreign key to primary key).
+- **Activity 2: Verify Relationships in SSMS**:
+  - Recreate or use `EmployeeDB` from Day 7:
+    ```sql
+    CREATE DATABASE EmployeeDB;
+    USE EmployeeDB;
+    CREATE SCHEMA HR;
+    CREATE SCHEMA Sales;
+    CREATE TABLE HR.Departments (
+        DepartmentID INT PRIMARY KEY,
+        DepartmentName VARCHAR(50) NOT NULL,
+        Location VARCHAR(50)
+    );
+    INSERT INTO HR.Departments (DepartmentID, DepartmentName, Location)
+    VALUES 
+        (1, 'IT', 'New York'),
+        (2, 'HR', 'Chicago'),
+        (3, 'Finance', 'Boston'),
+        (4, 'Marketing', 'San Francisco');
+    CREATE TABLE HR.Employees (
+        EmployeeID INT PRIMARY KEY,
+        FirstName VARCHAR(50) NOT NULL,
+        LastName VARCHAR(50) NOT NULL,
+        Email VARCHAR(100) UNIQUE,
+        DepartmentID INT,
+        Salary DECIMAL(10,2),
+        HireDate DATE DEFAULT GETDATE(),
+        CONSTRAINT FK_Employee_Dept FOREIGN KEY (DepartmentID) REFERENCES HR.Departments(DepartmentID)
+    );
+    INSERT INTO HR.Employees (EmployeeID, FirstName, LastName, Email, DepartmentID, Salary, HireDate)
+    VALUES 
+        (1, 'Alice', 'Smith', 'alice.smith@company.com', 1, 75000.67, '2023-01-15'),
+        (2, 'Bob', 'Johnson', 'bob.johnson@company.com', 2, 65000.33, '2023-02-20'),
+        (3, 'Cathy', 'Lee', 'cathy.lee@company.com', 1, 80000.99, '2023-03-10'),
+        (4, 'David', 'Wong', 'david.wong@company.com', 3, 70000.45, '2023-04-05'),
+        (5, 'Emma', 'Brown', 'emma.brown@company.com', NULL, 60000.12, '2023-05-01');
+    CREATE TABLE Sales.Orders (
+        OrderID INT PRIMARY KEY,
+        CustomerID INT NOT NULL,
+        OrderDate DATE NOT NULL,
+        TotalAmount DECIMAL(10,2),
+        Status VARCHAR(20)
+    );
+    INSERT INTO Sales.Orders (OrderID, CustomerID, OrderDate, TotalAmount, Status)
+    VALUES 
+        (1, 1, '2025-08-01', 199.99, 'Completed'),
+        (2, 2, '2025-08-02', 49.99, 'Pending'),
+        (3, 1, '2025-08-03', 299.99, 'Completed'),
+        (4, 3, '2025-08-04', 99.99, 'Cancelled'),
+        (5, 2, '2025-08-05', 149.99, 'Completed');
+    CREATE TABLE Sales.SalesTransactions (
+        TransactionID INT PRIMARY KEY,
+        OrderID INT,
+        ProductID INT,
+        Quantity INT NOT NULL,
+        UnitPrice DECIMAL(10,2),
+        TransactionDate DATE DEFAULT GETDATE(),
+        CONSTRAINT FK_Transaction_Order FOREIGN KEY (OrderID) REFERENCES Sales.Orders(OrderID)
+    );
+    INSERT INTO Sales.SalesTransactions (TransactionID, OrderID, ProductID, Quantity, UnitPrice, TransactionDate)
+    VALUES 
+        (1, 1, 1, 2, 99.995, '2025-08-01'),
+        (2, 1, 2, 1, 49.99, '2025-08-01'),
+        (3, 2, 3, 3, 16.663, '2025-08-02'),
+        (4, 3, 1, 1, 199.99, '2025-08-03'),
+        (5, 4, 4, 5, 19.998, '2025-08-04');
+    ```
+  - Run:
+    ```sql
+    SELECT * FROM sys.foreign_keys WHERE parent_object_id = OBJECT_ID('HR.Employees');
+    SELECT * FROM sys.foreign_keys WHERE parent_object_id = OBJECT_ID('Sales.SalesTransactions');
+    ```
+  - Verify: Check foreign key constraints in Results pane.
+- **Activity 3: Inspect Data**:
+  - Run:
+    ```sql
+    SELECT * FROM HR.Employees;
+    SELECT * FROM HR.Departments;
+    SELECT * FROM Sales.Orders;
+    SELECT * FROM Sales.SalesTransactions;
+    ```
+  - Note key columns (`DepartmentID`, `OrderID`) and their relationships.
+- **Activity 4: Journal Notes**:
+  - Write:
+    - Definition of primary and foreign keys.
+    - Example relationships in `EmployeeDB`.
+    - Importance of relationships for joins.
+
+**Resources**:
+- Microsoft Docs: “Primary and Foreign Key Constraints” (search “SQL Server keys”).
+- W3Schools: SQL Foreign Key tutorial.
+- SQLZoo: Relational database concepts.
+
+---
+
+#### 2. INNER JOIN Syntax and ON Clause (1-1.5 hours)
+**Goal**: Master the `INNER JOIN` syntax and `ON` clause to combine tables based on matching key values.
+
+**Theory (45-60 minutes)**:
+- **What is INNER JOIN?**
+  - `INNER JOIN` combines rows from two or more tables where the join condition (specified in the `ON` clause) is met.
+  - Only returns rows with matching values in both tables (excludes non-matching rows).
+  - Example:
+    ```sql
+    SELECT e.FirstName, e.LastName, d.DepartmentName
+    FROM HR.Employees AS e
+    INNER JOIN HR.Departments AS d
+    ON e.DepartmentID = d.DepartmentID;
+    ```
+    - Matches `Employees.DepartmentID` with `Departments.DepartmentID`.
+- **INNER JOIN Syntax**:
+  - Syntax:
+    ```sql
+    SELECT Columns
+    FROM Table1
+    INNER JOIN Table2
+    ON Table1.Column = Table2.Column;
+    ```
+  - Example:
+    ```sql
+    SELECT o.OrderID, o.TotalAmount, t.Quantity
+    FROM Sales.Orders AS o
+    INNER JOIN Sales.SalesTransactions AS t
+    ON o.OrderID = t.OrderID;
+    ```
+  - **ON Clause**:
+    - Specifies the condition for matching rows (usually key equality).
+    - Can include multiple conditions (e.g., `ON e.DepartmentID = d.DepartmentID AND e.HireDate > '2023-01-01'`).
+- **Key Points**:
+  - `INNER JOIN` is the most common join type; other types (e.g., `LEFT JOIN`) are covered later.
+  - Use table aliases (e.g., `e` for `Employees`) for readability and brevity.
+  - Combine with `WHERE`, `GROUP BY`, `ORDER BY`, or functions for complex queries.
+  - Non-matching rows (e.g., `NULL` foreign keys) are excluded.
+  - Example with multiple joins:
+    ```sql
+    SELECT e.FirstName, d.DepartmentName, o.OrderID
+    FROM HR.Employees AS e
+    INNER JOIN HR.Departments AS d ON e.DepartmentID = d.DepartmentID
+    INNER JOIN Sales.Orders AS o ON e.EmployeeID = o.CustomerID;
+    ```
+- **Best Practices**:
+  - Always qualify column names with table aliases (e.g., `e.FirstName` vs. `FirstName`) to avoid ambiguity.
+  - Use meaningful aliases (e.g., `e` for `Employees`, `d` for `Departments`).
+  - Test joins on small datasets to verify matching rows.
+  - Ensure foreign key constraints exist to prevent invalid joins.
+- **Common Pitfalls**:
+  - Ambiguous column names (e.g., `SELECT DepartmentID` when both tables have `DepartmentID`).
+  - Incorrect `ON` conditions (e.g., joining on wrong columns).
+  - Performance issues with large tables (use indexes, covered later).
+  - Excluding rows unintentionally due to `INNER JOIN`’s match requirement.
+- **SSMS Tools**:
+  - View results: Results pane shows combined rows.
+  - Debug errors: Messages pane shows “ambiguous column” or “invalid column” errors.
+  - Query plan: Right-click query > Display Estimated Execution Plan to check join efficiency.
+
+**Practice (30-45 minutes)**:
+- **Activity 1: Write INNER JOIN Queries**:
+  - In your journal, write queries to:
+    - Join `HR.Employees` and `HR.Departments` to get employee names and department names.
+    - Join `Sales.Orders` and `Sales.SalesTransactions` to get order details with transaction quantities.
+  - Example:
+    ```sql
+    SELECT e.FirstName, d.DepartmentName
+    FROM HR.Employees AS e
+    INNER JOIN HR.Departments AS d
+    ON e.DepartmentID = d.DepartmentID;
+    ```
+- **Activity 2: Run INNER JOIN in SSMS**:
+  - Run:
+    ```sql
+    -- Employees and departments
+    SELECT e.FirstName, e.LastName, d.DepartmentName, d.Location
+    FROM HR.Employees AS e
+    INNER JOIN HR.Departments AS d
+    ON e.DepartmentID = d.DepartmentID;
+    -- Orders and transactions
+    SELECT o.OrderID, o.TotalAmount, t.Quantity, t.UnitPrice
+    FROM Sales.Orders AS o
+    INNER JOIN Sales.SalesTransactions AS t
+    ON o.OrderID = t.OrderID;
+    ```
+  - Verify: Check Results pane for matched rows (note: Emma’s row is excluded due to NULL `DepartmentID`).
+- **Activity 3: Test with Conditions**:
+  - Run:
+    ```sql
+    SELECT e.FirstName, e.Salary, d.DepartmentName
+    FROM HR.Employees AS e
+    INNER JOIN HR.Departments AS d
+    ON e.DepartmentID = d.DepartmentID
+    WHERE e.Salary > 70000;
+    ```
+- **Activity 4: Test Errors**:
+  - Try: `SELECT FirstName, DepartmentName FROM HR.Employees INNER JOIN HR.Departments ON DepartmentID = DepartmentID;` (fails; ambiguous `DepartmentID`).
+  - Fix: Use `e.DepartmentID = d.DepartmentID`.
+  - Try: `SELECT e.FirstName, d.DepartmentName FROM HR.Employees AS e INNER JOIN HR.Departments AS d ON e.EmployeeID = d.DepartmentID;` (returns no rows; wrong columns).
+  - Fix: Use correct key columns.
+
+**Resources**:
+- Microsoft Docs: “INNER JOIN (Transact-SQL)” (search “SQL Server INNER JOIN”).
+- W3Schools: SQL INNER JOIN tutorial.
+- SQLZoo: Interactive join exercises.
+
+---
+
+#### 3. Practice Joining 2-3 Tables (1.5-2 hours)
+**Goal**: Apply `INNER JOIN` to combine 2-3 tables in a sample database, creating queries for real-world scenarios and handling errors.
+
+**Practice (1.5-2 hours)**:
+- **Step 1: Set Up Sample Data**:
+  - Use `EmployeeDB` with `HR.Employees`, `HR.Departments`, `Sales.Orders`, and `Sales.SalesTransactions` (from above).
+  - Add a table for customers to enable three-table joins:
+    ```sql
+    CREATE TABLE Sales.Customers (
+        CustomerID INT PRIMARY KEY,
+        CustomerName VARCHAR(50) NOT NULL,
+        Email VARCHAR(100),
+        Region VARCHAR(50)
+    );
+    INSERT INTO Sales.Customers (CustomerID, CustomerName, Email, Region)
+    VALUES 
+        (1, 'John Doe', 'john.doe@customer.com', 'East'),
+        (2, 'Jane Smith', 'jane.smith@customer.com', 'West'),
+        (3, 'Mike Brown', 'mike.brown@customer.com', 'North');
+    ```
+- **Step 2: Write 10-20 Queries for Real Scenarios**:
+  - Examples (run each in SSMS and verify):
+    1. Employee departments: `SELECT e.FirstName, e.LastName, d.DepartmentName FROM HR.Employees AS e INNER JOIN HR.Departments AS d ON e.DepartmentID = d.DepartmentID;`
+    2. Order transactions: `SELECT o.OrderID, o.TotalAmount, t.Quantity FROM Sales.Orders AS o INNER JOIN Sales.SalesTransactions AS t ON o.OrderID = t.OrderID;`
+    3. High-value orders: `SELECT o.OrderID, o.TotalAmount, t.UnitPrice FROM Sales.Orders AS o INNER JOIN Sales.SalesTransactions AS t ON o.OrderID = t.OrderID WHERE o.TotalAmount > 100;`
+    4. Customer orders: `SELECT c.CustomerName, o.OrderID, o.TotalAmount FROM Sales.Customers AS c INNER JOIN Sales.Orders AS o ON c.CustomerID = o.CustomerID;`
+    5. Three-table join: `SELECT c.CustomerName, o.OrderID, t.Quantity, t.UnitPrice FROM Sales.Customers AS c INNER JOIN Sales.Orders AS o ON c.CustomerID = o.CustomerID INNER JOIN Sales.SalesTransactions AS t ON o.OrderID = t.OrderID;`
+    6. IT employees: `SELECT e.FirstName, d.DepartmentName FROM HR.Employees AS e INNER JOIN HR.Departments AS d ON e.DepartmentID = d.DepartmentID WHERE d.DepartmentName = 'IT';`
+    7. Completed orders: `SELECT o.OrderID, c.CustomerName FROM Sales.Orders AS o INNER JOIN Sales.Customers AS c ON o.CustomerID = c.CustomerID WHERE o.Status = 'Completed';`
+    8. Transaction totals: `SELECT o.OrderID, SUM(t.Quantity * t.UnitPrice) AS TransactionTotal FROM Sales.Orders AS o INNER JOIN Sales.SalesTransactions AS t ON o.OrderID = t.OrderID GROUP BY o.OrderID;`
+    9. Customer regions: `SELECT c.Region, COUNT(o.OrderID) AS OrderCount FROM Sales.Customers AS c INNER JOIN Sales.Orders AS o ON c.CustomerID = o.CustomerID GROUP BY c.Region;`
+    10. Employee salaries: `SELECT e.FirstName, e.Salary, d.DepartmentName FROM HR.Employees AS e INNER JOIN HR.Departments AS d ON e.DepartmentID = d.DepartmentID ORDER BY e.Salary DESC;`
+    11. Order dates: `SELECT o.OrderID, CONVERT(VARCHAR, o.OrderDate, 101) AS OrderDate, c.CustomerName FROM Sales.Orders AS o INNER JOIN Sales.Customers AS c ON o.CustomerID = c.CustomerID;`
+    12. Transaction products: `SELECT t.TransactionID, t.ProductID, o.TotalAmount FROM Sales.SalesTransactions AS t INNER JOIN Sales.Orders AS o ON t.OrderID = o.OrderID WHERE t.Quantity > 1;`
+    13. High-salary departments: `SELECT d.DepartmentName, AVG(e.Salary) AS AvgSalary FROM HR.Employees AS e INNER JOIN HR.Departments AS d ON e.DepartmentID = d.DepartmentID GROUP BY d.DepartmentName HAVING AVG(e.Salary) > 70000;`
+    14. Customer order totals: `SELECT c.CustomerName, SUM(o.TotalAmount) AS TotalSpent FROM Sales.Customers AS c INNER JOIN Sales.Orders AS o ON c.CustomerID = o.CustomerID GROUP BY c.CustomerName;`
+    15. Detailed transactions: `SELECT c.CustomerName, o.OrderID, t.Quantity * t.UnitPrice AS TransactionValue FROM Sales.Customers AS c INNER JOIN Sales.Orders AS o ON c.CustomerID = o.CustomerID INNER JOIN Sales.SalesTransactions AS t ON o.OrderID = t.OrderID;`
+    16. Recent orders: `SELECT c.CustomerName, o.OrderID, o.OrderDate FROM Sales.Customers AS c INNER JOIN Sales.Orders AS o ON c.CustomerID = o.CustomerID WHERE o.OrderDate >= DATEADD(day, -30, GETDATE());`
+    17. Department locations: `SELECT e.FirstName, d.Location FROM HR.Employees AS e INNER JOIN HR.Departments AS d ON e.DepartmentID = d.DepartmentID WHERE d.Location = 'New York';`
+    18. Transaction counts: `SELECT o.OrderID, COUNT(t.TransactionID) AS ItemCount FROM Sales.Orders AS o INNER JOIN Sales.SalesTransactions AS t ON o.OrderID = t.OrderID GROUP BY o.OrderID HAVING COUNT(t.TransactionID) > 1;`
+    19. Formatted output: `SELECT CONCAT(e.FirstName, ' ', e.LastName) AS FullName, d.DepartmentName FROM HR.Employees AS e INNER JOIN HR.Departments AS d ON e.DepartmentID = d.DepartmentID;`
+    20. Error test: `SELECT FirstName, DepartmentName FROM HR.Employees INNER JOIN HR.Departments ON DepartmentID = DepartmentID;` (fails; ambiguous column).
+- **Step 3: Debug and Validate**:
+  - Verify: Check Results pane for correct joined rows (e.g., only matched rows appear).
+  - Debug errors: Fix ambiguous columns, incorrect `ON` conditions, or missing aliases.
+  - Test NULLs: Note how rows with NULL foreign keys (e.g., Emma’s `DepartmentID`) are excluded.
+- **Step 4: Mini-Project**:
+  - Create a table `Sales.OrderDetails`:
+    ```sql
+    CREATE TABLE Sales.OrderDetails (
+        DetailID INT PRIMARY KEY,
+        OrderID INT,
+        ProductName VARCHAR(50),
+        UnitPrice DECIMAL(10,2),
+        Quantity INT,
+        CONSTRAINT FK_Detail_Order FOREIGN KEY (OrderID) REFERENCES Sales.Orders(OrderID)
+    );
+    INSERT INTO Sales.OrderDetails (DetailID, OrderID, ProductName, UnitPrice, Quantity)
+    VALUES 
+        (1, 1, 'Laptop', 99.995, 2),
+        (2, 1, 'Mouse', 49.99, 1),
+        (3, 2, 'Keyboard', 16.663, 3),
+        (4, 3, 'Monitor', 199.99, 1),
+        (5, 4, 'Printer', 19.998, 5);
+    ```
+  - Write 5 queries for real scenarios:
+    1. Order details: `SELECT o.OrderID, o.TotalAmount, d.ProductName, d.Quantity FROM Sales.Orders AS o INNER JOIN Sales.OrderDetails AS d ON o.OrderID = d.OrderID;`
+    2. Customer orders: `SELECT c.CustomerName, o.OrderID, d.ProductName FROM Sales.Customers AS c INNER JOIN Sales.Orders AS o ON c.CustomerID = o.CustomerID INNER JOIN Sales.OrderDetails AS d ON o.OrderID = d.OrderID;`
+    3. High-value items: `SELECT o.OrderID, d.ProductName, d.UnitPrice FROM Sales.Orders AS o INNER JOIN Sales.OrderDetails AS d ON o.OrderID = d.OrderID WHERE d.UnitPrice > 50;`
+    4. Order totals: `SELECT o.OrderID, SUM(d.Quantity * d.UnitPrice) AS DetailTotal FROM Sales.Orders AS o INNER JOIN Sales.OrderDetails AS d ON o.OrderID = d.OrderID GROUP BY o.OrderID;`
+    5. Customer purchases: `SELECT c.CustomerName, COUNT(d.DetailID) AS ItemCount FROM Sales.Customers AS c INNER JOIN Sales.Orders AS o ON c.CustomerID = o.CustomerID INNER JOIN Sales.OrderDetails AS d ON o.OrderID = d.Order
