@@ -1,0 +1,449 @@
+### Detailed Explanation of Day 17: Subqueries – Basics
+
+**Objective**: Master the basics of subqueries in Microsoft SQL Server (MSSQL) to enhance query flexibility and solve complex problems. By the end of Day 17, you’ll understand how to use scalar subqueries in `SELECT` and `WHERE` clauses, differentiate between correlated and non-correlated subqueries, and practice writing nested `SELECT` statements. This day builds on your Days 1-16 skills, particularly `SELECT`, joins, set operations, and functions, enabling you to perform advanced data retrieval for real-world scenarios like filtering based on derived values or comparing records.
+
+**Duration**: 4-6 hours (split into theory, hands-on practice, and review). Adjust based on your comfort with SQL Server Management Studio (SSMS) and SQL syntax.
+
+---
+
+### Sub-Syllabus Breakdown
+1. **Scalar Subqueries in SELECT/WHERE** (1.5-2 hours)
+   - Learn the syntax and use of scalar subqueries in `SELECT` and `WHERE` clauses.
+   - Understand how subqueries return single values for comparisons or calculations.
+2. **Correlated vs. Non-Correlated Subqueries** (1-1.5 hours)
+   - Differentiate between correlated (dependent) and non-correlated (independent) subqueries.
+   - Explore their behavior and performance implications.
+3. **Practice Nested SELECTs** (1.5-2 hours)
+   - Write 10-20 queries using subqueries on a sample dataset.
+   - Focus on real-world scenarios like employee comparisons or sales analysis.
+
+---
+
+### Step-by-Step Detailed Plan for Day 17
+
+#### 1. Scalar Subqueries in SELECT/WHERE (1.5-2 hours)
+**Goal**: Master the use of scalar subqueries in `SELECT` and `WHERE` clauses to return single values for calculations or filtering.
+
+**Theory (45-60 minutes)**:
+- **What is a Subquery?**
+  - A subquery is a `SELECT` statement nested within another SQL query (outer query).
+  - Also called an inner query or nested query, it’s enclosed in parentheses.
+  - Scalar subqueries return a single value (one row, one column), used in `SELECT`, `WHERE`, or other clauses.
+  - Example: Find employees with salaries above the company average:
+    ```sql
+    SELECT FirstName, Salary
+    FROM HR.Employees
+    WHERE Salary > (SELECT AVG(Salary) FROM HR.Employees);
+    ```
+- **Scalar Subqueries in SELECT**:
+  - Used to compute a value for each row in the outer query’s result set.
+  - Syntax:
+    ```sql
+    SELECT Column1, (SELECT SingleValue FROM Table2 WHERE Condition) AS SubqueryColumn
+    FROM Table1;
+    ```
+  - Example:
+    ```sql
+    SELECT FirstName, Salary, (SELECT AVG(Salary) FROM HR.Employees) AS AvgSalary
+    FROM HR.Employees;
+    ```
+    - Adds the company-wide average salary to each employee’s row.
+  - Key points:
+    - Must return exactly one row and one column, or an error occurs.
+    - Useful for per-row comparisons or calculations (e.g., percentage of total).
+- **Scalar Subqueries in WHERE**:
+  - Used to filter rows based on a single value from a subquery.
+  - Syntax:
+    ```sql
+    SELECT Column1
+    FROM Table1
+    WHERE Column2 Operator (SELECT SingleValue FROM Table2 WHERE Condition);
+    ```
+  - Example:
+    ```sql
+    SELECT FirstName, Salary
+    FROM HR.Employees
+    WHERE DepartmentID = (SELECT DepartmentID FROM HR.Departments WHERE DepartmentName = 'IT');
+    ```
+    - Returns employees in the IT department.
+  - Key points:
+    - Common operators: `=`, `>`, `<`, `>=`, `<=`, `<>` (not equal).
+    - Subquery must return one value, or an error occurs (e.g., “Subquery returned more than 1 value”).
+- **Key Points**:
+  - Scalar subqueries are executed once (non-correlated) or per row (correlated, covered below).
+  - Use when joins are less intuitive (e.g., comparing to an aggregate).
+  - Combine with functions (e.g., `ROUND`, `COALESCE`) for formatting.
+  - Example with function:
+    ```sql
+    SELECT FirstName, Salary, ROUND((SELECT AVG(Salary) FROM HR.Employees), 2) AS AvgSalary
+    FROM HR.Employees;
+    ```
+- **Best Practices**:
+  - Ensure subqueries return one value to avoid errors.
+  - Use clear aliases to distinguish outer and inner query columns.
+  - Test subqueries independently to verify results.
+  - Consider joins for better performance in some cases (covered later).
+- **Common Pitfalls**:
+  - Subquery returning multiple rows/columns (e.g., `SELECT DepartmentID FROM HR.Departments` returns multiple rows).
+  - NULL results causing unexpected filtering (e.g., `WHERE Column = (SELECT NULL)`).
+  - Poor performance with large datasets (use indexes or optimize later).
+- **SSMS Tools**:
+  - View results: Results pane shows outer query with subquery values.
+  - Debug errors: Messages pane shows “Subquery returned more than 1 value” or type mismatches.
+  - Test subquery: Run inner query alone to check output.
+
+**Practice (45-60 minutes)**:
+- **Activity 1: Write Scalar Subquery Queries**:
+  - In your journal, write queries to:
+    - List employees with salaries above the company average (`WHERE`).
+    - Show each employee’s salary alongside the department average (`SELECT`).
+    - Find customers with orders above the average order total (`WHERE`).
+  - Example:
+    ```sql
+    SELECT FirstName, Salary
+    FROM HR.Employees
+    WHERE Salary > (SELECT AVG(Salary) FROM HR.Employees);
+    ```
+- **Activity 2: Run Scalar Subqueries in SSMS**:
+  - Use the `EmployeeDB` from Day 16:
+    ```sql
+    CREATE DATABASE EmployeeDB;
+    USE EmployeeDB;
+    CREATE SCHEMA HR;
+    CREATE SCHEMA Sales;
+    CREATE TABLE HR.Departments (
+        DepartmentID INT PRIMARY KEY,
+        DepartmentName VARCHAR(50) NOT NULL,
+        Location VARCHAR(50)
+    );
+    INSERT INTO HR.Departments (DepartmentID, DepartmentName, Location)
+    VALUES 
+        (1, 'IT', 'New York'),
+        (2, 'HR', 'Chicago'),
+        (3, 'Finance', 'Boston'),
+        (4, 'Marketing', 'San Francisco');
+    CREATE TABLE HR.Employees (
+        EmployeeID INT PRIMARY KEY,
+        FirstName VARCHAR(50) NOT NULL,
+        LastName VARCHAR(50) NOT NULL,
+        Email VARCHAR(100) UNIQUE,
+        DepartmentID INT,
+        Salary DECIMAL(10,2),
+        HireDate DATE DEFAULT GETDATE(),
+        ManagerID INT,
+        CONSTRAINT FK_Employee_Dept FOREIGN KEY (DepartmentID) REFERENCES HR.Departments(DepartmentID),
+        CONSTRAINT FK_Employee_Manager FOREIGN KEY (ManagerID) REFERENCES HR.Employees(EmployeeID)
+    );
+    INSERT INTO HR.Employees (EmployeeID, FirstName, LastName, Email, DepartmentID, Salary, HireDate, ManagerID)
+    VALUES 
+        (1, 'Alice', 'Smith', 'alice.smith@company.com', 1, 75000.67, '2023-01-15', 3),
+        (2, 'Bob', 'Johnson', 'bob.johnson@company.com', 2, 65000.33, '2023-02-20', 3),
+        (3, 'Cathy', 'Lee', 'cathy.lee@company.com', 1, 80000.99, '2023-03-10', NULL),
+        (4, 'David', 'Wong', 'david.wong@company.com', 3, 70000.45, '2023-04-05', NULL),
+        (5, 'Emma', 'Brown', 'emma.brown@company.com', NULL, 60000.12, '2023-05-01', 4);
+    CREATE TABLE Sales.Customers (
+        CustomerID INT PRIMARY KEY,
+        CustomerName VARCHAR(50) NOT NULL,
+        Email VARCHAR(100),
+        Region VARCHAR(50)
+    );
+    INSERT INTO Sales.Customers (CustomerID, CustomerName, Email, Region)
+    VALUES 
+        (1, 'John Doe', 'john.doe@customer.com', 'East'),
+        (2, 'Jane Smith', 'jane.smith@customer.com', 'West'),
+        (3, 'Mike Brown', 'mike.brown@customer.com', 'North'),
+        (4, 'Lisa Green', 'lisa.green@customer.com', 'San Francisco');
+    CREATE TABLE Sales.Orders (
+        OrderID INT PRIMARY KEY,
+        CustomerID INT NOT NULL,
+        OrderDate DATE NOT NULL,
+        TotalAmount DECIMAL(10,2),
+        Status VARCHAR(20),
+        CONSTRAINT FK_Order_Customer FOREIGN KEY (CustomerID) REFERENCES Sales.Customers(CustomerID)
+    );
+    INSERT INTO Sales.Orders (OrderID, CustomerID, OrderDate, TotalAmount, Status)
+    VALUES 
+        (1, 1, '2025-08-01', 199.99, 'Completed'),
+        (2, 2, '2025-08-02', 49.99, 'Pending'),
+        (3, 1, '2025-08-03', 299.99, 'Completed'),
+        (4, 3, '2025-08-04', 99.99, 'Cancelled'),
+        (5, 2, '2025-08-05', 149.99, 'Completed');
+    ```
+  - Run:
+    ```sql
+    -- Subquery in WHERE
+    SELECT FirstName, Salary
+    FROM HR.Employees
+    WHERE Salary > (SELECT AVG(Salary) FROM HR.Employees);
+    -- Subquery in SELECT
+    SELECT FirstName, Salary, (SELECT AVG(Salary) FROM HR.Employees) AS AvgSalary
+    FROM HR.Employees;
+    -- Subquery for specific department
+    SELECT FirstName, LastName
+    FROM HR.Employees
+    WHERE DepartmentID = (SELECT DepartmentID FROM HR.Departments WHERE DepartmentName = 'IT');
+    ```
+  - Verify: Check Results pane for filtered or calculated results (e.g., Alice and Cathy have salaries above average).
+- **Activity 3: Test with Functions**:
+  - Run:
+    ```sql
+    SELECT FirstName, Salary, ROUND((SELECT AVG(Salary) FROM HR.Employees), 2) AS AvgSalary
+    FROM HR.Employees
+    WHERE Salary > (SELECT MAX(Salary) FROM HR.Employees WHERE DepartmentID = 2);
+    ```
+- **Activity 4: Test Errors**:
+  - Try: `SELECT FirstName FROM HR.Employees WHERE DepartmentID = (SELECT DepartmentID FROM HR.Departments);` (fails; multiple rows).
+  - Fix: Add `WHERE DepartmentName = 'IT'` to subquery.
+  - Try: `SELECT FirstName, (SELECT DepartmentName FROM HR.Departments) AS Dept FROM HR.Employees;` (fails; multiple rows).
+  - Fix: Correlate subquery (covered next).
+
+**Resources**:
+- Microsoft Docs: “Subqueries (Transact-SQL)” (search “SQL Server subqueries”).
+- W3Schools: SQL Subqueries tutorial.
+- SQLZoo: Interactive subquery exercises.
+
+---
+
+#### 2. Correlated vs. Non-Correlated Subqueries (1-1.5 hours)
+**Goal**: Understand the differences between correlated and non-correlated subqueries, their execution behavior, and performance considerations.
+
+**Theory (30-45 minutes)**:
+- **Non-Correlated Subqueries**:
+  - Independent of the outer query; executed once and return a single value.
+  - Example:
+    ```sql
+    SELECT FirstName, Salary
+    FROM HR.Employees
+    WHERE Salary > (SELECT AVG(Salary) FROM HR.Employees);
+    ```
+    - The subquery `(SELECT AVG(Salary) FROM HR.Employees)` runs once, returning one value.
+  - Key points:
+    - Faster for small datasets, as they execute independently.
+    - Used for static comparisons (e.g., against a fixed average).
+- **Correlated Subqueries**:
+  - Dependent on the outer query; executed for each row of the outer query.
+  - Reference columns from the outer query in the subquery.
+  - Example:
+    ```sql
+    SELECT FirstName, Salary
+    FROM HR.Employees AS e
+    WHERE Salary > (SELECT AVG(Salary) FROM HR.Employees AS e2 WHERE e2.DepartmentID = e.DepartmentID);
+    ```
+    - The subquery calculates the average salary for each employee’s department, running for each row of `e`.
+  - Key points:
+    - Slower due to row-by-row execution (like a loop).
+    - Useful for row-specific comparisons (e.g., salary vs. department average).
+- **Comparison**:
+  - **Non-Correlated**:
+    - Executes once, returns one value.
+    - Simpler, often faster.
+    - Example: Compare to company-wide metrics.
+  - **Correlated**:
+    - Executes per outer query row.
+    - More flexible for dynamic comparisons.
+    - Example: Compare to department-specific metrics.
+  - Example with both:
+    ```sql
+    -- Non-correlated
+    SELECT FirstName, DepartmentID
+    FROM HR.Employees
+    WHERE DepartmentID = (SELECT DepartmentID FROM HR.Departments WHERE DepartmentName = 'IT');
+    -- Correlated
+    SELECT FirstName, Salary
+    FROM HR.Employees AS e
+    WHERE Salary > (SELECT MAX(Salary) FROM HR.Employees AS e2 WHERE e2.DepartmentID = e.DepartmentID);
+    ```
+- **Performance Considerations**:
+  - Non-correlated subqueries are generally faster (single execution).
+  - Correlated subqueries can be slow for large datasets (row-by-row execution).
+  - Joins may be more efficient than correlated subqueries in some cases (e.g., department averages).
+  - Example with join alternative:
+    ```sql
+    -- Correlated subquery
+    SELECT e.FirstName, e.Salary
+    FROM HR.Employees AS e
+    WHERE Salary > (SELECT AVG(Salary) FROM HR.Employees AS e2 WHERE e2.DepartmentID = e.DepartmentID);
+    -- Join alternative
+    SELECT e.FirstName, e.Salary
+    FROM HR.Employees AS e
+    INNER JOIN (SELECT DepartmentID, AVG(Salary) AS AvgSalary FROM HR.Employees GROUP BY DepartmentID) AS d
+    ON e.DepartmentID = d.DepartmentID
+    WHERE e.Salary > d.AvgSalary;
+    ```
+- **Best Practices**:
+  - Use non-correlated subqueries for static values.
+  - Use correlated subqueries for row-specific logic when joins are complex.
+  - Test performance with large datasets (use Query Execution Plan in SSMS).
+  - Handle NULLs with `COALESCE` or `ISNULL` in subqueries.
+- **Common Pitfalls**:
+  - Correlated subqueries slowing queries due to repeated execution.
+  - Subqueries returning unexpected NULLs or multiple rows.
+  - Overcomplicating queries when joins suffice.
+- **SSMS Tools**:
+  - Execution plan: Right-click query > Display Estimated Execution Plan to compare subquery vs. join performance.
+  - Debug errors: Messages pane shows “Subquery returned more than 1 value” or NULL issues.
+  - Test subquery: Run inner query with outer row values to verify.
+
+**Practice (30-45 minutes)**:
+- **Activity 1: Write Correlated and Non-Correlated Queries**:
+  - In your journal, write queries to:
+    - Find employees with above-average company salary (non-correlated).
+    - Find employees with above-average department salary (correlated).
+    - Identify orders above the customer’s average order total (correlated).
+  - Example:
+    ```sql
+    -- Non-correlated
+    SELECT FirstName, Salary
+    FROM HR.Employees
+    WHERE Salary > (SELECT AVG(Salary) FROM HR.Employees);
+    -- Correlated
+    SELECT FirstName, Salary
+    FROM HR.Employees AS e
+    WHERE Salary > (SELECT AVG(Salary) FROM HR.Employees AS e2 WHERE e2.DepartmentID = e.DepartmentID);
+    ```
+- **Activity 2: Run in SSMS**:
+  - Run:
+    ```sql
+    -- Non-correlated: Employees in Finance
+    SELECT FirstName, LastName
+    FROM HR.Employees
+    WHERE DepartmentID = (SELECT DepartmentID FROM HR.Departments WHERE DepartmentName = 'Finance');
+    -- Correlated: Employees above department max salary
+    SELECT e.FirstName, e.Salary
+    FROM HR.Employees AS e
+    WHERE Salary > (SELECT MAX(Salary) FROM HR.Employees AS e2 WHERE e2.DepartmentID = e.DepartmentID);
+    -- Correlated: Orders above customer average
+    SELECT o.OrderID, o.TotalAmount
+    FROM Sales.Orders AS o
+    WHERE TotalAmount > (SELECT AVG(TotalAmount) FROM Sales.Orders AS o2 WHERE o2.CustomerID = o.CustomerID);
+    ```
+  - Verify: Check Results pane for correct filtering.
+- **Activity 3: Test Errors**:
+  - Try: `SELECT FirstName FROM HR.Employees WHERE Salary > (SELECT Salary FROM HR.Employees);` (fails; multiple rows).
+  - Fix: Use `AVG(Salary)` or `MAX(Salary)`.
+
+---
+
+#### 3. Practice Nested SELECTs (1.5-2 hours)
+**Goal**: Apply subqueries in real-world scenarios, combining them with joins, functions, and aggregates.
+
+**Practice (1.5-2 hours)**:
+- **Step 1: Set Up Sample Data**:
+  - Use `EmployeeDB` from Day 16. Add a table for employee performance:
+    ```sql
+    CREATE TABLE HR.EmployeePerformance (
+        PerformanceID INT PRIMARY KEY,
+        EmployeeID INT,
+        ReviewDate DATE,
+        PerformanceScore INT,
+        Comments VARCHAR(200),
+        CONSTRAINT FK_Performance_Employee FOREIGN KEY (EmployeeID) REFERENCES HR.Employees(EmployeeID)
+    );
+    INSERT INTO HR.EmployeePerformance (PerformanceID, EmployeeID, ReviewDate, PerformanceScore, Comments)
+    VALUES 
+        (1, 1, '2025-01-15', 85, 'Excellent work'),
+        (2, 2, '2025-02-20', 70, 'Needs improvement'),
+        (3, 3, '2025-03-10', 90, 'Outstanding'),
+        (4, 4, '2025-04-05', 65, 'Below expectations'),
+        (5, 5, '2025-05-01', 80, 'Good performance');
+    ```
+- **Step 2: Write 10-20 Queries for Real Scenarios**:
+  - Examples (run each in SSMS and verify):
+    1. Employees above company average salary:
+       ```sql
+       SELECT FirstName, Salary
+       FROM HR.Employees
+       WHERE Salary > (SELECT AVG(Salary) FROM HR.Employees);
+       ```
+    2. Employees with department max salary:
+       ```sql
+       SELECT e.FirstName, e.Salary
+       FROM HR.Employees AS e
+       WHERE Salary = (SELECT MAX(Salary) FROM HR.Employees AS e2 WHERE e2.DepartmentID = e.DepartmentID);
+       ```
+    3. Orders above average order total:
+       ```sql
+       SELECT OrderID, TotalAmount
+       FROM Sales.Orders
+       WHERE TotalAmount > (SELECT AVG(TotalAmount) FROM Sales.Orders);
+       ```
+    4. Employees in IT department:
+       ```sql
+       SELECT FirstName, LastName
+       FROM HR.Employees
+       WHERE DepartmentID = (SELECT DepartmentID FROM HR.Departments WHERE DepartmentName = 'IT');
+       ```
+    5. Employees with high performance scores:
+       ```sql
+       SELECT e.FirstName, p.PerformanceScore
+       FROM HR.Employees AS e
+       INNER JOIN HR.EmployeePerformance AS p ON e.EmployeeID = p.EmployeeID
+       WHERE p.PerformanceScore > (SELECT AVG(PerformanceScore) FROM HR.EmployeePerformance);
+       ```
+    6. Customers with above-average orders:
+       ```sql
+       SELECT c.CustomerName, o.OrderID
+       FROM Sales.Customers AS c
+       INNER JOIN Sales.Orders AS o ON c.CustomerID = o.CustomerID
+       WHERE o.TotalAmount > (SELECT AVG(TotalAmount) FROM Sales.Orders);
+       ```
+    7. Correlated: Employees above department average:
+       ```sql
+       SELECT e.FirstName, e.Salary
+       FROM HR.Employees AS e
+       WHERE Salary > (SELECT AVG(Salary) FROM HR.Employees AS e2 WHERE e2.DepartmentID = e.DepartmentID);
+       ```
+    8. Correlated: Orders above customer average:
+       ```sql
+       SELECT o.OrderID, o.TotalAmount
+       FROM Sales.Orders AS o
+       WHERE TotalAmount > (SELECT AVG(TotalAmount) FROM Sales.Orders AS o2 WHERE o2.CustomerID = o.CustomerID);
+       ```
+    9. Employees with recent performance reviews:
+       ```sql
+       SELECT e.FirstName, p.ReviewDate
+       FROM HR.Employees AS e
+       INNER JOIN HR.EmployeePerformance AS p ON e.EmployeeID = p.EmployeeID
+       WHERE p.ReviewDate > (SELECT DATEADD(month, -6, GETDATE()));
+       ```
+    10. Department average salary comparison:
+        ```sql
+        SELECT FirstName, Salary, (SELECT AVG(Salary) FROM HR.Employees WHERE DepartmentID = e.DepartmentID) AS DeptAvg
+        FROM HR.Employees AS e;
+        ```
+    11. Employees reporting to specific manager:
+        ```sql
+        SELECT FirstName, LastName
+        FROM HR.Employees
+        WHERE ManagerID = (SELECT EmployeeID FROM HR.Employees WHERE FirstName = 'Cathy');
+        ```
+    12. Orders in high-value regions:
+        ```sql
+        SELECT o.OrderID, c.Region
+        FROM Sales.Orders AS o
+        INNER JOIN Sales.Customers AS c ON o.CustomerID = c.CustomerID
+        WHERE c.Region = (SELECT Region FROM Sales.Customers WHERE CustomerName = 'John Doe');
+        ```
+    13. Employees with top performance:
+        ```sql
+        SELECT e.FirstName, p.PerformanceScore
+        FROM HR.Employees AS e
+        INNER JOIN HR.EmployeePerformance AS p ON e.EmployeeID = p.EmployeeID
+        WHERE p.PerformanceScore = (SELECT MAX(PerformanceScore) FROM HR.EmployeePerformance);
+        ```
+    14. Correlated: Employees with above-average tenure:
+        ```sql
+        SELECT e.FirstName, DATEDIFF(year, e.HireDate, GETDATE()) AS Tenure
+        FROM HR.Employees AS e
+        WHERE DATEDIFF(year, e.HireDate, GETDATE()) > (SELECT AVG(DATEDIFF(year, HireDate, GETDATE())) FROM HR.Employees AS e2 WHERE e2.DepartmentID = e.DepartmentID);
+        ```
+    15. Customers without high-value orders:
+        ```sql
+        SELECT CustomerName
+        FROM Sales.Customers AS c
+        WHERE CustomerID NOT IN (SELECT CustomerID FROM Sales.Orders WHERE TotalAmount > (SELECT AVG(TotalAmount) FROM Sales.Orders));
+        ```
+    16. Employees with formatted salary comparison:
+        ```sql
+        SELECT FirstName, Salary, ROUND((SELECT AVG(Salary) FROM HR.Employees), 2) AS CompanyAvg
+        FROM HR.Em
