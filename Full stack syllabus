@@ -1,0 +1,2168 @@
+Here’s a complete list of topics you need to learn to become a Java Full Stack Developer:
+
+
+---
+
+1. Core Java
+
+Java Basics (syntax, data types, operators)
+
+OOP Concepts (Class, Object, Inheritance, Polymorphism, Encapsulation, Abstraction)
+
+Exception Handling
+
+Collections Framework (List, Set, Map, Queue)
+
+Generics
+
+Multithreading & Concurrency
+
+Java I/O (File handling, Serialization)
+
+Java 8+ Features (Streams, Lambda, Functional Interfaces)
+
+JVM Internals (Memory management, Garbage collection basics)
+
+
+
+---
+
+2. Databases
+
+SQL Basics (DDL, DML, DQL)
+
+Joins, Views, Indexes, Stored Procedures
+
+Normalization, Transactions (ACID)
+
+Popular Databases: MySQL, PostgreSQL, Oracle
+
+Basic knowledge of NoSQL (MongoDB)
+
+
+
+---
+
+3. Backend Development
+
+Java Frameworks:
+
+Spring Core
+
+Spring Boot (REST API development)
+
+Spring Data JPA (Database integration)
+
+Spring Security (Authentication & Authorization)
+
+
+Hibernate ORM
+
+Building & Consuming RESTful APIs
+
+Microservices Basics (Spring Cloud, Eureka, Feign, API Gateway)
+
+Messaging Queues (Kafka, RabbitMQ – optional but good)
+
+
+
+---
+
+4. Frontend Development
+
+HTML5 (semantic tags, forms, tables)
+
+CSS3 (flexbox, grid, media queries)
+
+JavaScript (ES6+, DOM, Fetch API)
+
+Frontend Framework (Choose one):
+
+React (preferred for modern development)
+
+Angular (good alternative)
+
+
+State Management (Redux for React or RxJS for Angular)
+
+Consuming REST APIs from frontend
+
+
+
+---
+
+5. Tools & Build Systems
+
+Git & GitHub/GitLab/Bitbucket
+
+Maven or Gradle (build automation)
+
+Postman (API testing)
+
+Docker Basics (containerizing apps)
+
+
+
+---
+
+6. DevOps & Deployment (Basic Knowledge)
+
+CI/CD Basics (Jenkins or GitHub Actions)
+
+Application Deployment (Tomcat, Cloud — AWS/Heroku)
+
+Basic Linux Commands (for servers)
+
+
+
+---
+
+7. Testing
+
+Unit Testing (JUnit, Mockito)
+
+Integration Testing
+
+API Testing (Postman, RestAssured)
+
+
+
+---
+
+8. Additional Good-to-Have Skills
+
+Design Patterns (Singleton, Factory, Builder, etc.)
+
+SOLID Principles
+
+Logging Framework (SLF4J, Logback)
+
+Monitoring (basic understanding of tools like Prometheus/Grafana)
+
+
+
+---
+
+Would you like me to prepare a 6-month step-by-step roadmap (day-wise or month-wise) to cover all these topics and become job-ready?
+
+###### HTML 
+
+# 20-Day HTML Learning Syllabus
+
+This syllabus is designed for absolute beginners with no prior coding experience, progressing from basic HTML structure to semantic markup, accessibility, and practical projects. Each day includes a main heading, subtopics with detailed explanations, estimated time (assuming 2-3 hours/day), resources (free online like MDN Web Docs, freeCodeCamp, W3Schools), and practice exercises. Focus on hands-on coding: use a text editor like VS Code and preview in a browser or CodePen. Build small pages daily to reinforce concepts. By the end, you'll create structured, accessible web pages.
+
+## Day 1: Introduction to HTML
+- **What is HTML?**: Understand HyperText Markup Language; role in web development; HTML vs. CSS/JS.
+- **Basic Structure**: <!DOCTYPE html>, <html>, <head>, <meta>, <body> tags; boilerplate setup.
+- **Setting Up Environment**: Text editor (VS Code), browser (Chrome/Firefox); saving .html files.
+- **Practice**: Create a simple "Hello World" page.
+- **Resources**: MDN HTML Basics; freeCodeCamp HTML Introduction.
+- **Exercises**: Write an HTML file with a title and heading displayed in the browser.
+
+## Day 2: HTML Elements and Tags
+- **Elements Anatomy**: Opening/closing tags, self-closing tags, attributes (e.g., id, class).
+- **Common Tags**: <h1>-<h6>, <p>, <br>, <hr>, <div>, <span>.
+- **Nesting Elements**: Parent-child relationships; proper tag hierarchy.
+- **Practice**: Build a simple bio page with headings and paragraphs.
+- **Resources**: W3Schools HTML Elements.
+- **Exercises**: Create a page with nested headings and paragraphs about yourself.
+
+## Day 3: Attributes and Links
+- **Global Attributes**: id, class, style, title, data-*.
+- **Anchor Tags**: <a href="URL">; absolute vs. relative URLs, target="_blank".
+- **Images**: <img src="URL" alt="description">; importance of alt text.
+- **Practice**: Add links and images to a page.
+- **Resources**: MDN Attributes; freeCodeCamp Links.
+- **Exercises**: Create a page with 3 external links and 2 images with alt text.
+
+## Day 4: Text Formatting
+- **Inline Text Tags**: <strong>, <em>, <b>, <i>, <u>, <mark>, <small>.
+- **Superscript/Subscript**: <sup>, <sub> for math or footnotes.
+- **Quotes and Citations**: <blockquote>, <q>, <cite>.
+- **Practice**: Format a blog post excerpt.
+- **Resources**: W3Schools Text Formatting.
+- **Exercises**: Style a paragraph with bold, italic, and a blockquote.
+
+## Day 5: Lists
+- **Ordered Lists**: <ol>, <li>; type attribute (1, A, a).
+- **Unordered Lists**: <ul>, <li>; bullet styles (via CSS intro).
+- **Nested Lists**: Lists within lists for hierarchies.
+- **Practice**: Create a to-do list or menu.
+- **Resources**: MDN Lists.
+- **Exercises**: Build a nested list for a course outline with 3 levels.
+
+## Day 6: Semantic HTML
+- **Why Semantics?**: Accessibility, SEO, maintainability.
+- **Semantic Elements**: <header>, <nav>, <main>, <article>, <section>, <aside>, <footer>.
+- **Landmarks**: Role in screen readers; avoiding div-only layouts.
+- **Practice**: Restructure a page with semantic tags.
+- **Resources**: freeCodeCamp Semantic HTML.
+- **Exercises**: Convert a div-based layout to semantic elements for a blog.
+
+## Day 7: Tables
+- **Table Structure**: <table>, <tr>, <th>, <td>.
+- **Attributes**: colspan, rowspan; border (basic styling).
+- **Accessibility**: <caption>, scope for headers.
+- **Practice**: Create a schedule table.
+- **Resources**: MDN Tables.
+- **Exercises**: Build a table for a weekly timetable with headers and spans.
+
+## Day 8: Forms - Basics
+- **Form Element**: <form action="URL" method="GET/POST">.
+- **Input Types**: <input type="text/password/email/number">, <label>.
+- **Buttons**: <button type="submit/reset">.
+- **Practice**: Build a simple contact form.
+- **Resources**: W3Schools Forms.
+- **Exercises**: Create a form with name, email, and submit button.
+
+## Day 9: Forms - Advanced
+- **Advanced Inputs**: <input type="checkbox/radio/date/file">.
+- **Select and Textarea**: <select>, <option>, <textarea>.
+- **Form Attributes**: required, placeholder, disabled, maxlength.
+- **Practice**: Create a survey form.
+- **Resources**: MDN Forms.
+- **Exercises**: Build a form with dropdowns, checkboxes, and validation attributes.
+
+## Day 10: Meta Tags and Head Section
+- **Meta Tags**: charset, viewport (<meta name="viewport" content="width=device-width">).
+- **SEO Basics**: <meta name="description/keywords">, <title>.
+- **Favicon**: <link rel="icon">.
+- **Practice**: Optimize a page’s head for SEO.
+- **Resources**: freeCodeCamp Meta Tags.
+- **Exercises**: Add meta tags and favicon to a personal page.
+
+## Day 11: Multimedia - Images and Videos
+- **Advanced Images**: <picture>, <source> for responsive images.
+- **Video**: <video src="URL" controls>, poster attribute.
+- **Audio**: <audio src="URL" controls>.
+- **Practice**: Embed media in a portfolio.
+- **Resources**: MDN Multimedia.
+- **Exercises**: Create a media page with video and fallback images.
+
+## Day 12: HTML5 Structural Elements
+- **New Elements**: <figure>, <figcaption>, <details>, <summary>.
+- **Canvas Intro**: <canvas> for basic graphics (no JS yet).
+- **Progressive Enhancement**: Fallback content for older browsers.
+- **Practice**: Use figure for images; details for FAQs.
+- **Resources**: W3Schools HTML5.
+- **Exercises**: Build a gallery with figure and expandable details.
+
+## Day 13: Accessibility Basics
+- **Why Accessibility?**: Inclusive design; WCAG intro.
+- **ARIA**: role, aria-label, aria-hidden; when to use.
+- **Keyboard Navigation**: tabindex, focus management.
+- **Practice**: Add ARIA to a form.
+- **Resources**: MDN Accessibility.
+- **Exercises**: Make a nav menu keyboard-accessible.
+
+## Day 14: Linking CSS and JS
+- **CSS Integration**: <link rel="stylesheet" href="style.css">.
+- **JS Integration**: <script src="script.js">, defer/async attributes.
+- **Inline vs. External**: Pros and cons; best practices.
+- **Practice**: Style and add basic interactivity to a page.
+- **Resources**: freeCodeCamp HTML with CSS/JS.
+- **Exercises**: Link external CSS/JS to change a page’s color on click.
+
+## Day 15: HTML Validation and Debugging
+- **Validation Tools**: W3C Markup Validator; catching syntax errors.
+- **Common Errors**: Missing closing tags, incorrect nesting.
+- **Browser DevTools**: Inspect HTML structure; console errors.
+- **Practice**: Validate and fix a broken page.
+- **Resources**: W3C Validator Guide.
+- **Exercises**: Debug a page with 5 intentional HTML errors.
+
+## Day 16: SEO and Metadata
+- **Advanced Meta Tags**: Open Graph (og:title, og:image), Twitter Cards.
+- **Structured Data**: JSON-LD basics for rich snippets.
+- **Best Practices**: Clean URLs, alt text, heading hierarchy.
+- **Practice**: Add SEO tags to a blog.
+- **Resources**: Moz SEO Guide.
+- **Exercises**: Implement Open Graph tags for a portfolio.
+
+## Day 17: Iframes and Embedding
+- **Iframe Basics**: <iframe src="URL"> for embedding pages.
+- **Embedding External Content**: YouTube videos, Google Maps.
+- **Security**: sandbox attribute; preventing clickjacking.
+- **Practice**: Embed a map and video.
+- **Resources**: MDN Iframe.
+- **Exercises**: Create a page with embedded YouTube and a sandboxed iframe.
+
+## Day 18: Project - Personal Portfolio
+- **Planning**: Sketch a multi-section page (home, about, projects).
+- **Implementation**: Use semantic HTML, forms, images.
+- **Features**: Navigation, footer, contact form.
+- **Practice**: Save and preview in browser.
+- **Resources**: freeCodeCamp Projects.
+- **Exercises**: Build a 3-section portfolio with links and images.
+
+## Day 19: Project - Blog Page
+- **Structure**: Semantic layout with <article>, <header>, <footer>.
+- **Features**: Comments section (form), related posts (list).
+- **Accessibility**: ARIA roles, alt text.
+- **Practice**: Add meta tags for SEO.
+- **Resources**: MDN Project Ideas.
+- **Exercises**: Create a blog post with formatted text and media.
+
+## Day 20: Review and Next Steps
+- **Recap Key Concepts**: Structure, semantics, accessibility; self-quiz.
+- **Portfolio Building**: Polish projects, host on GitHub Pages.
+- **Next Steps**: Intro to CSS (styling), JavaScript (interactivity).
+- **Community**: Join Stack Overflow, Reddit r/webdev.
+- **Resources**: “HTML and CSS” by Jon Duckett; freeCodeCamp courses.
+- **Exercises**: Build a capstone landing page combining all skills.
+
+**Notes**:
+- Practice daily by editing HTML files and viewing changes live.
+- Use free tools like CodePen for quick experiments.
+- Validate code regularly to ensure standards compliance.
+- Focus on semantics and accessibility for modern web standards.
+- Deploy final projects to GitHub Pages for portfolio showcase.
+##### CSS
+# 30-Day CSS Learning Syllabus
+
+This syllabus is designed for beginners with basic HTML knowledge, progressing to intermediate and advanced CSS concepts. Each day includes a main heading, subtopics with detailed explanations, estimated time (assuming 2-4 hours/day), resources (free online like MDN Web Docs, CSS-Tricks, freeCodeCamp), and practice exercises. Focus on hands-on coding: build small projects or modify existing ones daily. Use tools like CodePen or VS Code for practice.
+
+## Day 1: Introduction to CSS Basics
+- **What is CSS?**: Understand CSS as Cascading Style Sheets for styling HTML; learn about separation of concerns (content vs. style).
+- **Syntax and Structure**: Explore rulesets (selector { property: value; }), comments (/* */), and basic formatting.
+- **Linking CSS to HTML**: Methods like inline, internal (<style> tag), and external (.css file with <link>).
+- **Practice**: Style a simple HTML page with colors and fonts.
+- **Resources**: MDN CSS Introduction; freeCodeCamp CSS module.
+- **Exercises**: Create a basic webpage and apply 5 different styles.
+
+## Day 2: Selectors - Part 1
+- **Basic Selectors**: Element (e.g., p {}), class (.class {}), ID (#id {}), and universal (* {}).
+- **Combinators**: Descendant (space), child (>), adjacent sibling (+), general sibling (~).
+- **Attribute Selectors**: [attr], [attr=value], [attr~=value], etc.
+- **Practice**: Target specific elements in a nested HTML structure.
+- **Resources**: CSS-Tricks Selectors Guide.
+- **Exercises**: Build a menu and style items using classes and IDs.
+
+## Day 3: Selectors - Part 2
+- **Pseudo-Classes**: :hover, :active, :focus, :nth-child(n), :first-child, :last-child.
+- **Pseudo-Elements**: ::before, ::after, ::first-line, ::first-letter.
+- **Specificity Rules**: Calculate specificity (inline > ID > class > element); understand !important.
+- **Practice**: Create interactive hover effects.
+- **Resources**: MDN Pseudo-Classes/Elements.
+- **Exercises**: Style a list with alternating colors using :nth-child.
+
+## Day 4: Colors and Backgrounds
+- **Color Systems**: RGB, HEX, HSL, RGBA (with opacity); named colors.
+- **Background Properties**: background-color, background-image, background-repeat, background-position, background-size.
+- **Gradients**: Linear and radial gradients using background-image.
+- **Practice**: Design a hero section with gradients.
+- **Resources**: MDN Colors; CSS Gradient Generator tools.
+- **Exercises**: Create a card with image background and overlay text.
+
+## Day 5: Typography and Text Styling
+- **Font Properties**: font-family (web-safe fonts, Google Fonts), font-size (px, em, rem), font-weight, font-style.
+- **Text Properties**: text-align, text-decoration, text-transform, line-height, letter-spacing, word-spacing.
+- **Web Fonts**: Importing @font-face; using external font services.
+- **Practice**: Style a blog post for readability.
+- **Resources**: MDN Typography; Google Fonts.
+- **Exercises**: Format a paragraph with custom fonts and spacing.
+
+## Day 6: Box Model Fundamentals
+- **Box Model Components**: Content, padding, border, margin; understanding box-sizing (content-box vs. border-box).
+- **Padding and Margin**: Directional properties (top, right, bottom, left); shorthand.
+- **Borders**: border-width, border-style (solid, dashed), border-color, border-radius.
+- **Practice**: Create spaced elements like buttons.
+- **Resources**: MDN Box Model.
+- **Exercises**: Build a simple form with padded inputs and borders.
+
+## Day 7: Display and Positioning - Part 1
+- **Display Property**: block, inline, inline-block, none; differences in behavior.
+- **Position Property**: static (default), relative, absolute, fixed, sticky.
+- **Z-Index**: Layering elements with z-index.
+- **Practice**: Position a navigation bar.
+- **Resources**: CSS-Tricks Positioning.
+- **Exercises**: Create a sticky header on scroll.
+
+## Day 8: Display and Positioning - Part 2
+- **Overflow Handling**: overflow (visible, hidden, scroll, auto); text-overflow.
+- **Floating Elements**: float (left, right, none); clear property.
+- **Advanced Positioning**: Combining position with top/left/right/bottom.
+- **Practice**: Layout a two-column page with floats.
+- **Resources**: MDN Float and Clear.
+- **Exercises**: Design a photo gallery with floated images.
+
+## Day 9: Flexbox - Basics
+- **Flex Container**: display: flex; flex-direction (row, column), flex-wrap, justify-content.
+- **Flex Items**: flex-grow, flex-shrink, flex-basis; align-self.
+- **Alignment**: align-items, align-content.
+- **Practice**: Build a responsive card layout.
+- **Resources**: Flexbox Froggy game; MDN Flexbox.
+- **Exercises**: Create a centered navigation using Flexbox.
+
+## Day 10: Flexbox - Advanced
+- **Ordering Items**: order property for reordering without changing HTML.
+- **Nested Flexboxes**: Using Flexbox inside Flexbox for complex layouts.
+- **Common Patterns**: Holy Grail layout, equal-height columns.
+- **Practice**: Design a dashboard with Flexbox.
+- **Resources**: CSS-Tricks Flexbox Guide.
+- **Exercises**: Build a product grid with flexible items.
+
+## Day 11: CSS Grid - Basics
+- **Grid Container**: display: grid; grid-template-columns, grid-template-rows, grid-gap.
+- **Grid Items**: grid-column, grid-row; spanning multiple cells.
+- **Placement**: justify-items, align-items.
+- **Practice**: Create a basic grid layout.
+- **Resources**: Grid Garden game; MDN Grid.
+- **Exercises**: Layout a photo album in a grid.
+
+## Day 12: CSS Grid - Advanced
+- **Named Areas**: grid-template-areas for semantic layouts.
+- **Auto-Fit and Auto-Fill**: minmax() for responsive grids.
+- **Nested Grids**: Grids inside grids; subgrid (if supported).
+- **Practice**: Build a magazine-style page.
+- **Resources**: CSS-Tricks Grid Guide.
+- **Exercises**: Design a responsive dashboard with Grid.
+
+## Day 13: Responsive Design - Media Queries
+- **Media Queries Basics**: @media (min-width: 768px) {}; breakpoints (mobile-first vs. desktop-first).
+- **Viewport Meta**: <meta name="viewport"> for mobile responsiveness.
+- **Fluid Units**: %, vw, vh, rem for scalable designs.
+- **Practice**: Make a site mobile-friendly.
+- **Resources**: MDN Media Queries.
+- **Exercises**: Adapt a layout for phone, tablet, desktop.
+
+## Day 14: Responsive Images and Videos
+- **Responsive Images**: srcset, sizes attributes; picture element.
+- **Aspect Ratio**: Maintaining ratios with padding hacks or aspect-ratio property.
+- **Embedding Videos**: Responsive iframes (YouTube embeds).
+- **Practice**: Add responsive media to a page.
+- **Resources**: MDN Responsive Images.
+- **Exercises**: Create a gallery with scalable images.
+
+## Day 15: CSS Variables and Custom Properties
+- **Declaring Variables**: :root { --main-color: #fff; }; using var(--main-color).
+- **Scope and Inheritance**: Global vs. local variables.
+- **Dynamic Changes**: Updating variables with JavaScript (intro).
+- **Practice**: Theme a site with variables.
+- **Resources**: MDN Custom Properties.
+- **Exercises**: Build a dark/light mode toggle using variables.
+
+## Day 16: Transitions
+- **Transition Basics**: transition-property, transition-duration, transition-timing-function, transition-delay.
+- **Shorthand**: transition: all 0.3s ease;
+- **Multiple Transitions**: Animating multiple properties.
+- **Practice**: Add hover transitions to buttons.
+- **Resources**: MDN Transitions.
+- **Exercises**: Create a menu with smooth open/close.
+
+## Day 17: Animations - Keyframes
+- **@keyframes Rule**: Defining animations with from/to or percentages.
+- **Animation Properties**: animation-name, animation-duration, animation-iteration-count, animation-direction.
+- **Easing Functions**: linear, ease-in-out, cubic-bezier.
+- **Practice**: Animate a loading spinner.
+- **Resources**: MDN Animations.
+- **Exercises**: Build a bouncing ball animation.
+
+## Day 18: Transforms
+- **2D Transforms**: translate, scale, rotate, skew.
+- **3D Transforms**: perspective, rotateX/Y/Z, translate3d.
+- **Combining with Transitions**: Smooth transform animations.
+- **Practice**: Create card flip effects.
+- **Resources**: MDN Transforms.
+- **Exercises**: Design a 3D rotating cube.
+
+## Day 19: Filters and Blends
+- **CSS Filters**: blur, brightness, contrast, grayscale, hue-rotate.
+- **Backdrop Filters**: backdrop-filter for frosted glass effects.
+- **Blend Modes**: mix-blend-mode (multiply, screen).
+- **Practice**: Apply filters to images.
+- **Resources**: MDN Filters.
+- **Exercises**: Create a photo editor preview.
+
+## Day 20: Advanced Selectors and Pseudo-Classes
+- **:not(), :is(), :where()**: Complex negation and matching.
+- **:has() Selector**: Parent selection (if supported).
+- **Form Pseudo-Classes**: :valid, :invalid, :checked.
+- **Practice**: Style forms dynamically.
+- **Resources**: MDN Advanced Selectors.
+- **Exercises**: Validate and style a form on input.
+
+## Day 21: CSS Preprocessors - Intro to Sass
+- **Why Preprocessors?**: Variables, nesting, mixins in Sass.
+- **Installation and Setup**: Using Sass via npm or online compilers.
+- **Nesting Rules**: Simplified selector writing.
+- **Practice**: Convert CSS to Sass.
+- **Resources**: Sass Basics (official site).
+- **Exercises**: Refactor a project with Sass nesting.
+
+## Day 22: Sass Advanced Features
+- **Mixins and Functions**: Reusable code blocks; @mixin, @include.
+- **Partials and Imports**: Modular Sass with @use, @import.
+- **Control Directives**: @if, @for, @each for logic.
+- **Practice**: Build a theme system.
+- **Resources**: Sass Guide.
+- **Exercises**: Create a grid mixin.
+
+## Day 23: Accessibility in CSS
+- **Semantic Styling**: Using ARIA roles with CSS.
+- **Contrast and Readability**: Tools like WCAG contrast checker.
+- **Focus Styles**: Custom :focus outlines.
+- **Practice**: Audit and fix a site for accessibility.
+- **Resources**: MDN Accessibility.
+- **Exercises**: Style a site with high contrast modes.
+
+## Day 24: Performance Optimization
+- **CSS Best Practices**: Minimize selectors, avoid !important overuse.
+- **Critical CSS**: Inline styles for above-the-fold content.
+- **Minification and Compression**: Tools like CSSNano.
+- **Practice**: Optimize a large stylesheet.
+- **Resources**: CSS-Tricks Performance.
+- **Exercises**: Profile and reduce CSS file size.
+
+## Day 25: CSS Frameworks - Bootstrap Intro
+- **What is Bootstrap?**: Grid system, components, utilities.
+- **Setup and Usage**: CDN or npm; basic classes.
+- **Customization**: Overriding with custom CSS.
+- **Practice**: Build a page with Bootstrap.
+- **Resources**: Bootstrap Docs.
+- **Exercises**: Create a responsive navbar.
+
+## Day 26: Project - Personal Portfolio
+- **Planning**: Wireframe a multi-page site.
+- **Implementation**: Use Flexbox/Grid for layout, responsive design.
+- **Styling**: Add transitions and custom fonts.
+- **Practice**: Deploy to GitHub Pages.
+- **Resources**: freeCodeCamp Projects.
+- **Exercises**: Add sections like about, projects, contact.
+
+## Day 27: Project - E-commerce Product Page
+- **Layout**: Grid for products, Flexbox for details.
+- **Interactivity**: Hover effects, animations.
+- **Responsiveness**: Media queries for devices.
+- **Practice**: Integrate basic CSS variables.
+- **Resources**: MDN Project Ideas.
+- **Exercises**: Style cart and checkout elements.
+
+## Day 28: Project - Blog Layout
+- **Typography Focus**: Article styling, comments section.
+- **Advanced Features**: Dark mode toggle with variables.
+- **Accessibility**: Ensure keyboard navigation.
+- **Practice**: Use Sass for organization.
+- **Resources**: CSS-Tricks Blog Designs.
+- **Exercises**: Add pagination and search bar.
+
+## Day 29: Debugging and Tools
+- **Browser DevTools**: Inspect elements, edit CSS live.
+- **Common Issues**: Specificity conflicts, box model bugs.
+- **Linters and Validators**: Stylelint, W3C CSS Validator.
+- **Practice**: Debug a broken layout.
+- **Resources**: Chrome DevTools Guide.
+- **Exercises**: Fix 5 common CSS errors.
+
+## Day 30: Review and Next Steps
+- **Recap Key Concepts**: Review basics to advanced; quiz yourself.
+- **Portfolio Building**: Polish projects, add to GitHub.
+- **Advanced Topics Intro**: CSS-in-JS (e.g., styled-components), Tailwind CSS.
+- **Community**: Join forums like Stack Overflow, Reddit r/css.
+- **Resources**: CSS Mastery book; online courses.
+- **Exercises**: Build a final capstone project combining all skills.
+
+########
+
+# 45-Day JavaScript Learning Syllabus
+
+This syllabus is designed for beginners with basic HTML and CSS knowledge, progressing from fundamentals to advanced concepts, including modern ES6+ features, asynchronous programming, and introductory full-stack elements. Each day includes a main heading, subtopics with detailed explanations, estimated time (assuming 2-4 hours/day), resources (free online like MDN Web Docs, freeCodeCamp, JavaScript.info), and practice exercises. Focus on hands-on coding: use browser console, CodePen, or VS Code with Live Server. Build small scripts or apps daily to reinforce learning.
+
+## Day 1: Introduction to JavaScript
+- **What is JavaScript?**: Understand JS as a scripting language for web interactivity; client-side vs. server-side; history and ECMAScript standards.
+- **Setting Up Environment**: Embed JS in HTML (<script> tag), external files, browser console for testing.
+- **Basic Syntax**: Comments (// or /* */), semicolons, case sensitivity.
+- **Practice**: Write a simple "Hello World" script.
+- **Resources**: MDN JavaScript Guide; freeCodeCamp JS Basics.
+- **Exercises**: Create an HTML page that alerts a message on load.
+
+## Day 2: Variables and Data Types
+- **Declaring Variables**: var, let, const; differences in scope and reassignment.
+- **Primitive Types**: String, number, boolean, undefined, null, bigint, symbol.
+- **Type Coercion**: Implicit vs. explicit conversion (e.g., String(), Number()).
+- **Practice**: Declare and log variables in console.
+- **Resources**: JavaScript.info Variables.
+- **Exercises**: Write a script to swap two variables without a temp.
+
+## Day 3: Operators and Expressions
+- **Arithmetic Operators**: +, -, *, /, %, ** (exponentiation).
+- **Comparison and Logical**: ==, ===, !=, >, <, &&, ||, !.
+- **Assignment and Others**: +=, -=, ternary (condition ? true : false).
+- **Practice**: Build simple calculators.
+- **Resources**: MDN Operators.
+- **Exercises**: Create a program to check if a number is even/odd.
+
+## Day 4: Control Structures - Conditionals
+- **If-Else Statements**: Basic if, else if, else chains.
+- **Switch Statement**: For multiple cases; break and default.
+- **Truthiness**: Falsy values (false, 0, "", null, undefined, NaN).
+- **Practice**: Decision-making scripts like grade calculator.
+- **Resources**: freeCodeCamp Control Flow.
+- **Exercises**: Write a script for a simple quiz with conditional scoring.
+
+## Day 5: Control Structures - Loops
+- **For Loop**: Initialization, condition, increment; for...of for iterables.
+- **While and Do-While**: Differences in execution.
+- **Break and Continue**: Controlling loop flow.
+- **Practice**: Iterate over numbers or arrays.
+- **Resources**: MDN Loops.
+- **Exercises**: Print multiplication tables using loops.
+
+## Day 6: Functions - Basics
+- **Declaring Functions**: Function declaration, expression, arrow functions.
+- **Parameters and Arguments**: Default parameters, rest parameters (...args).
+- **Return Statement**: Returning values; undefined if omitted.
+- **Practice**: Create reusable math functions.
+- **Resources**: JavaScript.info Functions.
+- **Exercises**: Build a function to calculate factorial.
+
+## Day 7: Functions - Scope and Closures
+- **Scope Types**: Global, function, block (let/const).
+- **Hoisting**: var vs. let/const behavior.
+- **Closures**: Functions remembering outer scope; practical uses like counters.
+- **Practice**: Nested functions and private variables.
+- **Resources**: MDN Scope.
+- **Exercises**: Implement a closure-based module pattern.
+
+## Day 8: Arrays - Basics
+- **Creating Arrays**: Literals [], new Array(); indexing starts at 0.
+- **Methods**: push, pop, shift, unshift, length.
+- **Iteration**: forEach, map, filter, reduce (intro).
+- **Practice**: Manipulate shopping lists.
+- **Resources**: MDN Arrays.
+- **Exercises**: Sort an array of numbers ascending/descending.
+
+## Day 9: Arrays - Advanced
+- **Multidimensional Arrays**: Arrays of arrays; accessing nested elements.
+- **Destructuring**: [a, b] = array; rest patterns.
+- **Spread Operator**: ... for copying or merging arrays.
+- **Practice**: Process data like student scores.
+- **Resources**: freeCodeCamp Arrays.
+- **Exercises**: Flatten a 2D array into 1D.
+
+## Day 10: Objects - Basics
+- **Creating Objects**: Literals {}, new Object(); key-value pairs.
+- **Accessing Properties**: Dot notation (obj.prop), bracket (obj['prop']).
+- **Methods**: Adding functions as properties.
+- **Practice**: Represent user data as objects.
+- **Resources**: JavaScript.info Objects.
+- **Exercises**: Create an object for a car and log its details.
+
+## Day 11: Objects - Advanced
+- **this Keyword**: Referring to current object in methods.
+- **Destructuring Objects**: {prop1, prop2} = obj; defaults and aliases.
+- **Prototypes and Inheritance**: Basics of __proto__ and Object.create.
+- **Practice**: Build a simple class-like structure.
+- **Resources**: MDN Objects.
+- **Exercises**: Implement a person object with methods like greet().
+
+## Day 12: Strings and Manipulation
+- **String Methods**: length, toUpperCase, trim, slice, substring.
+- **Template Literals**: Backticks `` for interpolation `${var}`.
+- **Regular Expressions Intro**: /pattern/, test(), match().
+- **Practice**: Parse and format text inputs.
+- **Resources**: MDN Strings.
+- **Exercises**: Validate an email format using regex.
+
+## Day 13: DOM Manipulation - Basics
+- **What is DOM?**: Document Object Model; tree structure.
+- **Selecting Elements**: getElementById, querySelector, querySelectorAll.
+- **Modifying Elements**: textContent, innerHTML, style.property.
+- **Practice**: Change page content dynamically.
+- **Resources**: freeCodeCamp DOM.
+- **Exercises**: Build a script to update a paragraph on button click.
+
+## Day 14: DOM Manipulation - Advanced
+- **Creating/Removing Elements**: createElement, appendChild, removeChild.
+- **Attributes**: getAttribute, setAttribute, classList (add/remove/toggle).
+- **Traversal**: parentNode, children, nextSibling.
+- **Practice**: Build dynamic lists.
+- **Resources**: MDN DOM.
+- **Exercises**: Create a to-do list app adding/removing items.
+
+## Day 15: Events - Basics
+- **Event Listeners**: addEventListener('click', handler); removeEventListener.
+- **Common Events**: click, mouseover, keydown, submit.
+- **Event Object**: e.target, e.preventDefault().
+- **Practice**: Interactive buttons and forms.
+- **Resources**: JavaScript.info Events.
+- **Exercises**: Handle form submission without reload.
+
+## Day 16: Events - Advanced
+- **Event Bubbling/Capturing**: Propagation phases; stopPropagation.
+- **Delegation**: Attaching listeners to parents for dynamic elements.
+- **Custom Events**: new CustomEvent; dispatchEvent.
+- **Practice**: Efficient event handling in lists.
+- **Resources**: MDN Events.
+- **Exercises**: Implement drag-and-drop simulation.
+
+## Day 17: ES6+ Features - Let/Const, Arrow Functions
+- **Block Scope**: let/const vs. var.
+- **Arrow Functions**: Shorter syntax; lexical this.
+- **Default Parameters**: function(param = value).
+- **Practice**: Refactor older code to ES6.
+- **Resources**: freeCodeCamp ES6.
+- **Exercises**: Convert traditional functions to arrows.
+
+## Day 18: ES6+ Features - Destructuring and Spread/Rest
+- **Array/Object Destructuring**: Detailed patterns.
+- **Spread in Functions/Arrays**: ... for arguments or concatenation.
+- **Rest Parameters**: Collecting args into arrays.
+- **Practice**: Simplify function calls.
+- **Resources**: MDN Destructuring.
+- **Exercises**: Destructure API response mocks.
+
+## Day 19: ES6+ Features - Classes and Inheritance
+- **Class Syntax**: class Name { constructor() {} methods() {} }.
+- **Extends and Super**: Inheritance basics.
+- **Static Methods**: Class-level functions.
+- **Practice**: Model real-world objects like animals.
+- **Resources**: JavaScript.info Classes.
+- **Exercises**: Create a Shape class with Circle subclass.
+
+## Day 20: ES6+ Features - Modules
+- **Export/Import**: export default, named exports; import { } from ''.
+- **Dynamic Imports**: import() for lazy loading.
+- **Module Patterns**: Organizing code in files.
+- **Practice**: Split code into modules.
+- **Resources**: MDN Modules.
+- **Exercises**: Build a modular calculator app.
+
+## Day 21: Asynchronous JavaScript - Callbacks
+- **Synchronous vs. Async**: Blocking code issues.
+- **Callbacks**: Functions as arguments; callback hell.
+- **setTimeout/setInterval**: Timing functions.
+- **Practice**: Delayed executions.
+- **Resources**: freeCodeCamp Async.
+- **Exercises**: Chain callbacks for sequential tasks.
+
+## Day 22: Asynchronous JavaScript - Promises
+- **Promise Basics**: new Promise((resolve, reject) => {}); then/catch/finally.
+- **Chaining Promises**: Multiple .then().
+- **Promise.all/race**: Handling multiple promises.
+- **Practice**: Simulate async operations.
+- **Resources**: MDN Promises.
+- **Exercises**: Fetch mock data with promises.
+
+## Day 23: Asynchronous JavaScript - Async/Await
+- **Async Functions**: async function() {}; await for promises.
+- **Error Handling**: try/catch with await.
+- **Top-Level Await**: In modules.
+- **Practice**: Refactor promise code to async/await.
+- **Resources**: JavaScript.info Async/Await.
+- **Exercises**: Build an async data loader.
+
+## Day 24: Fetch API and AJAX
+- **XMLHttpRequest Basics**: Older method for comparison.
+- **Fetch API**: fetch(url).then(res => res.json()).
+- **Handling Responses**: JSON, text; error checking.
+- **Practice**: Call public APIs like JSONPlaceholder.
+- **Resources**: MDN Fetch.
+- **Exercises**: Display fetched user data in DOM.
+
+## Day 25: JSON and Data Handling
+- **JSON Methods**: JSON.stringify, JSON.parse.
+- **Working with APIs**: Headers, POST requests with fetch.
+- **LocalStorage/SessionStorage**: Persisting data.
+- **Practice**: Store and retrieve app state.
+- **Resources**: freeCodeCamp JSON.
+- **Exercises**: Build a weather app fetching from API.
+
+## Day 26: Error Handling and Debugging
+- **Try-Catch**: Catching runtime errors.
+- **Throw and Custom Errors**: new Error('msg').
+- **Console Methods**: log, warn, error, table, time.
+- **Practice**: Debug broken scripts.
+- **Resources**: MDN Debugging.
+- **Exercises**: Add error handling to fetch calls.
+
+## Day 27: Functional Programming Concepts
+- **Pure Functions**: No side effects.
+- **Higher-Order Functions**: Functions returning/taking functions.
+- **Immutability**: Avoiding mutations with spread, map.
+- **Practice**: Refactor imperative code to functional.
+- **Resources**: JavaScript.info FP.
+- **Exercises**: Implement curry function.
+
+## Day 28: Introduction to Node.js
+- **What is Node.js?**: Server-side JS; installation.
+- **Modules**: require, exports; npm basics (no installs needed for core).
+- **File System**: fs.readFile, fs.writeFile (sync/async).
+- **Practice**: Simple server scripts.
+- **Resources**: Node.js Docs.
+- **Exercises**: Read/write JSON files.
+
+## Day 29: Express.js Basics (Intro to Backend)
+- **Setting Up Express**: Minimal server with app.get/post.
+- **Routing**: Handling requests/responses.
+- **Middleware**: Basics like body-parser (assume installed).
+- **Practice**: Build a simple API.
+- **Resources**: Express Docs.
+- **Exercises**: Create CRUD endpoints for todos.
+
+## Day 30: Testing JavaScript
+- **Unit Testing**: Jest basics (assume setup); test, expect.
+- **Assertions**: toBe, toEqual, toThrow.
+- **Mocking**: For functions and modules.
+- **Practice**: Test simple functions.
+- **Resources**: Jest Docs.
+- **Exercises**: Write tests for a calculator module.
+
+## Day 31: Project - Interactive To-Do List
+- **Planning**: UI with HTML/CSS, JS for logic.
+- **Implementation**: Add/remove/edit tasks, localStorage.
+- **Features**: Event listeners, DOM manipulation.
+- **Practice**: Deploy to GitHub Pages.
+- **Resources**: freeCodeCamp Projects.
+- **Exercises**: Add filters like completed/pending.
+
+## Day 32: Project - Quiz App
+- **Layout**: Questions from array, score tracking.
+- **Interactivity**: Buttons for answers, timers.
+- **Async**: Optional fetch for questions.
+- **Practice**: Use classes for structure.
+- **Resources**: MDN Project Ideas.
+- **Exercises**: Display results with animations.
+
+## Day 33: Project - Weather Dashboard
+- **API Integration**: Fetch from OpenWeatherMap (free API).
+- **Display**: Current weather, forecast.
+- **Features**: Search by city, error handling.
+- **Practice**: Async/await for data.
+- **Resources**: freeCodeCamp APIs.
+- **Exercises**: Add unit toggle (C/F).
+
+## Day 34: Advanced Topics - Generators and Iterators
+- **Iterators**: Symbol.iterator; for...of internals.
+- **Generators**: function* () { yield; }; next().
+- **Async Generators**: With await.
+- **Practice**: Custom iterable objects.
+- **Resources**: MDN Iterators.
+- **Exercises**: Generate Fibonacci sequence.
+
+## Day 35: Advanced Topics - Web Workers
+- **What are Workers?**: Background threads for heavy tasks.
+- **Setup**: new Worker('script.js'); postMessage/onmessage.
+- **Use Cases**: Offloading computations.
+- **Practice**: Parallel processing simulation.
+- **Resources**: MDN Web Workers.
+- **Exercises**: Compute large arrays in worker.
+
+## Day 36: Advanced Topics - Service Workers
+- **PWA Basics**: Offline caching.
+- **Registration**: navigator.serviceWorker.register.
+- **Lifecycle**: Install, activate, fetch events.
+- **Practice**: Cache assets for offline app.
+- **Resources**: Google PWA Docs.
+- **Exercises**: Make a simple app offline-capable.
+
+## Day 37: Introduction to React (Frontend Framework)
+- **Why React?**: Component-based UI.
+- **Setup**: Create React App (assume); JSX basics.
+- **Components**: Functional vs. class; props.
+- **Practice**: Simple counter component.
+- **Resources**: React Docs.
+- **Exercises**: Build a list renderer.
+
+## Day 38: React - State and Hooks
+- **useState Hook**: Managing state in functions.
+- **useEffect**: Side effects like fetching data.
+- **Custom Hooks**: Reusable logic.
+- **Practice**: State-driven UIs.
+- **Resources**: freeCodeCamp React.
+- **Exercises**: Fetch and display API data.
+
+## Day 39: Project - React To-Do App
+- **Components**: App, TodoList, TodoItem.
+- **State Management**: useState for tasks.
+- **Features**: Add/edit/delete, persistence.
+- **Practice**: Deploy to Netlify.
+- **Resources**: React Tutorial.
+- **Exercises**: Add search functionality.
+
+## Day 40: Security in JavaScript
+- **Common Vulnerabilities**: XSS, CSRF basics.
+- **Sanitization**: Escaping user input.
+- **Best Practices**: HTTPS, content security policy.
+- **Practice**: Secure form handling.
+- **Resources**: MDN Security.
+- **Exercises**: Prevent script injection in DOM.
+
+## Day 41: Performance Optimization
+- **Debounce/Throttle**: For events like scroll/resize.
+- **Lazy Loading**: Images and code splitting.
+- **Profiling**: Using browser tools.
+- **Practice**: Optimize slow scripts.
+- **Resources**: Addy Osmani Articles.
+- **Exercises**: Throttle a search input.
+
+## Day 42: TypeScript Intro (Typed JS)
+- **Why TypeScript?**: Static typing for JS.
+- **Basics**: Types (string, number), interfaces.
+- **Setup**: tsconfig; compiling to JS.
+- **Practice**: Type existing JS code.
+- **Resources**: TypeScript Docs.
+- **Exercises**: Define types for a user object.
+
+## Day 43: Project - Full-Stack Blog (Node + Express + Frontend)
+- **Backend**: Express API for posts.
+- **Frontend**: Fetch and display with vanilla JS or React.
+- **Integration**: CRUD operations.
+- **Practice**: Local server setup.
+- **Resources**: MERN Stack Tutorials (adapt).
+- **Exercises**: Add authentication mock.
+
+## Day 44: Debugging Advanced and Tools
+- **Browser DevTools**: Breakpoints, call stack.
+- **VS Code Debugger**: For Node/ブラウザ.
+- **Linters**: ESLint setup.
+- **Practice**: Fix complex bugs.
+- **Resources**: Chrome DevTools.
+- **Exercises**: Debug async code issues.
+
+## Day 45: Review and Next Steps
+- **Recap Key Concepts**: From basics to advanced; self-quiz.
+- **Portfolio Building**: Polish projects, GitHub repo.
+- **Advanced Topics Intro**: Vue/Angular, WebAssembly, Deno.
+- **Community**: Stack Overflow, Reddit r/learnjavascript.
+- **Resources**: "Eloquent JavaScript" book; Udemy courses.
+- **Exercises**: Build a capstone project like a chat app.
+
+
+### React
+
+# 40-Day React Learning Syllabus
+
+This syllabus is designed for learners with solid JavaScript knowledge (including ES6+ features like classes, promises, and async/await), progressing from React fundamentals to advanced topics, state management, and full applications. Each day includes a main heading, subtopics with detailed explanations, estimated time (assuming 2-4 hours/day), resources (free online like React Official Docs, freeCodeCamp, MDN), and practice exercises. Focus on hands-on coding: use Create React App or Vite for setup, and build incrementally. Experiment in CodeSandbox or local setups. By the end, you'll build deployable apps.
+
+## Day 1: Introduction to React
+- **What is React?**: Understand React as a declarative UI library; components, virtual DOM, one-way data flow; comparison to vanilla JS.
+- **Setting Up Environment**: Install Node.js/npm; create a project with Create React App (npx create-react-app my-app).
+- **First Component**: Functional components; JSX syntax basics (HTML-like in JS).
+- **Practice**: Render a simple "Hello World" app.
+- **Resources**: React Docs Getting Started; freeCodeCamp React Tutorial.
+- **Exercises**: Create an app that displays your name and a static list.
+
+## Day 2: JSX Fundamentals
+- **JSX Syntax**: Embedding JS expressions { }, attributes, conditional rendering with ternary.
+- **Styling in JSX**: Inline styles (object syntax), CSS classes with className.
+- **Fragments**: <> </> to avoid extra divs; key prop intro for lists.
+- **Practice**: Build a static profile card.
+- **Resources**: MDN JSX; React JSX Docs.
+- **Exercises**: Render a list of items with unique keys and conditional text.
+
+## Day 3: Components - Functional Basics
+- **Creating Components**: Export/import; nesting components.
+- **Props**: Passing data from parent to child; prop types intro (though deprecated, understand basics).
+- **Children Prop**: Slotting content with props.children.
+- **Practice**: Compose a header, body, footer.
+- **Resources**: freeCodeCamp Components.
+- **Exercises**: Build a reusable Card component that accepts title and content as props.
+
+## Day 4: Components - Class Basics
+- **Class Components**: extends React.Component; render method.
+- **State in Classes**: this.state, setState; differences from props.
+- **Event Handling**: onClick, onChange; binding this (arrow functions or bind).
+- **Practice**: Counter app with class component.
+- **Resources**: React Docs Class Components.
+- **Exercises**: Create a toggle button that changes state and UI.
+
+## Day 5: Lifecycle Methods in Classes
+- **Mounting Phase**: constructor, componentDidMount, render.
+- **Updating Phase**: shouldComponentUpdate, componentDidUpdate.
+- **Unmounting**: componentWillUnmount for cleanup.
+- **Practice**: Fetch data on mount (mocked).
+- **Resources**: MDN Lifecycle; React Lifecycle Diagram.
+- **Exercises**: Build a timer that starts on mount and cleans up on unmount.
+
+## Day 6: Props Drilling and Composition
+- **Props Drilling**: Passing props through multiple levels; issues with deep nesting.
+- **Component Composition**: Higher-order components (HOCs) intro; render props pattern.
+- **Default Props**: Setting fallback values.
+- **Practice**: Multi-level prop passing in a form.
+- **Resources**: React Composition Docs.
+- **Exercises**: Compose a layout with header, sidebar, and content using props.
+
+## Day 7: Lists and Keys
+- **Rendering Lists**: map() over arrays; importance of key prop for reconciliation.
+- **Dynamic Lists**: Adding/removing items from state.
+- **Conditional Rendering**: && operator, if-else in render.
+- **Practice**: Todo list skeleton.
+- **Resources**: freeCodeCamp Lists.
+- **Exercises**: Render a dynamic shopping list with add button.
+
+## Day 8: Forms - Controlled Components
+- **Input Handling**: value and onChange for text inputs, checkboxes.
+- **Select and Textarea**: Managing multiple form elements in state.
+- **Form Submission**: onSubmit event; preventing default.
+- **Practice**: Simple login form.
+- **Resources**: React Forms Docs.
+- **Exercises**: Build a registration form with validation alerts.
+
+## Day 9: Forms - Uncontrolled and Refs
+- **Uncontrolled Components**: defaultValue; when to use over controlled.
+- **Refs**: createRef, useRef (intro); accessing DOM nodes.
+- **Forwarding Refs**: ref forwarding for child components.
+- **Practice**: Focus input on button click.
+- **Resources**: MDN Refs.
+- **Exercises**: Create a form that auto-focuses and reads value via ref.
+
+## Day 10: Hooks - Introduction
+- **Why Hooks?**: Functional components with state; replaces classes.
+- **useState Hook**: Declaring state; updating with functions for prev state.
+- **Rules of Hooks**: Only at top level; in functions starting with capital.
+- **Practice**: Refactor class counter to hooks.
+- **Resources**: React Hooks Docs.
+- **Exercises**: Build a stateful accordion component.
+
+## Day 11: Hooks - useEffect
+- **useEffect Basics**: Runs after render; dependency array.
+- **Cleanup Function**: Return function for subscriptions/unmount.
+- **Simulating Lifecycles**: Empty deps for mount, no deps for every render.
+- **Practice**: Fetch data on mount with useEffect.
+- **Resources**: freeCodeCamp useEffect.
+- **Exercises**: Create a clock that updates every second with cleanup.
+
+## Day 12: Hooks - Custom Hooks
+- **Creating Custom Hooks**: Extract logic (e.g., useFetch for API calls).
+- **Sharing Logic**: Between components without HOCs.
+- **Best Practices**: Name starts with "use"; can call other hooks.
+- **Practice**: Custom hook for localStorage.
+- **Resources**: React Custom Hooks.
+- **Exercises**: Build useWindowSize hook and use in a responsive component.
+
+## Day 13: Hooks - useContext
+- **Context API**: createContext, Provider, Consumer.
+- **useContext Hook**: Accessing context in functions.
+- **Avoiding Prop Drilling**: Theme or user context example.
+- **Practice**: Dark mode toggle with context.
+- **Resources**: MDN Context.
+- **Exercises**: Implement a language switcher using context.
+
+## Day 14: Hooks - useReducer
+- **useReducer Basics**: Reducer function, dispatch; like mini-Redux.
+- **Complex State**: When useState isn't enough (e.g., objects with actions).
+- **Combining with useContext**: Global state management.
+- **Practice**: Counter with multiple actions.
+- **Resources**: React useReducer Docs.
+- **Exercises**: Build a todo reducer with add/edit/delete.
+
+## Day 15: Hooks - Advanced (useMemo, useCallback)
+- **useMemo**: Memoize expensive computations; deps array.
+- **useCallback**: Memoize functions to prevent re-renders.
+- **Performance Optimization**: When to use; React.memo for components.
+- **Practice**: Optimize a list with heavy calculations.
+- **Resources**: freeCodeCamp Advanced Hooks.
+- **Exercises**: Memoize a factorial function in a component.
+
+## Day 16: Routing - React Router Basics
+- **Setup**: Install react-router-dom; BrowserRouter.
+- **Routes and Links**: Route, Link, NavLink.
+- **URL Parameters**: useParams for dynamic routes.
+- **Practice**: Multi-page app skeleton.
+- **Resources**: React Router Docs.
+- **Exercises**: Create a simple blog with home/about/posts routes.
+
+## Day 17: Routing - Advanced
+- **Nested Routes**: Outlet for child routes.
+- **Navigation**: useNavigate, programmatic redirects.
+- **Protected Routes**: Auth checks with wrappers.
+- **Practice**: Dashboard with sub-routes.
+- **Resources**: freeCodeCamp Router.
+- **Exercises**: Implement login redirect on protected page.
+
+## Day 18: State Management - Context + Reducer
+- **Global State**: Combine useContext and useReducer.
+- **Actions and Dispatch**: Standard patterns.
+- **Async Actions**: Thunks intro (manual).
+- **Practice**: Shared cart state.
+- **Resources**: React Context Advanced.
+- **Exercises**: Build a multi-component counter with global state.
+
+## Day 19: State Management - Redux Basics
+- **Why Redux?**: Predictable state; actions, reducers, store.
+- **Setup**: Install redux, react-redux; createStore.
+- **Actions and Reducers**: Pure functions; combineReducers.
+- **Practice**: Simple Redux counter.
+- **Resources**: Redux Docs.
+- **Exercises**: Connect a component to Redux store.
+
+## Day 20: State Management - Redux Advanced
+- **Middleware**: applyMiddleware; thunk for async.
+- **useSelector and useDispatch**: Hooks integration.
+- **DevTools**: Redux DevTools setup.
+- **Practice**: Async fetch in Redux.
+- **Resources**: freeCodeCamp Redux.
+- **Exercises**: Build a todo app with Redux and thunks.
+
+## Day 21: API Integration - Fetch and Axios
+- **Fetching Data**: useEffect with fetch; error handling.
+- **Axios Setup**: Install axios; interceptors intro.
+- **Loading States**: Spinners with conditional rendering.
+- **Practice**: Display API data (e.g., JSONPlaceholder).
+- **Resources**: MDN Fetch; Axios Docs.
+- **Exercises**: Fetch and list users from an API.
+
+## Day 22: API Integration - Advanced
+- **POST/PUT/DELETE**: Mutating data with APIs.
+- **Authentication**: Headers, tokens; mock auth.
+- **Caching**: Simple memoization for fetches.
+- **Practice**: CRUD app skeleton.
+- **Resources**: React API Calls.
+- **Exercises**: Build a post creator with API integration.
+
+## Day 23: Error Boundaries and Suspense
+- **Error Boundaries**: Class components for catching errors.
+- **Suspense and Lazy**: React.lazy, Suspense fallback.
+- **Code Splitting**: Dynamic imports for optimization.
+- **Practice**: Handle errors in child components.
+- **Resources**: React Error Boundaries Docs.
+- **Exercises**: Lazy-load a heavy component with fallback.
+
+## Day 24: Styling in React
+- **CSS Modules**: Scoped styles; import as object.
+- **Styled-Components**: Install and use; theme provider.
+- **Tailwind CSS Intro**: Setup with PostCSS; utility classes.
+- **Practice**: Style a card with modules.
+- **Resources**: Styled-Components Docs; Tailwind Docs.
+- **Exercises**: Theme a button with styled-components.
+
+## Day 25: Forms - Advanced Libraries
+- **Formik Basics**: Install formik; Field, Form, validation.
+- **Yup Validation**: Schema-based validation.
+- **React Hook Form**: Alternative with less re-renders.
+- **Practice**: Validated signup form.
+- **Resources**: Formik Docs.
+- **Exercises**: Build a multi-step form with Formik.
+
+## Day 26: Testing - Jest Basics
+- **Setup**: With Create React App (built-in); test files.
+- **Unit Tests**: Testing components with render, screen.
+- **Assertions**: expect, toBe, toHaveTextContent.
+- **Practice**: Test a button click.
+- **Resources**: Jest Docs; React Testing Library.
+- **Exercises**: Write tests for a counter component.
+
+## Day 27: Testing - Advanced
+- **Mocking**: jest.fn, mocking modules/APIs.
+- **Integration Tests**: User events with @testing-library/user-event.
+- **Snapshots**: toMatchSnapshot for UI.
+- **Practice**: Test async components.
+- **Resources**: freeCodeCamp Testing.
+- **Exercises**: Test a form submission with mocks.
+
+## Day 28: Performance Optimization
+- **React Profiler**: DevTools for measuring renders.
+- **Memoization**: React.memo, useMemo in lists.
+- **Virtualization**: react-window for large lists.
+- **Practice**: Optimize a slow-rendering app.
+- **Resources**: React Optimization Docs.
+- **Exercises**: Virtualize a 1000-item list.
+
+## Day 29: Accessibility in React
+- **ARIA Attributes**: role, aria-label; semantic HTML.
+- **Keyboard Navigation**: Focus management, tabIndex.
+- **Tools**: Lighthouse audits; react-axe for checks.
+- **Practice**: Accessible modal component.
+- **Resources**: React Accessibility.
+- **Exercises**: Make a dropdown menu keyboard-friendly.
+
+## Day 30: Server-Side Rendering - Next.js Intro
+- **Why SSR?**: SEO, performance; Next.js setup.
+- **Pages and Routing**: File-based routing.
+- **getStaticProps**: Static generation.
+- **Practice**: Simple Next.js page.
+- **Resources**: Next.js Docs.
+- **Exercises**: Build a static blog page.
+
+## Day 31: Next.js Advanced
+- **getServerSideProps**: Server-side rendering.
+- **API Routes**: Backend in Next.js.
+- **Dynamic Routes**: [slug].js.
+- **Practice**: SSR data fetching.
+- **Resources**: freeCodeCamp Next.js.
+- **Exercises**: Create a dynamic user profile page.
+
+## Day 32: Deployment and CI/CD
+- **Deployment Platforms**: Vercel, Netlify for React/Next.js.
+- **Build Process**: npm run build; environment variables.
+- **GitHub Actions Intro**: Basic CI for tests/deploy.
+- **Practice**: Deploy a simple app.
+- **Resources**: Vercel Docs.
+- **Exercises**: Deploy your todo app to Vercel.
+
+## Day 33: Project - Todo App with Hooks
+- **Planning**: Features like add/edit/delete, persistence.
+- **Implementation**: Hooks, localStorage, styling.
+- **Testing**: Add basic tests.
+- **Practice**: Full build from scratch.
+- **Resources**: React Project Ideas.
+- **Exercises**: Add filters and search.
+
+## Day 34: Project - E-commerce Cart
+- **Components**: Product list, cart, checkout.
+- **State**: Context or Redux for cart.
+- **API**: Mock or real (e.g., Fake Store API).
+- **Practice**: Routing and forms.
+- **Resources**: freeCodeCamp Projects.
+- **Exercises**: Implement quantity updates and totals.
+
+## Day 35: Project - Blog with Next.js
+- **SSR/SSG**: Fetch posts from API or Markdown.
+- **Features**: Comments, search.
+- **Deployment**: To Vercel.
+- **Practice**: SEO optimizations.
+- **Resources**: Next.js Examples.
+- **Exercises**: Add admin login mock for posting.
+
+## Day 36: Advanced Topics - Portals and Modals
+- **Portals**: ReactDOM.createPortal for overlays.
+- **Modal Implementation**: With context for open/close.
+- **Event Bubbling in Portals**: Handling clicks outside.
+- **Practice**: Custom modal dialog.
+- **Resources**: React Portals Docs.
+- **Exercises**: Build a confirmation modal.
+
+## Day 37: Advanced Topics - Animations
+- **React Transition Group**: CSSTransition, TransitionGroup.
+- **Framer Motion Intro**: Install; motion components.
+- **Animations Best Practices**: Performance considerations.
+- **Practice**: Animate list items.
+- **Resources**: Framer Motion Docs.
+- **Exercises**: Create a page transition effect.
+
+## Day 38: Advanced Topics - GraphQL with Apollo
+- **GraphQL Basics**: Queries, mutations; vs. REST.
+- **Apollo Client Setup**: Install, useQuery, useMutation.
+- **Integration**: Fetch data in components.
+- **Practice**: Simple query app.
+- **Resources**: Apollo Docs.
+- **Exercises**: Build a user list with GraphQL.
+
+## Day 39: Project - Full-Stack App (React + Backend)
+- **Backend Mock**: Use JSON Server or Firebase.
+- **Features**: Auth, CRUD, real-time (if Firebase).
+- **Integration**: API calls, state management.
+- **Practice**: End-to-end build.
+- **Resources**: MERN Stack Tutorials (focus on React).
+- **Exercises**: Add user profiles and posts.
+
+## Day 40: Review and Next Steps
+- **Recap Key Concepts**: Hooks to advanced; self-quiz.
+- **Portfolio Building**: Polish projects, deploy, GitHub.
+- **Advanced Topics Intro**: React Native, TypeScript with React, TanStack Query.
+- **Community**: Reddit r/reactjs, Stack Overflow.
+- **Resources**: "React Up & Running" book; Udemy React courses.
+- **Exercises**: Build a capstone like a chat app with WebSockets.
+
+
+######  Testing 
+
+# 40-Day Testing Syllabus (Unit Testing with JUnit/Mockito, Integration Testing, API Testing with Postman/RestAssured)
+
+This syllabus is designed for learners with basic Java knowledge (OOP, collections, basic syntax) and familiarity with web development concepts (APIs, HTTP). It covers unit testing with JUnit and Mockito, integration testing, and API testing using Postman and RestAssured over 40 days. Each day includes a main heading, subtopics with detailed explanations, estimated time (2-4 hours/day), resources (free online like Baeldung, DZone, Postman Docs), and practice exercises. Focus on hands-on coding: use IntelliJ IDEA or Eclipse for Java, Postman for API testing, and a Spring Boot project for practice. Build testable code and automate tests daily. By the end, you'll test Java applications and APIs effectively.
+
+## Day 1: Introduction to Software Testing
+- **What is Testing?**: Purpose (bug detection, reliability); types (unit, integration, API, end-to-end).
+- **Testing Pyramid**: Unit tests (base), integration tests, UI/API tests (top).
+- **Tools Overview**: JUnit, Mockito, Postman, RestAssured; their roles.
+- **Setup**: Install Java JDK, IntelliJ IDEA, Maven; create a simple Spring Boot project.
+- **Practice**: Run a basic JUnit test in IDE.
+- **Resources**: Baeldung Testing Introduction; freeCodeCamp Testing Basics.
+- **Exercises**: Set up a Maven project and write a test that asserts true.
+
+## Day 2: JUnit Basics
+- **JUnit Framework**: Purpose; JUnit 5 architecture (Jupiter, Platform, Vintage).
+- **Annotations**: @Test, @BeforeEach, @AfterEach, @BeforeAll, @AfterAll.
+- **Assertions**: assertEquals, assertTrue, assertThrows, assertNotNull.
+- **Practice**: Write tests for a simple calculator class.
+- **Resources**: JUnit 5 User Guide; Baeldung JUnit Basics.
+- **Exercises**: Create a Calculator class with add/subtract and test with 5 assertions.
+
+## Day 3: JUnit Test Structure
+- **Test Lifecycle**: Setup, execution, teardown; understanding lifecycle hooks.
+- **Test Naming**: Conventions (e.g., shouldDoSomethingWhenCondition).
+- **Organizing Tests**: Packages, test suites with @Suite.
+- **Practice**: Structure tests for a User class.
+- **Resources**: JUnit 5 Documentation.
+- **Exercises**: Write 3 tests for a User class (get/set methods) with clear naming.
+
+## Day 4: Assertions and Assumptions
+- **Advanced Assertions**: assertAll for grouped assertions; assertTimeout.
+- **Assumptions**: assumeTrue, assumeFalse for conditional tests.
+- **Exception Testing**: Testing expected exceptions with assertThrows.
+- **Practice**: Test edge cases in a math utility.
+- **Resources**: Baeldung JUnit Assertions.
+- **Exercises**: Test a divide method for zero division with assertThrows.
+
+## Day 5: Mockito Basics
+- **What is Mocking?**: Simulating dependencies; why Mockito?
+- **Setup**: Add Mockito dependency to Maven; @Mock, @InjectMocks.
+- **Stubbing**: when(...).thenReturn(...); basic mock behavior.
+- **Practice**: Mock a service in a UserController test.
+- **Resources**: Mockito Documentation; Baeldung Mockito Intro.
+- **Exercises**: Mock a repository in a test for a UserService class.
+
+## Day 6: Mockito - Stubbing and Verification
+- **Advanced Stubbing**: thenThrow, thenAnswer; chaining responses.
+- **Verification**: verify(mock).method(); verifyNoMoreInteractions.
+- **Argument Matchers**: any(), eq(); custom matchers intro.
+- **Practice**: Test a service with multiple mock interactions.
+- **Resources**: Mockito Guide on Verification.
+- **Exercises**: Write a test verifying a mock method was called twice.
+
+## Day 7: Mockito - Spies and Real Objects
+- **Spies**: @Spy for partial mocking; calling real methods.
+- **Spy vs. Mock**: When to use each; real method overrides.
+- **Behavior Testing**: Combining spies with stubbing.
+- **Practice**: Spy a service to test partial logic.
+- **Resources**: Baeldung Mockito Spy.
+- **Exercises**: Create a spy for a Logger class and verify logged messages.
+
+## Day 8: Unit Testing Spring Boot Applications
+- **Spring Boot Testing**: @SpringBootTest vs. @Test; minimal context.
+- **Mocking Beans**: @MockBean for Spring context mocks.
+- **Testing Controllers**: MockMvc for HTTP simulation.
+- **Practice**: Test a REST controller with MockMvc.
+- **Resources**: Spring Boot Testing Docs; Baeldung MockMvc.[](https://github.com/kevinjuliow/spring-boot-unitTesting-RESTAPIs)
+- **Exercises**: Write a unit test for a GET endpoint returning JSON.
+
+## Day 9: Unit Testing Best Practices
+- **Test Isolation**: Tests should not depend on each other.
+- **AAA Pattern**: Arrange, Act, Assert structure.
+- **Code Coverage**: Intro to JaCoCo for measuring coverage.
+- **Practice**: Refactor tests for better readability.
+- **Resources**: DZone Testing Best Practices.
+- **Exercises**: Refactor a test suite to follow AAA and achieve 80% coverage.
+
+## Day 10: Parameterized Tests in JUnit
+- **Parameterized Tests**: @ParameterizedTest, @ValueSource, @CsvSource.
+- **Custom Arguments**: @MethodSource for complex inputs.
+- **Use Cases**: Testing multiple inputs efficiently.
+- **Practice**: Test a string utility with various inputs.
+- **Resources**: JUnit 5 Parameterized Tests.
+- **Exercises**: Write a parameterized test for a palindrome checker.
+
+## Day 11: Testing Exceptions and Edge Cases
+- **Exception Scenarios**: Null inputs, boundary conditions.
+- **Custom Exceptions**: Testing application-specific errors.
+- **Mocking Exceptions**: thenThrow in Mockito.
+- **Practice**: Test a service with invalid inputs.
+- **Resources**: Baeldung Exception Testing.
+- **Exercises**: Test a method that throws IllegalArgumentException.
+
+## Day 12: Introduction to Integration Testing
+- **What is Integration Testing?**: Testing component interactions; vs. unit testing.[](https://stackoverflow.com/questions/53533747/junitmockito-or-restassured)
+- **Spring Boot Integration**: @SpringBootTest with full context.
+- **In-Memory Databases**: H2 for testing database interactions.
+- **Practice**: Test a service with a real repository.
+- **Resources**: Spring Integration Testing.
+- **Exercises**: Write an integration test for a UserService with H2.
+
+## Day 13: Integration Testing with Spring
+- **Test Configuration**: @TestConfiguration for custom beans.
+- **Mocking in Integration**: Combining @MockBean with real context.
+- **Testing Repositories**: @DataJpaTest for JPA-specific tests.
+- **Practice**: Test a CRUD repository.
+- **Resources**: Baeldung Spring Integration Testing.[](https://dev.to/igventurelli/testing-spring-boot-applications-unit-integration-and-mocking-a-comprehensive-guide-3ehd)
+- **Exercises**: Test a save operation in a JPA repository.
+
+## Day 14: Integration Testing with Databases
+- **Database Setup**: Flyway/Testcontainers for schema migration.
+- **Testing Transactions**: @Transactional in tests.
+- **Rollback**: Auto-rollback with @Transactional.
+- **Practice**: Test a service with database operations.
+- **Resources**: Testcontainers Docs.
+- **Exercises**: Write a test for a service updating a database record.
+
+## Day 15: Integration Testing REST Controllers
+- **MockMvc for Integration**: Testing full HTTP stack without server.
+- **Spring RestTemplate**: Testing client-side API calls.
+- **TestRestTemplate**: Spring Boot’s test HTTP client.
+- **Practice**: Test a POST endpoint with MockMvc.
+- **Resources**: Baeldung MockMvc Integration.[](https://dzone.com/articles/spring-boot-rest-api-unit-testing-with-junit)
+- **Exercises**: Test a POST controller method returning 201 Created.[](https://www.oodlestechnologies.com/blogs/How-To-Unit-Test-A-POST-REST-Service-Using-Mockito-With-JUnit/)
+
+## Day 16: Introduction to API Testing
+- **What is API Testing?**: Validating endpoints, responses, status codes.[](https://learning.postman.com/docs/tests-and-scripts/test-apis/end-to-end-testing/)
+- **Tools Overview**: Postman for manual, RestAssured for automation.
+- **HTTP Basics**: Methods (GET, POST), status codes, headers.
+- **Practice**: Send a GET request in Postman to a public API.
+- **Resources**: Postman Learning Center; MDN HTTP.
+- **Exercises**: Test a public API like JSONPlaceholder in Postman.
+
+## Day 17: Postman - Basics
+- **Postman Interface**: Collections, requests, environments.
+- **Creating Requests**: GET, POST; setting headers, body.
+- **Assertions in Postman**: Tests tab; pm.test for scripts.
+- **Practice**: Test a REST API endpoint manually.
+- **Resources**: Postman Docs.[](https://learning.postman.com/docs/tests-and-scripts/test-apis/end-to-end-testing/)
+- **Exercises**: Write 3 Postman tests for a GET endpoint (status, body).
+
+## Day 18: Postman - Advanced
+- **Variables**: Global, collection, environment variables.
+- **Chaining Requests**: Using pm.response to pass data.
+- **Scripts**: Pre-request scripts; automating workflows.
+- **Practice**: Chain a login and data fetch.
+- **Resources**: Postman Learning Center Advanced.
+- **Exercises**: Create a collection to test a login and user data retrieval.
+
+## Day 19: Postman - Automation and Newman
+- **Newman Intro**: CLI for running Postman collections.
+- **Setup**: Install Newman; run collections with reports.
+- **CI Integration**: Intro to running Newman in CI pipelines.
+- **Practice**: Automate a Postman collection.
+- **Resources**: Newman Docs.
+- **Exercises**: Run a collection with Newman and generate an HTML report.
+
+## Day 20: RestAssured - Setup and Basics
+- **What is RestAssured?**: Java library for API testing; DSL syntax.
+- **Setup**: Add RestAssured to Maven; configure in Spring Boot.
+- **Basic Requests**: get(), post(); validating statusCode().
+- **Practice**: Test a GET endpoint with RestAssured.
+- **Resources**: RestAssured Docs; Baeldung RestAssured.[](https://www.geeksforgeeks.org/software-testing/how-to-test-api-with-rest-assured/)
+- **Exercises**: Write a RestAssured test for a public API endpoint.
+
+## Day 21: RestAssured - Response Validation
+- **Response Assertions**: body(), contentType(), header().
+- **Hamcrest Matchers**: equalTo, containsString.
+- **JSON Path**: Extracting data from responses.
+- **Practice**: Validate JSON response structure.
+- **Resources**: RestAssured JSON Path Guide.
+- **Exercises**: Test a JSON response for specific field values.
+
+## Day 22: RestAssured - Advanced Requests
+- **POST/PUT/DELETE**: Sending payloads; form-data, JSON.
+- **Headers and Cookies**: Setting custom headers, cookies.
+- **Query Parameters**: Adding params to requests.
+- **Practice**: Test a POST endpoint with payload.
+- **Resources**: Baeldung RestAssured Advanced.
+- **Exercises**: Test a POST request with a JSON body and validate response.
+
+## Day 23: RestAssured - Authentication
+- **Basic Auth**: basic(username, password).
+- **OAuth2**: Setting Authorization header; token handling.
+- **Mocking APIs**: Intro to WireMock for stubs.
+- **Practice**: Test an authenticated endpoint.
+- **Resources**: RestAssured Authentication Guide.
+- **Exercises**: Test a mock OAuth2-protected endpoint.
+
+## Day 24: API Testing Best Practices
+- **Test Design**: Clear, reusable tests; covering edge cases.
+- **Mocking vs. Real APIs**: When to use stubs vs. live servers.
+- **Data Management**: Test data setup, cleanup.
+- **Practice**: Refactor API tests for reuse.
+- **Resources**: DZone API Testing Best Practices.
+- **Exercises**: Refactor 5 RestAssured tests into a reusable suite.
+
+## Day 25: Mocking APIs with WireMock
+- **WireMock Setup**: Standalone server or in tests.
+- **Stubbing Responses**: Mapping URLs to responses.
+- **Verifying Requests**: Checking API calls.
+- **Practice**: Mock a third-party API for testing.
+- **Resources**: WireMock Docs.
+- **Exercises**: Create a WireMock stub for a user API.
+
+## Day 26: Test Data Management
+- **Generating Test Data**: Faker libraries or manual data.
+- **Database Seeding**: Using scripts or Testcontainers.
+- **Data Cleanup**: Resetting state between tests.
+- **Practice**: Seed a database for integration tests.
+- **Resources**: Testcontainers Guide.
+- **Exercises**: Write a test with seeded user data and cleanup.
+
+## Day 27: Testing Async APIs
+- **Async Endpoints**: Testing WebSocket or async REST.
+- **RestAssured Async**: async() method; polling responses.
+- **Timeouts**: Handling delays in tests.
+- **Practice**: Test a delayed API response.
+- **Resources**: Baeldung RestAssured Async.
+- **Exercises**: Test an async endpoint with a 2-second delay.
+
+## Day 28: Performance Testing APIs
+- **Load Testing Intro**: Tools like JMeter (basic overview).
+- **Postman Performance**: Collection runner for load simulation.
+- **RestAssured for Load**: Simulating multiple requests.
+- **Practice**: Simulate 100 API calls.
+- **Resources**: JMeter Docs.
+- **Exercises**: Run a Postman collection for 50 concurrent requests.
+
+## Day 29: Security Testing Basics
+- **Common Vulnerabilities**: SQL injection, XSS in APIs.
+- **Testing Auth**: Verifying token validation, roles.
+- **Postman Security**: Testing for headers like Content-Security-Policy.
+- **Practice**: Test an endpoint for missing auth.
+- **Resources**: OWASP API Security.
+- **Exercises**: Write a test to check for unauthorized access.
+
+## Day 30: Project - Unit Testing a Spring Boot App
+- **Planning**: Create a simple REST API (e.g., User CRUD).
+- **Implementation**: Write JUnit/Mockito tests for controllers, services.
+- **Features**: Test edge cases, exceptions.
+- **Practice**: Achieve 85% coverage.
+- **Resources**: Baeldung Spring Boot Testing.[](https://www.blazemeter.com/blog/junit-rest-api-testing)
+- **Exercises**: Test all CRUD operations with mocks.
+
+## Day 31: Project - Integration Testing a Spring Boot App
+- **Setup**: Full Spring context with H2 database.
+- **Tests**: Test service-repository integration; REST endpoints.
+- **Features**: Transactional tests, rollback.
+- **Practice**: Test a user creation flow.
+- **Resources**: Spring Testing Docs.[](https://dev.to/igventurelli/testing-spring-boot-applications-unit-integration-and-mocking-a-comprehensive-guide-3ehd)
+- **Exercises**: Write integration tests for a POST and GET endpoint.
+
+## Day 32: Project - API Testing with Postman
+- **Planning**: Test a public API or mock server (JSON Server).
+- **Implementation**: Create a Postman collection for CRUD.
+- **Features**: Assertions, chaining, variables.
+- **Practice**: Automate with Newman.
+- **Resources**: Postman Docs.
+- **Exercises**: Build a collection with 10 tests and run via Newman.
+
+## Day 33: Project - API Testing with RestAssured
+- **Setup**: Spring Boot API or public API.
+- **Tests**: Write RestAssured tests for all CRUD operations.
+- **Features**: JSON validation, auth, error handling.
+- **Practice**: Integrate with JUnit.
+- **Resources**: RestAssured Guide.[](https://www.geeksforgeeks.org/software-testing/how-to-test-api-with-rest-assured/)
+- **Exercises**: Test a full CRUD cycle with RestAssured.
+
+## Day 34: Test Coverage and Reporting
+- **Coverage Tools**: JaCoCo, SonarQube basics.
+- **Reports**: Generating HTML/XML reports.
+- **Improving Coverage**: Identifying gaps.
+- **Practice**: Analyze a project’s coverage.
+- **Resources**: JaCoCo Docs.
+- **Exercises**: Generate a coverage report for a test suite.
+
+## Day 35: Continuous Integration for Tests
+- **CI Basics**: GitHub Actions for running tests.
+- **Setup**: Configure a pipeline for JUnit/RestAssured.
+- **Test Reporting**: Integrating coverage in CI.
+- **Practice**: Run tests on push.
+- **Resources**: GitHub Actions Docs.
+- **Exercises**: Set up a CI pipeline for a Spring Boot project.
+
+## Day 36: Behavior-Driven Development (BDD) with Cucumber
+- **BDD Intro**: Writing tests in Gherkin (Given-When-Then).
+- **Cucumber Setup**: Add to Maven; feature files.
+- **Integration**: Combine with JUnit for API tests.
+- **Practice**: Write a BDD test for a login API.
+- **Resources**: Cucumber Docs.
+- **Exercises**: Create a feature file and step definitions for a GET endpoint.
+
+## Day 37: Testing GraphQL APIs
+- **GraphQL Basics**: Queries, mutations vs. REST.
+- **Postman for GraphQL**: Sending queries, testing responses.
+- **RestAssured for GraphQL**: Custom request bodies.
+- **Practice**: Test a GraphQL endpoint.
+- **Resources**: Baeldung GraphQL Testing.
+- **Exercises**: Write a Postman test for a GraphQL query.
+
+## Day 38: Debugging Tests
+- **Debugging JUnit**: Breakpoints in IntelliJ/Eclipse.
+- **Log Analysis**: Adding logs in tests for tracing.
+- **Common Issues**: Flaky tests, dependency issues.
+- **Practice**: Debug a failing integration test.
+- **Resources**: IntelliJ Debugging Guide.
+- **Exercises**: Fix a flaky test caused by async issues.
+
+## Day 39: Project - Full Testing Suite
+- **Planning**: Build a Spring Boot app with multiple endpoints.
+- **Tests**: Unit (JUnit/Mockito), integration (Spring), API (RestAssured/Postman).
+- **Features**: Coverage, CI, BDD.
+- **Practice**: End-to-end testing workflow.
+- **Resources**: Spring Testing Examples.
+- **Exercises**: Test a full app with 90% coverage and CI pipeline.
+
+## Day 40: Review and Next Steps
+- **Recap Key Concepts**: Unit, integration, API testing; tools mastery.
+- **Portfolio Building**: Document projects, push to GitHub.
+- **Advanced Topics Intro**: Performance testing (Gatling), UI testing (Selenium).
+- **Community**: Stack Overflow, Reddit r/softwaretesting.
+- **Resources**: “Testing JavaScript Applications” book; Baeldung Testing Tutorials.
+- **Exercises**: Build a capstone project testing a public API end-to-end.
+
+**Notes**:
+- Practice daily by writing and running tests in a Maven-based Spring Boot project.
+- Use public APIs (e.g., JSONPlaceholder) or mock servers (JSON Server, WireMock) for API testing.
+- Validate code with coverage tools to ensure thoroughness.
+- Focus on clean, maintainable test code following best practices.
+- Deploy test reports or documentation to GitHub for portfolio showcase.
+
+#######$$. 
+
+# 120-Day Java Frameworks Learning Syllabus
+
+This syllabus is designed for learners with solid Java knowledge (OOP, collections, exceptions, streams) and basic understanding of databases (SQL) and web concepts (HTTP). It progresses from Spring Core fundamentals to advanced topics like microservices and messaging, integrating Spring Boot, Data JPA, Security, Hibernate, REST APIs, and optional queues. Each day includes a main heading, subtopics with detailed explanations, estimated time (assuming 2-4 hours/day), resources (free online like Baeldung, Spring Official Docs, freeCodeCamp, DZone), and practice exercises. Focus on hands-on coding: use IntelliJ IDEA with Maven/Gradle, H2/MySQL for databases, Postman for API testing. Build incrementally on a Spring Boot project. By the end, you'll develop secure, scalable applications.
+
+## Day 1: Introduction to Spring Framework
+- **What is Spring?**: Overview of Spring as a lightweight, modular framework for enterprise Java; inversion of control (IoC), dependency injection (DI), AOP.
+- **Spring Modules**: Core, Boot, Data, Security, etc.; history and ecosystem.
+- **Setting Up Environment**: Install JDK 17+, IntelliJ, Maven; create a simple Spring project.
+- **Practice**: Hello World with Spring context.
+- **Resources**: Spring Docs Introduction; Baeldung Spring Basics.
+- **Exercises**: Set up a Maven project and load a Spring application context.
+
+## Day 2: Spring Core - Beans and IoC Container
+- **Beans**: Definition, lifecycle (init, destroy); bean scopes (singleton, prototype).
+- **IoC Container**: ApplicationContext vs. BeanFactory; XML configuration basics.
+- **Annotations**: @Bean, @Component; auto-scanning.
+- **Practice**: Define and retrieve beans.
+- **Resources**: Baeldung IoC; Spring Core Docs.
+- **Exercises**: Create 3 beans with different scopes and print their instances.
+
+## Day 3: Dependency Injection - Basics
+- **DI Types**: Constructor, setter, field injection; pros/cons.
+- **@Autowired**: Usage, required=false; qualifiers.
+- **Configuration**: Java-based config with @Configuration.
+- **Practice**: Inject dependencies in a service.
+- **Resources**: freeCodeCamp Spring DI.
+- **Exercises**: Build a Car class injecting Engine and print details.
+
+## Day 4: Dependency Injection - Advanced
+- **@Qualifier and @Primary**: Resolving ambiguities.
+- **Lazy Initialization**: @Lazy for beans.
+- **Profiles**: @Profile for environment-specific beans.
+- **Practice**: Use profiles in a multi-env setup.
+- **Resources**: Baeldung DI Advanced.
+- **Exercises**: Create dev/prod profiles injecting different DB configs.
+
+## Day 5: Aspect-Oriented Programming (AOP) - Basics
+- **AOP Concepts**: Aspects, advice, pointcuts, join points.
+- **@Aspect Annotation**: Defining aspects.
+- **Advice Types**: @Before, @After, @Around.
+- **Practice**: Log method calls with AOP.
+- **Resources**: Spring AOP Docs.
+- **Exercises**: Create a logging aspect for a service method.
+
+## Day 6: AOP - Advanced
+- **Pointcut Expressions**: execution(), within(), args().
+- **Weaving**: Proxy-based AOP; limitations.
+- **Custom Aspects**: For performance monitoring.
+- **Practice**: Apply transaction aspect mock.
+- **Resources**: Baeldung AOP.
+- **Exercises**: Build an aspect to time method execution.
+
+## Day 7: Spring Expression Language (SpEL)
+- **SpEL Basics**: #{expression} in annotations; evaluating properties.
+- **Operators**: Arithmetic, logical, relational.
+- **Integration**: In @Value, AOP pointcuts.
+- **Practice**: Inject values with SpEL.
+- **Resources**: Spring SpEL Docs.
+- **Exercises**: Use SpEL to compute a bean property dynamically.
+
+## Day 8: Spring Core - Events and Listeners
+- **Application Events**: Publishing custom events.
+- **@EventListener**: Handling events asynchronously.
+- **Event Propagation**: Synchronous vs. async.
+- **Practice**: Publish user registration event.
+- **Resources**: Baeldung Spring Events.
+- **Exercises**: Create an event listener for a login event.
+
+## Day 9: Spring Core - Testing Basics
+- **@SpringBootTest**: For core tests (non-Boot).
+- **Mocking Beans**: With Mockito.
+- **Assertions**: Testing bean wiring.
+- **Practice**: Test a DI configuration.
+- **Resources**: Spring Testing Docs.
+- **Exercises**: Write JUnit tests for a service with injected dependencies.
+
+## Day 10: Spring Core Project - Simple Application
+- **Planning**: Build a console app with DI and AOP.
+- **Implementation**: Services, repositories (mock), logging aspect.
+- **Features**: Event handling for actions.
+- **Practice**: Run and debug the app.
+- **Resources**: Baeldung Spring Projects.
+- **Exercises**: Add a user management module with beans.
+
+## Day 11: Introduction to Spring Boot
+- **Spring Boot Overview**: Auto-configuration, starters, embedded server.
+- **Creating Boot Project**: Spring Initializr; pom.xml dependencies.
+- **@SpringBootApplication**: Scanning and config.
+- **Practice**: Run a basic Boot app.
+- **Resources**: Spring Boot Docs; Baeldung Boot Intro.
+- **Exercises**: Generate and run a Boot project with Actuator.
+
+## Day 12: Spring Boot Configuration
+- **application.properties/yaml**: Key-value config; profiles.
+- **@Value and @ConfigurationProperties**: Binding properties.
+- **External Config**: Command-line args, env variables.
+- **Practice**: Configure app ports and messages.
+- **Resources**: freeCodeCamp Boot Config.
+- **Exercises**: Create a config class bound to properties.
+
+## Day 13: Spring Boot - REST API Basics
+- **@RestController**: Handling HTTP requests.
+- **@GetMapping, @PostMapping**: Path variables, request params.
+- **ResponseEntity**: Custom responses with status.
+- **Practice**: Build a hello endpoint.
+- **Resources**: Baeldung REST with Boot.
+- **Exercises**: Create GET/POST endpoints for a book resource.
+
+## Day 14: Spring Boot - Error Handling
+- **@ExceptionHandler**: Controller-level handling.
+- **Global Exceptions**: @ControllerAdvice.
+- **Custom Errors**: ProblemDetail (RFC 7807).
+- **Practice**: Handle validation errors.
+- **Resources**: Spring Boot Error Handling.
+- **Exercises**: Implement 404 and 500 handlers.
+
+## Day 15: Spring Boot - Validation
+- **Bean Validation**: @Valid, @NotNull, @Size.
+- **Hibernate Validator**: Built-in constraints.
+- **Custom Validators**: Implementing ConstraintValidator.
+- **Practice**: Validate request bodies.
+- **Resources**: Baeldung Validation.
+- **Exercises**: Add validation to a user form endpoint.
+
+## Day 16: Spring Boot - Logging
+- **Logging Frameworks**: Logback default; levels (DEBUG, INFO).
+- **@Slf4j**: Lombok integration.
+- **Configuration**: logback.xml for patterns.
+- **Practice**: Log API requests.
+- **Resources**: Spring Boot Logging Docs.
+- **Exercises**: Configure file logging and log exceptions.
+
+## Day 17: Spring Boot - Testing REST APIs
+- **@WebMvcTest**: Controller tests with MockMvc.
+- **@SpringBootTest with TestRestTemplate**: Integration tests.
+- **Mocking Services**: @MockBean.
+- **Practice**: Test endpoints with assertions.
+- **Resources**: Baeldung Boot Testing.
+- **Exercises**: Write tests for GET/POST with JSON responses.
+
+## Day 18: Spring Boot - Actuators and Monitoring
+- **Actuator Endpoints**: /health, /metrics, /info.
+- **Micrometer**: Integration for Prometheus.
+- **Custom Health Indicators**: Implementing HealthIndicator.
+- **Practice**: Expose actuators.
+- **Resources**: Spring Boot Actuator Docs.
+- **Exercises**: Add a custom health check for DB connection.
+
+## Day 19: Spring Boot Project - Simple REST API
+- **Planning**: Bookstore API with CRUD.
+- **Implementation**: Controllers, services, in-memory repo.
+- **Features**: Validation, error handling.
+- **Practice**: Test with Postman.
+- **Resources**: freeCodeCamp Boot Projects.
+- **Exercises**: Implement list/add book endpoints.
+
+## Day 20: Introduction to Spring Data JPA
+- **What is JPA?**: Java Persistence API; entities, repositories.
+- **Spring Data JPA**: Auto-repo generation; starters.
+- **Setup**: Add dependencies, configure datasource (H2).
+- **Practice**: Create an entity and repo.
+- **Resources**: Spring Data JPA Docs; Baeldung JPA Intro.
+- **Exercises**: Set up a Boot app with JPA and H2 console.
+
+## Day 21: Entities and Mapping
+- **@Entity, @Id**: Basic annotations; generated values.
+- **Relationships**: @OneToMany, @ManyToOne, @JoinColumn.
+- **Embedded Types**: @Embeddable for complex fields.
+- **Practice**: Map a User-Address entity.
+- **Resources**: freeCodeCamp JPA.
+- **Exercises**: Create entities for Book and Author with relations.
+
+## Day 22: Repositories and CRUD
+- **CrudRepository**: Basic save/find/delete.
+- **JpaRepository**: PagingAndSortingRepository extensions.
+- **Custom Queries**: @Query with JPQL.
+- **Practice**: Implement CRUD operations.
+- **Resources**: Baeldung Spring Data Repos.
+- **Exercises**: Add repo methods for finding books by title.
+
+## Day 23: Query Methods and Specifications
+- **Derived Queries**: findByFieldAndOther.
+- **Specifications**: For dynamic queries with criteria.
+- **Paging and Sorting**: Pageable interface.
+- **Practice**: Paginate results.
+- **Resources**: Spring Data Query Methods.
+- **Exercises**: Implement paged search for users.
+
+## Day 24: Transactions in JPA
+- **@Transactional**: Propagation, isolation levels.
+- **Rollback**: Handling exceptions.
+- **Read-Only Transactions**: Optimization.
+- **Practice**: Wrap service methods.
+- **Resources**: Baeldung Transactions.
+- **Exercises**: Test a transfer method with rollback on error.
+
+## Day 25: Auditing with JPA
+- **@EnableJpaAuditing**: For created/updated dates.
+- **@CreatedDate, @LastModifiedDate**: Auto-fields.
+- **AuditorAware**: For user tracking.
+- **Practice**: Add auditing to entities.
+- **Resources**: Spring Data Auditing Docs.
+- **Exercises**: Enable auditing in a Book entity.
+
+## Day 26: Introduction to Hibernate ORM
+- **Hibernate Overview**: JPA implementation; session factory.
+- **Configuration**: hibernate.cfg.xml or Boot auto-config.
+- **Mapping**: Annotations vs. XML (focus annotations).
+- **Practice**: Migrate a JPA entity to Hibernate specifics.
+- **Resources**: Hibernate Docs; Baeldung Hibernate Intro.
+- **Exercises**: Set up Hibernate in a non-Boot project.
+
+## Day 27: Hibernate - Advanced Mapping
+- **Inheritance Strategies**: SINGLE_TABLE, TABLE_PER_CLASS.
+- **Collections**: @ElementCollection for lists.
+- **Lazy/Eager Fetching**: @ManyToMany with fetch types.
+- **Practice**: Map a polymorphic entity.
+- **Resources**: Hibernate Mapping Guide.
+- **Exercises**: Implement a Product hierarchy with inheritance.
+
+## Day 28: Hibernate - Caching
+- **First-Level Cache**: Session scope.
+- **Second-Level Cache**: Ehcache integration.
+- **Query Cache**: For repeated queries.
+- **Practice**: Enable caching in config.
+- **Resources**: Baeldung Hibernate Caching.
+- **Exercises**: Test cache hits/misses in a repo.
+
+## Day 29: Hibernate - Performance Tuning
+- **Batch Processing**: hibernate.jdbc.batch_size.
+- **N+1 Problem**: Solving with fetch joins.
+- **Statistics**: Enabling hibernate.generate_statistics.
+- **Practice**: Optimize a query with joins.
+- **Resources**: Hibernate Performance Docs.
+- **Exercises**: Fix N+1 in a one-to-many fetch.
+
+## Day 30: Spring Data JPA with Hibernate Project
+- **Planning**: Extend bookstore with DB persistence.
+- **Implementation**: Entities, repos, services with transactions.
+- **Features**: Paging, auditing.
+- **Practice**: Seed data with Flyway.
+- **Resources**: Baeldung JPA Projects.
+- **Exercises**: Implement CRUD with real DB.
+
+## Day 31: Introduction to Spring Security
+- **Security Basics**: Authentication, authorization; filters chain.
+- **@EnableWebSecurity**: Custom config.
+- **Dependencies**: spring-boot-starter-security.
+- **Practice**: Secure a Boot app with basic auth.
+- **Resources**: Spring Security Docs; Baeldung Security Intro.
+- **Exercises**: Add default security to an API.
+
+## Day 32: Authentication - In-Memory and JDBC
+- **UserDetailsService**: Custom user loading.
+- **In-Memory Users**: For testing.
+- **JDBC Authentication**: With users table.
+- **Practice**: Set up JDBC auth.
+- **Resources**: freeCodeCamp Security.
+- **Exercises**: Create users table and authenticate via JDBC.
+
+## Day 33: Authentication - JWT
+- **JWT Basics**: Tokens, claims; libraries (jjwt).
+- **Token Generation**: After login.
+- **Filter Chain**: JwtAuthenticationFilter.
+- **Practice**: Implement token-based auth.
+- **Resources**: Baeldung JWT.
+- **Exercises**: Generate and validate JWT on login.
+
+## Day 34: Authorization - Role-Based
+- **@PreAuthorize**: Method-level security.
+- **Roles and Authorities**: ROLE_USER, etc.
+- **@EnableMethodSecurity**: For annotations.
+- **Practice**: Restrict endpoints by role.
+- **Resources**: Spring Security Authorization.
+- **Exercises**: Secure admin endpoints for ROLE_ADMIN.
+
+## Day 35: OAuth2 and Social Login
+- **OAuth2 Basics**: Client, resource server.
+- **Spring Security OAuth2**: @EnableOAuth2Client.
+- **Google/GitHub Login**: Configuring providers.
+- **Practice**: Add Google login.
+- **Resources**: Baeldung OAuth2.
+- **Exercises**: Implement social login for an app.
+
+## Day 36: CSRF and CORS
+- **CSRF Protection**: Tokens in forms.
+- **CORS Configuration**: @CrossOrigin or global.
+- **Security Headers**: X-Frame-Options, etc.
+- **Practice**: Enable CORS for API.
+- **Resources**: Spring Security CSRF Docs.
+- **Exercises**: Configure CORS for a frontend domain.
+
+## Day 37: Testing Spring Security
+- **@WithMockUser**: Simulating users.
+- **MockMvc with Security**: Testing protected endpoints.
+- **Integration Tests**: For auth flows.
+- **Practice**: Test secured APIs.
+- **Resources**: Baeldung Security Testing.
+- **Exercises**: Write tests for login and role access.
+
+## Day 38: Spring Security Project - Secure API
+- **Planning**: Secure the bookstore API.
+- **Implementation**: JWT auth, role-based access.
+- **Features**: OAuth2 optional, CSRF for forms.
+- **Practice**: Test with Postman.
+- **Resources**: Spring Security Projects.
+- **Exercises**: Add user registration with password encoding.
+
+## Day 39: Building RESTful APIs - Best Practices
+- **REST Principles**: Stateless, resources, HTTP methods.
+- **HATEOAS**: Hypermedia links with Spring HATEOAS.
+- **Versioning**: URI or header versioning.
+- **Practice**: Add links to responses.
+- **Resources**: Baeldung REST Best Practices.
+- **Exercises**: Implement HATEOAS in a book endpoint.
+
+## Day 40: Consuming REST APIs - RestTemplate
+- **RestTemplate Basics**: GetForObject, postForEntity.
+- **Error Handling**: Custom ResponseErrorHandler.
+- **Async Calls**: AsyncRestTemplate.
+- **Practice**: Consume a public API.
+- **Resources**: Spring RestTemplate Docs.
+- **Exercises**: Fetch data from JSONPlaceholder.
+
+## Day 41: Consuming REST APIs - WebClient
+- **WebClient Intro**: Reactive alternative; builder.
+- **Mono/Flux Handling**: For responses.
+- **Retries and Backoff**: exchangeStrategies.
+- **Practice**: Build a reactive consumer.
+- **Resources**: Baeldung WebClient.
+- **Exercises**: Consume an API reactively and log response.
+
+## Day 42: API Documentation with Swagger
+- **OpenAPI/Swagger**: springdoc-openapi dependency.
+- **@OpenAPIDefinition**: Customizing docs.
+- **Annotations**: @Operation, @ApiResponse.
+- **Practice**: Document endpoints.
+- **Resources**: Springdoc Docs.
+- **Exercises**: Add Swagger UI to the bookstore API.
+
+## Day 43: Rate Limiting and Throttling
+- **Bucket4j or Resilience4j**: For rate limits.
+- **@RateLimiter**: Aspect-based limiting.
+- **Global Limits**: Filter implementation.
+- **Practice**: Limit API calls per user.
+- **Resources**: Baeldung Rate Limiting.
+- **Exercises**: Implement 5 calls/minute limit.
+
+## Day 44: REST API Project - Advanced Bookstore
+- **Planning**: Full CRUD with relations, security.
+- **Implementation**: Consume external API for books.
+- **Features**: Documentation, rate limiting.
+- **Practice**: Deploy locally.
+- **Resources**: freeCodeCamp REST Projects.
+- **Exercises**: Integrate with a payment mock API.
+
+## Day 45: Introduction to Microservices
+- **Microservices Architecture**: Benefits, challenges; vs. monolith.
+- **Spring Cloud Overview**: Modules like Config, Gateway.
+- **Decomposition**: By business capability.
+- **Practice**: Split a monolith into services.
+- **Resources**: Spring Cloud Docs; Baeldung Microservices Intro.
+- **Exercises**: Design a microservices diagram for e-commerce.
+
+## Day 46: Spring Cloud Config
+- **Centralized Config**: Config Server with Git.
+- **@EnableConfigServer**: Setup.
+- **Client Side**: @RefreshScope for dynamic refresh.
+- **Practice**: Configure multiple services.
+- **Resources**: Spring Cloud Config Docs.
+- **Exercises**: Set up a config server for dev/prod.
+
+## Day 47: Service Discovery with Eureka
+- **Eureka Server**: @EnableEurekaServer.
+- **Client Registration**: @EnableDiscoveryClient.
+- **Load Balancing**: With Ribbon (legacy) or LoadBalancer.
+- **Practice**: Register services.
+- **Resources**: Baeldung Eureka.
+- **Exercises**: Build Eureka server and register 2 clients.
+
+## Day 48: Client-Side Load Balancing
+- **Spring Cloud LoadBalancer**: Replacement for Ribbon.
+- **@LoadBalanced**: On RestTemplate/WebClient.
+- **Circuit Breakers**: Intro to Resilience4j.
+- **Practice**: Balance calls between instances.
+- **Resources**: Spring Cloud LoadBalancer Docs.
+- **Exercises**: Call a service with load balancing.
+
+## Day 49: Feign Client
+- **Declarative Clients**: @FeignClient annotation.
+- **Methods**: Mapping to endpoints.
+- **Error Handling**: Custom decoders.
+- **Practice**: Consume services with Feign.
+- **Resources**: Baeldung Feign.
+- **Exercises**: Create a Feign client for book service.
+
+## Day 50: API Gateway with Spring Cloud Gateway
+- **@EnableGateway**: Setup.
+- **Routes**: Predicate, filters (RewritePath).
+- **Rate Limiting**: Built-in or Redis.
+- **Practice**: Route to microservices.
+- **Resources**: Spring Cloud Gateway Docs.
+- **Exercises**: Configure routes for 2 services.
+
+## Day 51: Resilience and Fault Tolerance
+- **Resilience4j**: CircuitBreaker, Retry, Bulkhead.
+- **Integration**: With Feign or WebClient.
+- **Fallbacks**: Default responses on failure.
+- **Practice**: Add circuit breaker to calls.
+- **Resources**: Baeldung Resilience4j.
+- **Exercises**: Implement retry on a failing endpoint.
+
+## Day 52: Distributed Tracing with Sleuth and Zipkin
+- **Sleuth**: Auto-instrumentation.
+- **Zipkin Server**: For visualization.
+- **Spans and Traces**: Logging propagation.
+- **Practice**: Trace requests across services.
+- **Resources**: Spring Cloud Sleuth Docs.
+- **Exercises**: Set up Zipkin and trace a call chain.
+
+## Day 53: Microservices Security
+- **OAuth2 in Microservices**: Resource server config.
+- **JWT Propagation**: Through gateway.
+- **Gateway Security**: Auth at edge.
+- **Practice**: Secure services with JWT.
+- **Resources**: Baeldung Microservices Security.
+- **Exercises**: Add auth to gateway and services.
+
+## Day 54: Microservices Project - Part 1
+- **Planning**: E-commerce: User, Order, Product services.
+- **Implementation**: Eureka, Config Server.
+- **Features**: Register services.
+- **Practice**: Run multiple instances.
+- **Resources**: Spring Cloud Projects.
+- **Exercises**: Set up discovery and config.
+
+## Day 55: Microservices Project - Part 2
+- **Implementation**: Feign clients, Gateway.
+- **Features**: Routing, load balancing.
+- **Practice**: Call between services.
+- **Resources**: Baeldung Microservices Example.
+- **Exercises**: Implement order service calling product.
+
+## Day 56: Microservices Project - Part 3
+- **Features**: Resilience, tracing.
+- **Security**: Add JWT.
+- **Practice**: Test fault tolerance.
+- **Resources**: freeCodeCamp Microservices.
+- **Exercises**: Add circuit breaker and trace logs.
+
+Day 57: Introduction to Messaging Queues
+Why Messaging?: Decoupling, async communication.
+RabbitMQ Basics: Exchanges, queues, bindings.
+Installation: Docker setup.
+Practice: Send/receive messages.
+Resources: RabbitMQ Docs; Baeldung RabbitMQ.
+Exercises: Set up RabbitMQ and send a hello message.
+Day 58: Spring Boot with RabbitMQ
+spring-boot-starter-amqp: Dependencies.
+RabbitTemplate: Sending messages.
+@RabbitListener: Consuming queues.
+Practice: Integrate in Boot app.
+Resources: Spring AMQP Docs.
+Exercises: Build a producer-consumer for orders.
+Day 59: Advanced RabbitMQ - Exchanges
+Direct, Fanout, Topic: Routing keys.
+Dead Letter Queues: For failures.
+Retries: With backoff.
+Practice: Use topic exchange.
+Resources: Baeldung RabbitMQ Advanced.
+Exercises: Route messages by type.
+Day 60: Introduction to Kafka
+Kafka Basics: Topics, partitions, brokers.
+Installation: Docker Kafka + Zookeeper.
+Producers/Consumers: Basic API.
+Practice: Create topic and produce.
+Resources: Kafka Docs; Baeldung Kafka Intro.
+Exercises: Set up Kafka and send events.
+Day 61: Spring Boot with Kafka
+spring-kafka: Dependencies.
+KafkaTemplate: Producing messages.
+@KafkaListener: Consuming topics.
+Practice: Integrate in microservices.
+Resources: Spring Kafka Docs.
+Exercises: Build an event-driven service.
+Day 62: Advanced Kafka - Streams
+Kafka Streams: Processing data.
+KStreams, KTable: Joins, aggregations.
+Error Handling: Deserialization exceptions.
+Practice: Simple stream app.
+Resources: Baeldung Kafka Streams.
+Exercises: Filter and aggregate messages.
+Day 63: Messaging in Microservices
+Event-Driven Architecture: Using queues for inter-service comm.
+Saga Pattern: Distributed transactions.
+CQRS Basics: Command Query Responsibility Segregation.
+Practice: Use RabbitMQ for order events.
+Resources: DZone Messaging in Microservices.
+Exercises: Implement event publishing on order creation.
+Day 64: Comparing RabbitMQ and Kafka
+Use Cases: RabbitMQ for queues, Kafka for streams/logs.
+Performance: Throughput, durability.
+Integration: In Spring Cloud.
+Practice: Migrate a Rabbit app to Kafka.
+Resources: Baeldung Rabbit vs Kafka.
+Exercises: Benchmark simple send/receive.
+Day 65: Messaging Project - Event-Driven App
+Planning: Add messaging to e-commerce microservices.
+Implementation: Kafka for order events, Rabbit for notifications.
+Features: Listeners updating states.
+Practice: Test async flows.
+Resources: Spring Messaging Projects.
+Exercises: Publish order placed event and consume in inventory.
+Day 66: Containerization with Docker
+Docker Basics: Images, containers; Dockerfile.
+Spring Boot Docker: Multi-stage builds.
+Compose: For multi-service.
+Practice: Dockerize a Boot app.
+Resources: Docker Docs; Baeldung Docker Spring.
+Exercises: Build and run a containerized API.
+Day 67: Orchestration with Kubernetes
+Kubernetes Intro: Pods, deployments, services.
+Minikube Setup: Local cluster.
+Deploying Spring Apps: YAML manifests.
+Practice: Deploy a microservice.
+Resources: Kubernetes Docs; Baeldung K8s.
+Exercises: Create a deployment for Eureka.
+Day 68: CI/CD for Java Apps
+Jenkins/GitHub Actions: Pipelines for build/test/deploy.
+Maven Plugins: For testing, packaging.
+Integration: With Docker push.
+Practice: Set up a simple pipeline.
+Resources: Jenkins Docs.
+Exercises: Automate build on push.
+Day 69: Monitoring with Prometheus and Grafana
+Prometheus Setup: Scraping metrics.
+Grafana Dashboards: Visualizing data.
+Spring Boot Integration: Micrometer Prometheus.
+Practice: Monitor app metrics.
+Resources: Baeldung Monitoring.
+Exercises: Set up dashboard for JVM metrics.
+Day 70: Logging with ELK Stack
+Elasticsearch, Logstash, Kibana: Centralized logging.
+Spring Boot Logstash: Appender config.
+Searching Logs: Queries in Kibana.
+Practice: Log to ELK.
+Resources: ELK Docs.
+Exercises: Search for error logs in Kibana.
+Day 71: Advanced Testing in Frameworks
+Integration Tests: With Testcontainers for DB/queues.
+Contract Testing: Pact for microservices.
+Performance Tests: JMeter for APIs.
+Practice: Test with containers.
+Resources: Testcontainers Docs.
+Exercises: Write a test using Dockerized DB.
+Day 72: Reactive Programming with Spring WebFlux
+WebFlux Basics: Reactive REST; Mono/Flux.
+Reactive Repos: R2DBC for databases.
+Backpressure: Handling streams.
+Practice: Build a reactive endpoint.
+Resources: Spring WebFlux Docs.
+Exercises: Convert a REST API to reactive.
+Day 73: GraphQL with Spring
+GraphQL Basics: Schemas, resolvers.
+spring-boot-starter-graphql: Setup.
+Queries/Mutations: DataFetchers.
+Practice: Expose GraphQL endpoint.
+Resources: Baeldung GraphQL.
+Exercises: Implement query for books.
+
+
+
+
+
